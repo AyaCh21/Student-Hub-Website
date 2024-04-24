@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href="{{ asset('css/base.css')}}" rel='stylesheet' type='text/css'>
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
@@ -11,6 +12,28 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    <header>
+        <div class="navbar-container">
+            <div class="navbar">
+                <div class="navbar-left">
+                    <a href="">Home</a>
+                    <a href="">Study</a>
+                    <a href="">Profile</a>
+                </div>
+                <div class="navbar-right">
+                    <input type="button" value="Sign In">
+                    <input type="button" value="Join Now">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
     </body>
+
+    <footer>
+        Copyright 2022 WebTech. StudHub All Rights Reserved. <a href="https://admin.kuleuven.be/privacy/en/">Privacy Policy</a> | <a href="https://admin.kuleuven.be/icts/english/cookiepolicy/">Terms of Use</a>
+    </footer>
 </html>

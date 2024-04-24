@@ -1,0 +1,98 @@
+:root{
+    --main-color: #b3bcbb;
+    --minor-color: #7c938e;
+    --extra-color: #eaafa9;
+    --dark-color: #3c4443;
+    --light-color: #efd0ce;
+}
+
+body{
+    background: var(--dark-color);
+    color: var(--light-color);
+    margin: 0;
+    font-family: "SoDo Sans SemiBold", Helvetica Neue, Helvetica, Arial,
+    sans-serif;
+
+}
+
+.navbar-container {
+    /* background: var(--main-color);
+    box-shadow: 0 4px 5px 0 var(--minor-color);
+    -webkit-box-shadow: 0 4px 5px 0 var(--minor-color);
+    -moz-box-shadow: 0 4px 5px 0 var(--minor-color); */
+}
+
+.navbar {
+    margin: auto;
+    max-width: 100%;
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    font-size: 16px;
+    justify-content: space-evenly;
+}
+
+.navbar a {
+    align-items: center;
+}
+
+.navbar-right, .navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-left a {
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 0 30px;
+    color: var(--extra-color);
+}
+
+.navbar-left a {
+    text-decoration: none;
+}
+
+input[type=button] {
+    background: var(--minor-color);
+    margin: 2px;
+    border-radius: 40px;
+    border: 1px solid var(--main-color);
+    padding: 5px 20px 5px 20px;
+    max-width: max-content;
+}
+
+input[type=button]:hover{
+    box-shadow: inset 0 0 0 2em var(--extra-color);
+    cursor: pointer;
+    -webkit-transition: background 2s ease-out;
+    -moz-transition: background 2s ease-out;
+    -o-transition: background 2s ease-out;
+    transition: background 2s ease-out;
+}
+
+main {
+    width: 70%;
+    margin: auto;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+section {
+    padding: 10px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.text-main {
+    padding: 10px;
+    border-radius: 30px;
+}
+
+footer {
+    padding: 50px;
+    text-align: center;
+}
+
+footer a {
+    text-decoration: none;
+}

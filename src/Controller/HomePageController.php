@@ -12,7 +12,10 @@ class HomePageController extends AbstractController
     #[Route("/home", name:"homepage")]
     public function homePage(): Response
     {
-        return $this->render('home.html.twig',[]);
+        $this->stylesheets[]='home_header.css';
+        return $this->render('home.html.twig',[
+            'stylesheets'=>$this->stylesheets
+        ]);
     }
 
     #[Route("/profile", name:"profile")]

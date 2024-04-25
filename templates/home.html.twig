@@ -1,8 +1,27 @@
 {% extends 'base.html.twig' %}
 {% block content %}
+
+
     <h1 class="large-text">
         StudHub!<br>
+        <span class="large-text_inner">
+            <span class="large-text_blobs">
+                <span class="large-text_blob1"></span>
+                <span class="large-text_blob2"></span>
+                <span class="large-text_blob3"></span>
+            </span>
+        </span>
     </h1>
+
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10"></feGaussianBlur>
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7" result="goo"></feColorMatrix>
+                <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
+            </filter>
+        </defs>
+    </svg>
 
     <div class="home-buttons">
         <input type="button" value="Sign In">

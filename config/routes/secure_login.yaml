@@ -3,4 +3,4 @@
 #routing for a login, without logging in u would always direct to this link.
 login:
   path: /login
-  controller: App\Controller\SecureLoginController::loginPage
+  controller: App\Controller\UserController::loginPage

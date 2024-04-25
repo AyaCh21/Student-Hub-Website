@@ -95,13 +95,6 @@ footer a {
     color: var(--extra-color);
 }
 
-.large-text {
-    color: var(--main-color);
-    font-weight: 600;
-    font-size: 302px;
-    margin: 60px 0;
-}
-
 main {
     display: block;
     align-items: center;

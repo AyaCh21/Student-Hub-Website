@@ -11,6 +11,7 @@ body{
     color: var(--light-color);
     margin: 0;
     font-family: "Lato", sans-serif;
+    position: relative;
 
 }
 
@@ -27,27 +28,21 @@ body{
     display: flex;
     padding: 20px;
     align-items: center;
-    font-size: 16px;
-    justify-content: space-evenly;
+    font-size: 22px;
+    border-bottom: 1px solid var(--extra-color);
 }
 
 .navbar a {
-    align-items: center;
-}
-
-.navbar-right, .navbar-left {
-    display: flex;
-    align-items: center;
-}
-
-.navbar-left a {
     text-transform: uppercase;
     font-weight: 400;
     margin: 0 30px;
     color: var(--extra-color);
-    text-space: 2px;
+    text-space: 1px;
     text-decoration: none;
+}
 
+.home-buttons {
+    text-align: center;
 }
 
 input[type=button] {
@@ -55,8 +50,9 @@ input[type=button] {
     margin: 2px;
     border-radius: 40px;
     border: 1px solid var(--main-color);
-    padding: 5px 20px 5px 20px;
-    max-width: max-content;
+    padding: 10px 40px 10px 40px;
+    max-width: 20%;
+    font-size: 16px;
 }
 
 input[type=button]:hover{
@@ -65,7 +61,7 @@ input[type=button]:hover{
     -webkit-transition: background 2s ease-out;
     -moz-transition: background 2s ease-out;
     -o-transition: background 2s ease-out;
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 main {
@@ -88,7 +84,10 @@ section {
 
 footer {
     padding: 50px;
-    text-align: center;
+    position: fixed;
+    bottom: 0;
+    justify-content: center;
+    width: 100%;
 }
 
 footer a {
@@ -96,4 +95,16 @@ footer a {
     color: var(--extra-color);
 }
 
-foot
+.large-text {
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 302px;
+    margin: 60px 0;
+}
+
+main {
+    display: block;
+    align-items: center;
+    top: 50%;
+    transform: translate(0, 15%);
+}

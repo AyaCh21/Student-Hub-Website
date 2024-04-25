@@ -7,4 +7,4 @@ controllers:
 #every time has a new route, add to here? the extra domains and the ones not defined in the controller
 home:
     path: /
-    controller: App\Controller\CouBooksController::homePage
+    controller: App\Controller\HomePageController::homePage

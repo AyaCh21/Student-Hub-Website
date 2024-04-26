@@ -1,4 +1,6 @@
-:root{
+/* base.css */
+
+:root {
     --main-color: #b3bcbb;
     --minor-color: #7c938e;
     --extra-color: #eaafa9;
@@ -6,13 +8,17 @@
     --light-color: #efd0ce;
 }
 
-body{
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
     background: var(--dark-color);
     color: var(--light-color);
-    margin: 0;
     font-family: "Lato", sans-serif;
     position: relative;
-
 }
 
 .navbar-container {
@@ -55,7 +61,7 @@ input[type=button] {
     font-size: 16px;
 }
 
-input[type=button]:hover{
+input[type=button]:hover {
     box-shadow: inset 110px 0 1px 2px var(--extra-color);
     cursor: pointer;
     -webkit-transition: background 2s ease-out;
@@ -69,6 +75,7 @@ main {
     margin: auto;
     text-align: justify;
     text-justify: inter-word;
+    padding-bottom: 100px; /* Ensure space for the footer */
 }
 
 section {
@@ -87,21 +94,9 @@ footer {
     position: fixed;
     bottom: 0;
     left: 0;
-
     text-align: center;
     width: 100%;
-
-}
-
-
-footer a {
-    text-decoration: none;
-    color: var(--extra-color);
-}
-
-main {
-    display: block;
-    align-items: center;
-    top: 50%;
-    transform: translate(0, 15%);
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    z-index: 999; /* Ensure the footer appears above other elements */
 }

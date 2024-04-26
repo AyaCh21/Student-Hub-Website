@@ -36,6 +36,7 @@ class StudyController extends AbstractController
                 'courses' => [
                     ['name' => 'Course C1'],
                     ['name' => 'Course C2'],
+                    ['name' => 'Course C3'],
                 ],
             ],
             [

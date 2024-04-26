@@ -1,3 +1,5 @@
+/* study.css */
+
 .phase-header {
     margin-bottom: 10px;
 }
@@ -15,7 +17,7 @@
 .courses {
     display: none;
     max-height: 300px; /* Adjust the maximum height as needed */
-    overflow-y: auto; /* Use auto to show scrollbar only when content overflows */
+    overflow-y: scroll; /* Add vertical scrollbar if content overflows */
     padding-bottom: 10px;
 }
 

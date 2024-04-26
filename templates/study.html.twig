@@ -1,17 +1,36 @@
+{# templates/study/index.html.twig #}
 {% extends 'base.html.twig' %}
 {% block content %}
 
 
-
-    <div class="spec-box">
-        <div class="label-box">username: </div>
-        <div class="input-box">r683362</div>
-    </div>
-
-    <div class="spec-box">
-        <div class="label-box">email: </div>
-        <div class="input-box">bolin.great@is</div>
-    </div>
-
+    <section>
+        <h1>Study</h1>
+        <form>
+            <select name="course_phase">
+                <option value="phase1">Phase 1</option>
+                <option value="phase2">Phase 2</option>
+                <option value="phase3">Phase 3</option>
+                <!-- Add more phases as needed -->
+            </select>
+            <select name="note_type">
+                <option value="lecture">Lecture Notes</option>
+                <option value="lab">Lab Notes</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        <div class="course-list">
+            {% for course in courses %}
+                <div class="course">
+                    <h2>{{ course.name }}</h2>
+                    <p>{{ course.description }}</p>
+                    <ul>
+                        {% for material in course.materials %}
+                            <li>{{ material.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock %}

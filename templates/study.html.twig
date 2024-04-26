@@ -2,6 +2,11 @@
 
 {% block title %}Study{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/study.js') }}"></script>
@@ -11,17 +16,23 @@
     <h1>Study</h1>
 
     {% for phase in phases %}
-        <h2 class="phase-toggle">{{ phase.name }}</h2>
+        <div class="phase-header">
+            <h2 class="phase-toggle">
+                <i class="fas fa-plus-circle"></i>
+                {{ phase.name }}
+            </h2>
+        </div>
         <ul class="courses" style="display: none;">
-            {% for book in phase.books %}
-                <li class="book">
-                    <strong>Title:</strong> {{ book.title }}<br>
-                    <strong>Author:</strong> {{ book.author }}<br>
-                    <strong>Description:</strong> {{ book.description }}<br>
-                    <div class="options">
-                        <span class="option" data-type="lecture">Lecture</span>
-                        <span class="option" data-type="lab">Lab</span>
-                    </div>
+            {% for course in phase.courses %}
+                <li class="course">
+                    <span class="course-toggle">
+                        <i class="fas fa-plus-circle"></i>
+                        {{ course }}
+                    </span>
+                    <ul class="options" style="display: none;">
+                        <li>Lecture</li>
+                        <li>Lab</li>
+                    </ul>
                 </li>
             {% endfor %}
         </ul>

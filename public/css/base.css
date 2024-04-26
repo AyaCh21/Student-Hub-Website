@@ -1,0 +1,107 @@
+:root{
+    --main-color: #b3bcbb;
+    --minor-color: #7c938e;
+    --extra-color: #eaafa9;
+    --dark-color: #3c4443;
+    --light-color: #efd0ce;
+}
+
+body{
+    background: var(--dark-color);
+    color: var(--light-color);
+    margin: 0;
+    font-family: "Lato", sans-serif;
+    position: relative;
+
+}
+
+.navbar-container {
+    /* background: var(--main-color);
+    box-shadow: 0 4px 5px 0 var(--minor-color);
+    -webkit-box-shadow: 0 4px 5px 0 var(--minor-color);
+    -moz-box-shadow: 0 4px 5px 0 var(--minor-color); */
+}
+
+.navbar {
+    margin: auto;
+    max-width: 100%;
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    font-size: 22px;
+    border-bottom: 1px solid var(--extra-color);
+}
+
+.navbar a {
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 0 30px;
+    color: var(--extra-color);
+    text-space: 1px;
+    text-decoration: none;
+}
+
+.home-buttons {
+    text-align: center;
+}
+
+input[type=button] {
+    background: var(--minor-color);
+    margin: 2px;
+    border-radius: 40px;
+    border: 1px solid var(--main-color);
+    padding: 10px 40px 10px 40px;
+    max-width: 20%;
+    font-size: 16px;
+}
+
+input[type=button]:hover{
+    box-shadow: inset 110px 0 1px 2px var(--extra-color);
+    cursor: pointer;
+    -webkit-transition: background 2s ease-out;
+    -moz-transition: background 2s ease-out;
+    -o-transition: background 2s ease-out;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+main {
+    width: 70%;
+    margin: auto;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+section {
+    padding: 10px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.text-main {
+    padding: 10px;
+    border-radius: 30px;
+}
+
+footer {
+    padding: 50px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    text-align: center;
+    width: 100%;
+
+}
+
+
+footer a {
+    text-decoration: none;
+    color: var(--extra-color);
+}
+
+main {
+    display: block;
+    align-items: center;
+    top: 50%;
+    transform: translate(0, 15%);
+}

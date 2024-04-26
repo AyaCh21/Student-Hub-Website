@@ -13,30 +13,30 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Study</h1>
-
-    {% for phase in phases %}
-        <div class="phase-header">
-            <h2 class="phase-toggle">
-                <i class="fas fa-plus-circle"></i>
-                {{ phase.name }}
-            </h2>
-        </div>
-        <ul class="courses" style="display: none;">
-            {% for course in phase.courses %}
-                <li class="course">
-                    <span class="course-toggle">
-                        <i class="fas fa-plus-circle"></i>
-                        {{ course }}
-                    </span>
-                    <ul class="options" style="display: none;">
-                        <li>Lecture</li>
-                        <li>Lab</li>
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endfor %}
+    <div class="phases-wrapper">
+        {% for phase in phases %}
+            <div class="phase-header">
+                <h2 class="phase-toggle">
+                    <i class="fas fa-plus-circle"></i>
+                    {{ phase.name }}
+                </h2>
+            </div>
+            <ul class="courses" style="display: none;">
+                {% for course in phase.courses %}
+                    <li class="course">
+                        <span class="course-toggle">
+                            <i class="fas fa-plus-circle"></i>
+                            {{ course.name }}
+                        </span>
+                        <ul class="options" style="display: none;">
+                            <li>Lecture</li>
+                            <li>Lab</li>
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
 
     <div id="selected-option"></div> {# Display selected option here #}
 

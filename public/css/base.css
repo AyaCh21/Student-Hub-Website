@@ -86,9 +86,13 @@ footer {
     padding: 50px;
     position: fixed;
     bottom: 0;
-    justify-content: center;
+    left: 0;
+
+    text-align: center;
     width: 100%;
+
 }
+
 
 footer a {
     text-decoration: none;

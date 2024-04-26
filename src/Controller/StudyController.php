@@ -17,35 +17,36 @@ class StudyController extends AbstractController
         // Dummy data for demonstration
         $phases = [
 
-                [
-                    'name' => 'Phase 1',
-                    'courses' => [
-                        'Course A1',
-                        'Course A2',
-                    ],
+            [
+                'name' => 'Phase 1',
+                'courses' => [
+                    ['name' => 'Course A1'],
+                    ['name' => 'Course A2'],
                 ],
-                [
-                    'name' => 'Phase 2',
-                    'courses' => [
-                        'Course B1',
-                        'Course B2',
-                    ],
+            ],
+            [
+                'name' => 'Phase 2',
+                'courses' => [
+                    ['name' => 'Course B1'],
+                    ['name' => 'Course B2'],
                 ],
-                [
-                    'name' => 'Phase 3',
-                    'courses' => [
-                        'Course C1',
-                        'Course C2',
-                    ],
+            ],
+            [
+                'name' => 'Phase 3',
+                'courses' => [
+                    ['name' => 'Course C1'],
+                    ['name' => 'Course C2'],
                 ],
-                [
-                    'name' => 'Phase 4',
-                    'courses' => [
-                        'Course D1',
-                        'Course D2',
-                    ],
+            ],
+            [
+                'name' => 'Phase 4',
+                'courses' => [
+                    ['name' => 'Course D1'],
+                    ['name' => 'Course D2'],
+                    ['name' => 'Course D3'],
                 ],
-            ];
+            ],
+        ];
 
         return $this->render('study.html.twig', [
             'phases' => $phases,

@@ -1,31 +1,17 @@
-.course-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+.book {
+    margin-bottom: 20px;
 }
 
-.course {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: calc(33.33% - 20px); /* Adjust as needed for responsiveness */
+.options {
+    display: none;
 }
 
-.course h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
+.option {
+    cursor: pointer;
+    margin-right: 10px;
 }
 
-.course p {
-    margin-bottom: 10px;
-}
-
-.course ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.course ul li {
-    margin-bottom: 5px;
+.option:hover {
+    text-decoration: underline;
+    font-weight: bold;
 }

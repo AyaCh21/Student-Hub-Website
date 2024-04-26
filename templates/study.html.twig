@@ -1,36 +1,32 @@
-{# templates/study/index.html.twig #}
 {% extends 'base.html.twig' %}
+
+{% block title %}Study{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/study.js') }}"></script>
+{% endblock %}
+
 {% block content %}
+    <h1>Study</h1>
 
-
-    <section>
-        <h1>Study</h1>
-        <form>
-            <select name="course_phase">
-                <option value="phase1">Phase 1</option>
-                <option value="phase2">Phase 2</option>
-                <option value="phase3">Phase 3</option>
-                <!-- Add more phases as needed -->
-            </select>
-            <select name="note_type">
-                <option value="lecture">Lecture Notes</option>
-                <option value="lab">Lab Notes</option>
-            </select>
-            <button type="submit">Filter</button>
-        </form>
-        <div class="course-list">
-            {% for course in courses %}
-                <div class="course">
-                    <h2>{{ course.name }}</h2>
-                    <p>{{ course.description }}</p>
-                    <ul>
-                        {% for material in course.materials %}
-                            <li>{{ material.title }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+    {% for phase in phases %}
+        <h2 class="phase-toggle">{{ phase.name }}</h2>
+        <ul class="courses" style="display: none;">
+            {% for book in phase.books %}
+                <li class="book">
+                    <strong>Title:</strong> {{ book.title }}<br>
+                    <strong>Author:</strong> {{ book.author }}<br>
+                    <strong>Description:</strong> {{ book.description }}<br>
+                    <div class="options">
+                        <span class="option" data-type="lecture">Lecture</span>
+                        <span class="option" data-type="lab">Lab</span>
+                    </div>
+                </li>
             {% endfor %}
-        </div>
-    </section>
+        </ul>
+    {% endfor %}
+
+    <div id="selected-option"></div> {# Display selected option here #}
 
 {% endblock %}

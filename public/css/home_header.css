@@ -1,108 +1,61 @@
-*, *:before, *:after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-.large-text {
-    font-weight: 600;
-    font-size: 302px;
-    margin: 60px 0;
-    z-index: 1;
-    padding: 26px 40px;
-    background: transparent;
-    outline: none;
-    border: none;
-    position: relative;
-
-    &:before {
-        content: "";
-        z-index: 1;
-        position: absolute;
-        left: 0;
-        top: 0;
-        color: var(--main-color);
-        border: var(--main-color);
-        width: 100%;
-        height: 100%;
-    }
-
-    &:after {
-        content: "";
-        z-index: -2;
-        position: absolute;
-        left: 3px;
-        top: 3px;
-        width: 100%;
-        height: 100%;
-
-        transition: all 0.3s 0.2s;
-        border-radius: 30px;
-    }
-
-    &:hover {
-        color: var(--extra-color);
-        border-radius: 30px;
-
-        &:after {
-            transition: all 0.3s;
-            left: 0;
-            top: 0;
-            border-radius: 30px;
-        }
-    }
-}
-
-.large-text_inner {
-    z-index: -1;
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    top: 0;
+.container-title {
     width: 100%;
-    height: 100%;
-    border-radius:30px;
-    background: var(--light-color);
-}
-
-.large-text_blobs {
+    height: 80%;
+    top: 50%;
+    isolation: isolate;
     position: relative;
-    display: block;
-    height: 100%;
-    filter: url(#goo);
+    overflow: hidden;
 }
 
-.large-text_blob1 {
-    top: 2px;
-    width: 33%;
-    height: 100%;
-    background: var(--light-color);
-    border-radius: 100%;
-    transform: translate3d(0,150%,0) scale(1.7);
-    transition: transform 0.45s;
+.main-title {
+    width: 100%;
+    height: 80%;
+    margin: 60px 0;
+    padding: 26px 40px;
+    display: flex;
+    font-size: 302px;
+    font-weight: 600;
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: center;
+}
 
-    @supports(filter: url('#goo')) {
-        transform: translate3d(0,150%,0) scale(1.4);
+.blob {
+    position: absolute;
+    z-index: -1;
+    background: linear-gradient(45deg, var(--main-color), var(--extra-color));
+    width: 400px;
+    height: 300px;
+    border-radius: 16px;
+    filter: blur(35px);
+    opacity: 0.4;
+    -webkit-backdrop-filter: blur(35px);
+    animation: animate 13s cubic-bezier(0.68, -0.55, 0.27, 0.55) infinite alternate;
+}
+
+@keyframes animate {
+    0% {
+        translate: -10% -25%;
+        border-radius: 60% 40% 30% 70% / 100% 85% 92% 74%;
+    }
+    20% {
+        translate: 60% 33%;
+        border-radius: 20% 71% 47% 70% / 81% 15% 22% 54%;
+        rotate: 41deg;
+        scale: 2.15;
     }
 
-    left: 80%; <!-- 3-1 times 120% / 3 -->
-    transition-delay: 0.16s;
-}
-
-.large-text_blob2 {
-    top: 2px;
-    width: 33%;
-    height: 100%;
-    background: var(--light-color);
-    border-radius: 100%;
-    transform: translate3d(0,150%,0) scale(1.7);
-    transition: transform 0.45s;
-
-    @supports(filter: url('#goo')) {
-        transform: translate3d(0,150%,0) scale(1.4);
+    60% {
+        translate: -60% 33%;
+        border-radius: 20% 71% 47% 70% / 81% 15% 22% 54%;
+        rotate: 41deg;
+        scale: 0.65;
     }
 
-    left: 40%; <!-- 2-1 times 120% / 3 -->
-    transition-delay: 0.08s;
+    90% {
+        translate: 45% 73%;
+        border-radius: 100% 75% 92% 74% / 60% 80% 30% 70%;
+        rotate: -60deg;
+        scale: 1.05;
+    }
 }
-

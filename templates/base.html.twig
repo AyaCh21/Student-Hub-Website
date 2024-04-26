@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <link href="{{ asset('css/base.css')}}" rel='stylesheet' type='text/css'>
+    {% if stylesheets is defined %}
+        {% for stylesheet in stylesheets %}
+            <link href="{{ asset('css/'~stylesheet)}}" rel='stylesheet' type='text/css'>
+        {% endfor %}
+    {% endif %}
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% block javascripts %}
+    {% endblock %}
+</head>
+<body>
+<header>
+    <div class="navbar-container">
+        <div class="navbar">
+            <a href="{{ path('homepage') }}">Home</a>
+            <a href="{{ path('study') }}">study</a>
+            <a href="{{ path('profile') }}">Profile</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+
+<footer>
+    Copyright 2022 WebTech. StudHub All Rights Reserved. <a href="https://admin.kuleuven.be/privacy/en/">Privacy Policy</a> | <a href="https://admin.kuleuven.be/icts/english/cookiepolicy/">Terms of Use</a>
+</footer>
 </html>

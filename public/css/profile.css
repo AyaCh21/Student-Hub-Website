@@ -30,16 +30,26 @@
     font-size: 16px;
 }
 
-.option-edit{
-    background-color: var(--extra-color);
+.option-edit {
     margin-top: 20px;
-    justify-items: end;
+    display: flex;
+    justify-content: flex-end;
+
 }
 
 input[type=button] {
+    position: relative;
+    background-color: var(--light-color);
+    color: var(--dark-color);
     margin: 0 20px;
     border-radius: 40px;
     border: 1px solid var(--extra-color);
     padding: 10px 40px;
-    font-size: 22px;
+    font-size: 16px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+
+    &:hover {
+        box-shadow: inset 0 -25px 0 var(--extra-color), inset 0 25px 0 var(--extra-color);
+    }
 }

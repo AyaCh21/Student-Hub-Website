@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StudyController extends AbstractController
 {
+    private array $stylesheets;
     /**
      * @Route("/study", name="study")
      */
@@ -49,8 +50,11 @@ class StudyController extends AbstractController
             ],
         ];
 
+        $this->stylesheets[]='study.css';
+
         return $this->render('study.html.twig', [
             'phases' => $phases,
+            'stylesheets' => $this->stylesheets
         ]);
     }
 }

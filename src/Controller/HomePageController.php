@@ -34,5 +34,4 @@ class HomePageController extends AbstractController
           //  'stylesheets'=>$this->stylesheets
         //]);
     //}
-
 }

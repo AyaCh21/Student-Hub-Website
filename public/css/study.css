@@ -1,0 +1,36 @@
+/* study.css */
+
+.phase-header {
+    margin-bottom: 10px;
+}
+
+.phase-toggle, .course-toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.icon-toggle {
+    margin-right: 5px;
+}
+
+.courses {
+    display: none;
+    max-height: 300px; /* Adjust the maximum height as needed */
+    overflow-y: scroll; /* Add vertical scrollbar if content overflows */
+    padding-bottom: 10px;
+}
+
+.options {
+    display: none;
+}
+
+.option {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.option:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}

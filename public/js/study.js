@@ -15,29 +15,41 @@ document.addEventListener('DOMContentLoaded', function() {
         lastPhaseContainer.style.paddingBottom = `${totalExpandedHeight}px`;
     }
 
-    phaseHeaders.forEach(header => {
-        const toggle = header.querySelector('.phase-toggle');
-        const courses = header.nextElementSibling;
+    function togglePhase(phase) {
+        const courses = phase.nextElementSibling;
+        const isCollapsed = courses.style.display === 'none';
 
-        toggle.addEventListener('click', function() {
-            const isCollapsed = courses.style.display === 'none';
-            courses.style.display = isCollapsed ? 'block' : 'none';
-            toggle.querySelector('i').classList.toggle('fa-plus');
-            toggle.querySelector('i').classList.toggle('fa-minus');
-            adjustLastPhaseMargin();
+        courses.style.display = isCollapsed ? 'block' : 'none';
+        phase.dataset.expanded = isCollapsed ? 'true' : 'false';
+
+        const toggleIcon = phase.querySelector('.phase-toggle svg path');
+        toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+
+        adjustLastPhaseMargin();
+    }
+
+    function toggleCourse(course) {
+        const options = course.nextElementSibling;
+        const isCollapsed = options.style.display === 'none';
+
+        options.style.display = isCollapsed ? 'block' : 'none';
+        course.dataset.expanded = isCollapsed ? 'true' : 'false';
+
+        const toggleIcon = course.querySelector('.course-toggle svg path');
+        toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+
+        adjustLastPhaseMargin();
+    }
+
+    phaseHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            togglePhase(header);
         });
 
-        const courseToggles = courses.querySelectorAll('.course-toggle');
-
+        const courseToggles = header.nextElementSibling.querySelectorAll('.course-toggle');
         courseToggles.forEach(courseToggle => {
-            const options = courseToggle.nextElementSibling;
-
             courseToggle.addEventListener('click', function() {
-                const isCollapsed = options.style.display === 'none';
-                options.style.display = isCollapsed ? 'block' : 'none';
-                courseToggle.querySelector('i').classList.toggle('fa-plus');
-                courseToggle.querySelector('i').classList.toggle('fa-minus');
-                adjustLastPhaseMargin();
+                toggleCourse(courseToggle);
             });
         });
     });

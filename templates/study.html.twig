@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{{ asset('css/study.css') }}">
 {% endblock %}
 
@@ -18,7 +18,10 @@
         {% for phase in phases %}
             <div class="phase-header">
                 <h2 class="phase-toggle">
-                    <i class="fas fa-plus-circle"></i>
+                    <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                        <path class="expand-more" d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+                        <path class="expand-less" d="M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z" style="display: none"/>
+                    </svg>
                     {{ phase.name }}
                 </h2>
             </div>
@@ -26,7 +29,10 @@
                 {% for course in phase.courses %}
                     <li class="course">
                         <span class="course-toggle">
-                            <i class="fas fa-plus-circle"></i>
+                            <svg class="course-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                                <path class="expand-more" d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+                                <path class="expand-less" d="M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z" style="display: none"/>
+                            </svg>
                             {{ course.name }}
                         </span>
                         <ul class="options" style="display: none;">
@@ -38,7 +44,5 @@
             </ul>
         {% endfor %}
     </div>
-
     <div id="selected-option"></div> {# Display selected option here #}
-
 {% endblock %}

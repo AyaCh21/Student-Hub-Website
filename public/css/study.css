@@ -17,7 +17,7 @@
 .courses {
     display: none;
     max-height: 300px; /* Adjust the maximum height as needed */
-    overflow-y: scroll; /* Add vertical scrollbar if content overflows */
+    overflow-y: scroll;
     padding-bottom: 10px;
 }
 

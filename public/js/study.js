@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         phase.dataset.expanded = isCollapsed ? 'true' : 'false';
 
         const toggleIcon = phase.querySelector('.phase-toggle svg path');
-       // toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+       /// toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
         toggleIcon.setAttribute('d', isCollapsed ? 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z' : 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z');
 
         adjustLastPhaseMargin();

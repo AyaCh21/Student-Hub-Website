@@ -3,19 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const footer = document.querySelector('footer');
     const phaseContainers = document.querySelectorAll('.phase-container');
 
-    function adjustFooterPosition() {
-        const bodyHeight = document.body.clientHeight;
-        const windowHeight = window.innerHeight;
-        const footerHeight = footer.offsetHeight;
-
-        if (bodyHeight < windowHeight) {
-            footer.style.position = 'fixed';
-            footer.style.bottom = '0';
-        } else {
-            footer.style.position = 'static';
-        }
-    }
-
     function adjustLastPhaseMargin() {
         const lastPhaseContainer = phaseContainers[phaseContainers.length - 1];
         const expandedCourses = lastPhaseContainer.querySelectorAll('.course:not(.collapsed)');
@@ -37,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
             courses.style.display = isCollapsed ? 'block' : 'none';
             toggle.querySelector('i').classList.toggle('fa-plus');
             toggle.querySelector('i').classList.toggle('fa-minus');
-            adjustFooterPosition();
             adjustLastPhaseMargin();
         });
 
@@ -51,17 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 options.style.display = isCollapsed ? 'block' : 'none';
                 courseToggle.querySelector('i').classList.toggle('fa-plus');
                 courseToggle.querySelector('i').classList.toggle('fa-minus');
-                adjustFooterPosition();
                 adjustLastPhaseMargin();
             });
         });
     });
 
-    adjustFooterPosition();
     adjustLastPhaseMargin();
 
     window.addEventListener('resize', function() {
-        adjustFooterPosition();
         adjustLastPhaseMargin();
     });
 });

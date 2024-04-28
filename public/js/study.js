@@ -17,29 +17,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function togglePhase(phase) {
         const courses = phase.nextElementSibling;
-        const isCollapsed = courses.style.display === 'none';
+        const isCollapsed = window.getComputedStyle(courses).display === 'none';
 
         courses.style.display = isCollapsed ? 'block' : 'none';
         phase.dataset.expanded = isCollapsed ? 'true' : 'false';
 
         const toggleIcon = phase.querySelector('.phase-toggle svg path');
-        toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+       // toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+        toggleIcon.setAttribute('d', isCollapsed ? 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z' : 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z');
 
         adjustLastPhaseMargin();
     }
 
     function toggleCourse(course) {
         const options = course.nextElementSibling;
-        const isCollapsed = options.style.display === 'none';
+        const isCollapsed = window.getComputedStyle(options).display === 'none';
 
         options.style.display = isCollapsed ? 'block' : 'none';
         course.dataset.expanded = isCollapsed ? 'true' : 'false';
 
         const toggleIcon = course.querySelector('.course-toggle svg path');
-        toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+       // toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+        toggleIcon.setAttribute('d', isCollapsed ? 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z' : 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z');
 
         adjustLastPhaseMargin();
     }
+
 
     phaseHeaders.forEach(header => {
         header.addEventListener('click', function() {

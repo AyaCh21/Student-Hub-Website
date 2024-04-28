@@ -11,3 +11,4 @@ home:
 study:
     path: /study
     controller: App\Controller\StudyController::study
+

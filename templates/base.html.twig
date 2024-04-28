@@ -15,19 +15,18 @@
     {% endif %}
 
     {% block javascripts %}
+        <script src="{{ asset('js/keep_navbar.js') }}"></script>
     {% endblock %}
 </head>
 <body>
 <header>
-    <div class="navbar-container">
-        <div class="navbar">
+        <nav class="navbar">
             <ul>
-                <li><a href="{{ path('homepage') }}">Home</a></li>
-                <li><a href="{{ path('study') }}">study</a></li>
-                <li><a href="{{ path('profile') }}">Profile</a></li>
+                <li class="nav-opt" id="home"><a href="{{ path('homepage') }}">Home</a></li>
+                <li class="nav-opt" id="study"><a href="{{ path('study') }}">study</a></li>
+                <li class="nav-opt" id="profile"><a href="{{ path('profile') }}">Profile</a></li>
             </ul>
-        </div>
-    </div>
+        </nav>
 </header>
 
 <main>

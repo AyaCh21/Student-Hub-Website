@@ -20,38 +20,51 @@ body{
 
 }
 
-.navbar-container {
-    /* background: var(--main-color);
-    box-shadow: 0 4px 5px 0 var(--minor-color);
-    -webkit-box-shadow: 0 4px 5px 0 var(--minor-color);
-    -moz-box-shadow: 0 4px 5px 0 var(--minor-color); */
-}
-
 .navbar {
-    margin: auto;
-    max-width: 100%;
-    display: flex;
     padding: 20px;
-    align-items: center;
-    font-size: 22px;
     border-bottom: 1px solid var(--extra-color);
 }
-
-.navbar a {
-    text-transform: uppercase;
-    font-weight: 400;
-    margin: 0 30px;
-    color: var(--extra-color);
-    text-space: 1px;
-    text-decoration: none;
-}
-
 .navbar ul {
     list-style: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
 }
-
 .navbar li {
     display: inline-block;
+    margin: 0 15px;
+}
+.navbar a {
+    color: var(--extra-color);
+    font-size: 22px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    padding: 2px 0;
+}
+.navbar a:before{
+    content: "";
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: 0.5s transform ease;
+    transform: scale3d(0,1,1);
+    transform-origin: 0 50%;
+    background: var(--light-color);
+}
+.navbar a:hover:before{
+    transform: scale3d(1,1,1);
+    transform-origin: 0 50%;
+}
+.navbar a:before{
+    transform-origin: 100% 20%;
+}
+
+.nav_opt.active {
+    background: var(--extra-color);
 }
 
 .home-buttons {

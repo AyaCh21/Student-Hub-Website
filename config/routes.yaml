@@ -4,7 +4,7 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-#every time has a new route, add to here? the extra domains and the ones not defined in the controller
+#every time has a new route, add to here? the extra domains and the ones not defined in  the controller
 home:
     path: /
     controller: App\Controller\HomePageController::homePage
@@ -12,3 +12,5 @@ home:
 study:
         path: /study
         controller: App\Controller\StudyController::study
+
+

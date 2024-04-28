@@ -1429,6 +1429,18 @@
         },
         {
             "name": "symfony/asset",
+<<<<<<< HEAD
+            "version": "v6.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/asset.git",
+                "reference": "14b1c0fddb64af6ea626af51bb3c47af9fa19cb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/asset/zipball/14b1c0fddb64af6ea626af51bb3c47af9fa19cb7",
+                "reference": "14b1c0fddb64af6ea626af51bb3c47af9fa19cb7",
+=======
             "version": "7.1.x-dev",
             "source": {
                 "type": "git",
@@ -1439,18 +1451,19 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/asset/zipball/330d0da0f96da4246d06db342b19254ba5987d52",
                 "reference": "330d0da0f96da4246d06db342b19254ba5987d52",
+>>>>>>> dev
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2"
+                "php": ">=8.1"
             },
             "conflict": {
-                "symfony/http-foundation": "<6.4"
+                "symfony/http-foundation": "<5.4"
             },
             "require-dev": {
-                "symfony/http-client": "^6.4|^7.0",
-                "symfony/http-foundation": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0"
+                "symfony/http-client": "^5.4|^6.0|^7.0",
+                "symfony/http-foundation": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0"
             },
             "type": "library",
             "autoload": {
@@ -1478,7 +1491,11 @@
             "description": "Manages URL generation and versioning of web assets such as CSS stylesheets, JavaScript files and image files",
             "homepage": "https://symfony.com",
             "support": {
+<<<<<<< HEAD
+                "source": "https://github.com/symfony/asset/tree/v6.4.3"
+=======
                 "source": "https://github.com/symfony/asset/tree/7.1"
+>>>>>>> dev
             },
             "funding": [
                 {
@@ -1494,7 +1511,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2024-01-23T14:51:35+00:00"
+=======
             "time": "2024-01-23T15:06:13+00:00"
+>>>>>>> dev
         },
         {
             "name": "symfony/cache",
@@ -3843,6 +3864,85 @@
             "time": "2024-02-15T11:23:52+00:00"
         },
         {
+            "name": "symfony/ux-icons",
+            "version": "v2.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ux-icons.git",
+                "reference": "46a1180d4a55e1768f9f8ab5dd376828cb247de0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ux-icons/zipball/46a1180d4a55e1768f9f8ab5dd376828cb247de0",
+                "reference": "46a1180d4a55e1768f9f8ab5dd376828cb247de0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/framework-bundle": "^6.4|^7.0",
+                "symfony/twig-bundle": "^6.4|^7.0"
+            },
+            "conflict": {
+                "symfony/flex": "<1.13"
+            },
+            "require-dev": {
+                "symfony/asset-mapper": "^6.4|^7.0",
+                "symfony/console": "^6.4|^7.0",
+                "symfony/http-client": "6.4|^7.0",
+                "symfony/phpunit-bridge": "^6.3|^7.0",
+                "symfony/ux-twig-component": "^2.14",
+                "zenstruck/console-test": "^1.5"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "name": "symfony/ux",
+                    "url": "https://github.com/symfony/ux"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\Icons\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Renders local and remote SVG icons in your Twig templates.",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "icons",
+                "svg",
+                "symfony-ux",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/ux-icons/tree/v2.17.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-04-19T06:36:45+00:00"
+        },
+        {
             "name": "symfony/var-dumper",
             "version": "v6.4.6",
             "source": {
@@ -4636,8 +4736,12 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
+<<<<<<< HEAD
+    "plugin-api-version": "2.2.0"
+=======
     "platform-overrides": {
         "php": "8.3"
     },
     "plugin-api-version": "2.6.0"
+>>>>>>> dev
 }

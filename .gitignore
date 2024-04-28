@@ -10,3 +10,5 @@
 .idea/
 ###< symfony/framework-bundle ###
 .idea/
+
+.php-version

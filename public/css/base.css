@@ -46,6 +46,14 @@ body{
     text-decoration: none;
 }
 
+.navbar ul {
+    list-style: none;
+}
+
+.navbar li {
+    display: inline-block;
+}
+
 .home-buttons {
     text-align: center;
 }
@@ -76,7 +84,7 @@ footer {
     left: 0;
     text-align: center;
     width: 100%;
-    background-color: var(--dark-color);
+    background-color: transparent;
     color: var(--light-color);
     z-index: 999; /* Ensure the footer appears above other elements */
 }

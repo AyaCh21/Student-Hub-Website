@@ -1,25 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <div class="profile-header">
+        <h3 class="profile-h3">Your Profile</h3>
+        <p class="profile-p">You can change your data here.</p>
+    </div>
+    <div class="user-info-all">
+        <dl class="line-breaker"></dl>
+        <div class="spec-box">
+            <div class="label-box">username: </div>
+            <dd class="input-box">r683362</dd>
+        </div>
+        <div class="spec-box">
+            <div class="label-box">password: </div>
+            <dd class="input-box">*********</dd>
+        </div>
+        <div class="spec-box">
+            <dt class="label-box">email: </dt>
+            <dd class="input-box">bolin.great@is</dd>
+        </div>
 
-    <div class="spec-box">
-        <div class="label-box">username: </div>
-        <div class="input-box">r683362</div>
+        <div class="spec-box">
+            <dt class="label-box">specialisation: </dt>
+            <dd class="input-box">Electronics and ICT</dd>
+        </div>
+
+        <div class="option-edit">
+            <input type="button" value="Edit">
+            <input type="button" value="Cancel">
+        </div>
     </div>
 
-    <div class="spec-box">
-        <div class="label-box">email: </div>
-        <div class="input-box">bolin.great@is</div>
-    </div>
-
-    <div class="spec-box">
-        <div class="label-box">specialisation: </div>
-        <div class="input-box">Electronics and ICT</div>
-    </div>
-
-    <div class="option-edit">
-        <input type="button" value="Edit">
-        <input type="button" value="Confirm">
-    </div>
 
 {% endblock %}

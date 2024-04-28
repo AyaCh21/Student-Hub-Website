@@ -29,10 +29,9 @@ class HomePageController extends AbstractController
     //#[Route("/study", name:"study")]
     //public function study(): Response
     //{
-    //  $this->stylesheets[]='study.css';
-    //return $this->render('study.html.twig',[
-    //  'stylesheets'=>$this->stylesheets
-    //]);
+      //  $this->stylesheets[]='study.css';
+        //return $this->render('study.html.twig',[
+          //  'stylesheets'=>$this->stylesheets
+        //]);
     //}
-
 }

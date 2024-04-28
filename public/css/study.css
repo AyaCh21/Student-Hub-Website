@@ -1,5 +1,5 @@
 .phase-header {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .phase-toggle, .course-toggle {
@@ -15,7 +15,7 @@
 .courses {
     display: none;
     max-height: 300px; /* Adjust the maximum height as needed */
-    overflow-y: auto; /* Use auto to show scrollbar only when content overflows */
+    overflow-y: scroll; /* Add vertical scrollbar if content overflows */
     padding-bottom: 10px;
 }
 

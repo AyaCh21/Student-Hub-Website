@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const footer = document.querySelector('footer');
     const phaseContainers = document.querySelectorAll('.phase-container');
 
+<<<<<<< HEAD
     function adjustFooterPosition() {
         const bodyHeight = document.body.clientHeight;
         const windowHeight = window.innerHeight;
@@ -16,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+=======
+>>>>>>> dev
     function adjustLastPhaseMargin() {
         const lastPhaseContainer = phaseContainers[phaseContainers.length - 1];
         const expandedCourses = lastPhaseContainer.querySelectorAll('.course:not(.collapsed)');
@@ -37,7 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
             courses.style.display = isCollapsed ? 'block' : 'none';
             toggle.querySelector('i').classList.toggle('fa-plus');
             toggle.querySelector('i').classList.toggle('fa-minus');
+<<<<<<< HEAD
             adjustFooterPosition();
+=======
+>>>>>>> dev
             adjustLastPhaseMargin();
         });
 
@@ -51,17 +57,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 options.style.display = isCollapsed ? 'block' : 'none';
                 courseToggle.querySelector('i').classList.toggle('fa-plus');
                 courseToggle.querySelector('i').classList.toggle('fa-minus');
+<<<<<<< HEAD
                 adjustFooterPosition();
+=======
+>>>>>>> dev
                 adjustLastPhaseMargin();
             });
         });
     });
 
+<<<<<<< HEAD
     adjustFooterPosition();
     adjustLastPhaseMargin();
 
     window.addEventListener('resize', function() {
         adjustFooterPosition();
+=======
+    adjustLastPhaseMargin();
+
+    window.addEventListener('resize', function() {
+>>>>>>> dev
         adjustLastPhaseMargin();
     });
 });

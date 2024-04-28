@@ -1,4 +1,4 @@
-:root{
+:root {
     --main-color: #b3bcbb;
     --minor-color: #7c938e;
     --extra-color: #eaafa9;
@@ -6,13 +6,17 @@
     --light-color: #efd0ce;
 }
 
-body{
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
     background: var(--dark-color);
     color: var(--light-color);
-    margin: 0;
     font-family: "Lato", sans-serif;
     position: relative;
-
 }
 
 .navbar-container {
@@ -33,7 +37,6 @@ body{
 }
 
 .navbar a {
-    background: #93c5fd;
     text-transform: uppercase;
     font-weight: 400;
     margin: 0 30px;
@@ -68,7 +71,6 @@ body{
 .navbar li{
     display: inline-block;
 }
-
 .home-buttons {
     text-align: center;
 }
@@ -96,6 +98,7 @@ footer {
     position: fixed;
     bottom: 0;
     left: 0;
+<<<<<<< HEAD
 
     text-align: center;
     width: 100%;

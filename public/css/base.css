@@ -1,76 +1,72 @@
-:root {
+:root{
     --main-color: #b3bcbb;
     --minor-color: #7c938e;
     --extra-color: #eaafa9;
     --dark-color: #3c4443;
     --light-color: #efd0ce;
 }
-
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
-body {
+body{
     background: var(--dark-color);
     color: var(--light-color);
+    margin: 0;
     font-family: "Lato", sans-serif;
     position: relative;
-}
 
-.navbar-container {
-    /* background: var(--main-color);
-    box-shadow: 0 4px 5px 0 var(--minor-color);
-    -webkit-box-shadow: 0 4px 5px 0 var(--minor-color);
-    -moz-box-shadow: 0 4px 5px 0 var(--minor-color); */
 }
 
 .navbar {
-    margin: auto;
-    max-width: 100%;
-    display: flex;
     padding: 20px;
-    align-items: center;
-    font-size: 22px;
     border-bottom: 1px solid var(--extra-color);
 }
-
-.navbar a {
-    text-transform: uppercase;
-    font-weight: 400;
-    margin: 0 30px;
-    color: var(--extra-color);
-    text-space: 1px;
-    text-decoration: none;
+.navbar ul {
+    list-style: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
 }
-
+.navbar li {
+    display: inline-block;
+    margin: 0 15px;
+}
+.navbar a {
+    color: var(--extra-color);
+    font-size: 22px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    padding: 2px 0;
+}
 .navbar a:before{
-    background: var(--extra-color);
-    transform-origin: 100% 50%;
     content: "";
     width: 100%;
-    height: 4px;
+    height: 2px;
     position: absolute;
     left: 0;
     bottom: 0;
     transition: 0.5s transform ease;
     transform: scale3d(0,1,1);
-
+    transform-origin: 0 50%;
+    background: var(--light-color);
 }
 .navbar a:hover:before{
     transform: scale3d(1,1,1);
     transform-origin: 0 50%;
 }
+.navbar a:before{
+    transform-origin: 100% 20%;
+}
 
-.navbar ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.nav_opt.active {
+    background: var(--extra-color);
 }
-.navbar li{
-    display: inline-block;
-}
+
 .home-buttons {
     text-align: center;
 }
@@ -80,6 +76,7 @@ main {
     margin: auto;
     text-align: justify;
     text-justify: inter-word;
+    padding-bottom: 100px;
 }
 
 section {
@@ -98,10 +95,11 @@ footer {
     position: fixed;
     bottom: 0;
     left: 0;
-<<<<<<< HEAD
-
     text-align: center;
     width: 100%;
+    background-color: transparent;
+    color: var(--light-color);
+    z-index: 999; /* Ensure the footer appears above other elements */
 }
 
 

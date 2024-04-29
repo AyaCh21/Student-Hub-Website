@@ -1,7 +1,20 @@
+
+/* Your existing CSS styles */
 .phase-header {
-    margin-bottom: 10px;
+    background: var(--minor-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
 }
 
+.phase-wrapper {
+    background: var(--main-color);
+    display: block;
+    height: fit-content;
+    padding: 5px;
+
+}
 .phase-toggle, .course-toggle {
     cursor: pointer;
     display: flex;
@@ -13,13 +26,22 @@
 }
 
 .courses {
-    display: none;
-    max-height: 300px; /* Adjust the maximum height as needed */
-    overflow-y: scroll; /* Add vertical scrollbar if content overflows */
+    background: #6D28D9;
+    height: fit-content;
     padding-bottom: 10px;
 }
 
+.course {
+    display: flex;
+    flex-direction: row;
+}
+
+.courses li {
+    list-style: none;
+}
+
 .options {
+    background: #3b82f6;
     display: none;
 }
 

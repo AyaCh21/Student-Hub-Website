@@ -3,22 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const footer = document.querySelector('footer');
     const phaseContainers = document.querySelectorAll('.phase-container');
 
-<<<<<<< HEAD
-    function adjustFooterPosition() {
-        const bodyHeight = document.body.clientHeight;
-        const windowHeight = window.innerHeight;
-        const footerHeight = footer.offsetHeight;
-
-        if (bodyHeight < windowHeight) {
-            footer.style.position = 'fixed';
-            footer.style.bottom = '0';
-        } else {
-            footer.style.position = 'static';
-        }
-    }
-
-=======
->>>>>>> dev
     function adjustLastPhaseMargin() {
         const lastPhaseContainer = phaseContainers[phaseContainers.length - 1];
         const expandedCourses = lastPhaseContainer.querySelectorAll('.course:not(.collapsed)');
@@ -31,52 +15,51 @@ document.addEventListener('DOMContentLoaded', function() {
         lastPhaseContainer.style.paddingBottom = `${totalExpandedHeight}px`;
     }
 
-    phaseHeaders.forEach(header => {
-        const toggle = header.querySelector('.phase-toggle');
-        const courses = header.nextElementSibling;
+    function togglePhase(phase) {
+        const courses = phase.nextElementSibling;
+        const isCollapsed = window.getComputedStyle(courses).display === 'none';
 
-        toggle.addEventListener('click', function() {
-            const isCollapsed = courses.style.display === 'none';
-            courses.style.display = isCollapsed ? 'block' : 'none';
-            toggle.querySelector('i').classList.toggle('fa-plus');
-            toggle.querySelector('i').classList.toggle('fa-minus');
-<<<<<<< HEAD
-            adjustFooterPosition();
-=======
->>>>>>> dev
-            adjustLastPhaseMargin();
+        courses.style.display = isCollapsed ? 'block' : 'none';
+        phase.dataset.expanded = isCollapsed ? 'true' : 'false';
+
+        const toggleIcon = phase.querySelector('.phase-toggle svg path');
+       /// toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+        toggleIcon.setAttribute('d', isCollapsed ? 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z' : 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z');
+
+        adjustLastPhaseMargin();
+    }
+
+    function toggleCourse(course) {
+        const options = course.nextElementSibling;
+        const isCollapsed = window.getComputedStyle(options).display === 'none';
+
+        options.style.display = isCollapsed ? 'block' : 'none';
+        course.dataset.expanded = isCollapsed ? 'true' : 'false';
+
+        const toggleIcon = course.querySelector('.course-toggle svg path');
+       // toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
+        toggleIcon.setAttribute('d', isCollapsed ? 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z' : 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z');
+
+        adjustLastPhaseMargin();
+    }
+
+
+    phaseHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            togglePhase(header);
         });
 
-        const courseToggles = courses.querySelectorAll('.course-toggle');
-
+        const courseToggles = header.nextElementSibling.querySelectorAll('.course-toggle');
         courseToggles.forEach(courseToggle => {
-            const options = courseToggle.nextElementSibling;
-
             courseToggle.addEventListener('click', function() {
-                const isCollapsed = options.style.display === 'none';
-                options.style.display = isCollapsed ? 'block' : 'none';
-                courseToggle.querySelector('i').classList.toggle('fa-plus');
-                courseToggle.querySelector('i').classList.toggle('fa-minus');
-<<<<<<< HEAD
-                adjustFooterPosition();
-=======
->>>>>>> dev
-                adjustLastPhaseMargin();
+                toggleCourse(courseToggle);
             });
         });
     });
 
-<<<<<<< HEAD
-    adjustFooterPosition();
     adjustLastPhaseMargin();
 
     window.addEventListener('resize', function() {
-        adjustFooterPosition();
-=======
-    adjustLastPhaseMargin();
-
-    window.addEventListener('resize', function() {
->>>>>>> dev
         adjustLastPhaseMargin();
     });
 });

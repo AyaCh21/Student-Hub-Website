@@ -7,7 +7,7 @@ use PDO;
 class Db
 {
     // constants for database connection
-    const DSN = 'mysql:dbname=@mysql.studev.groept.be;host=mysql.studev.groept.be';
+    const DSN = 'mysql:dbname=a23www301;host=mysql.studev.groept.be';
     const USERNAME = "a23www301";
     const PASSWORD = "ra3wnmlO";
     private PDO $connection;

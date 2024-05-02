@@ -13,7 +13,7 @@
     <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
 {% endif %}
 
-<form method="post">
+<form method="post" action="{{ path('login_form_submit_route') }}">
     <label for="username">Username:</label>
     <input type="text" id="username" name="_username" required><br><br>
 

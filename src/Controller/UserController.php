@@ -26,10 +26,30 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
 
-    #[Route('/login', name: 'user_login_form')]
+//====================================================================================================================//
+//              LOGIN FUNCTIONS
+//====================================================================================================================//
+
+    #[Route('/login', name: 'user_login_index')]
     public function loginPage(AuthenticationUtils $authenticationUtils, Request $request,UserPasswordHasherInterface $passwordHasher): Response
     {
         // Get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // Last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+
+        return $this->render('login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
+
+    #[Route('/home', name: 'user_login_check')]
+    public function loginCheck(AuthenticationUtils $authenticationUtils,Request $request,UserPasswordHasherInterface $passwordHasher)
+    {
+
         $error = $authenticationUtils->getLastAuthenticationError();
 
         // Last username entered by the user
@@ -48,42 +68,54 @@ class UserController extends AbstractController
 
         printf("user: %s, password:%s, hashed password: %s",$username,$password,$password_hash);
 
-        return $this->render('login.html.twig', [
-            'last_username' => $lastUsername,
+        // This method is only used to define the route for login form submission.
+        // Symfony's security system will handle the actual authentication process.
+//        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+
+        return $this->render('home.html.twig', [
+            'username' => $username,
             'error' => $error,
         ]);
     }
 
-    #[Route('/login', name: 'user_login_check')]
-    public function loginCheck(Request $request)
-    {
-        // This method is only used to define the route for login form submission.
-        // Symfony's security system will handle the actual authentication process.
-        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
-    }
 
-    #[Route('/login', name: 'user_login_index')]
-    public function index(): Response
-    {
-        return $this->render('login/index.html.twig', [
-            'controller_name' => 'LoginController',
-        ]);
-    }
 
-    #[Route('/register', name: 'user_login_index')]
+//====================================================================================================================//
+//              REGISTER FUNCTIONS
+//====================================================================================================================//
+
+    #[Route('/register', name: 'user_register_index')]
     public function registerPage(): Response
     {
-        return $this->render('register/index.html.twig', [
-            'controller_name' => 'RegisterController',
+        return $this->render('register.html.twig', [
+            'controller_name' => 'UserController',
         ]);
     }
 
-    #[Route('/register',name: 'user_register_confirm')]
-    public function registerCheck(UserPasswordHasherInterface $passwordHasher): Response
+
+    #[Route('/register',name: 'user_register_confirm', methods: ['POST'])]
+    public function registerCheck(AuthenticationUtils $authenticationUtils, Request $request,UserPasswordHasherInterface $passwordHasher): Response
     {
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        $username = $request->request->get('_username');
+        $password1 = $request->request->get('_password_1');
+        $password2 = $request->request->get('_password_2');
+
+        if(!$password1!==($password2)){
+            printf("mis matching password!!");
+            return $this->render('register.html.twig', [
+                'controller_name' => 'UserController',
+                '_username' =>$username,
+                '_password_1' => "",
+                '_password_2' => ""
+            ]);
+        }
+
+
         // ... e.g. get the user data from a registration form
         $user = new User("admin","","email");
-        $plaintextPassword = "haha";
+        $plaintextPassword = $password1;
 
         // hash the password (based on the security.yaml config for the $user class)
         $hashedPassword = $passwordHasher->hashPassword(
@@ -93,9 +125,11 @@ class UserController extends AbstractController
         $user->setPassword($hashedPassword);
 
         //need some form stuff
+        printf("register successful! user: %s, password:%s, hashed password: %s",$username,$plaintextPassword,$hashedPassword);
 
-        return $this->render('login/index.html.twig', [
-            'controller_name' => 'LoginController',
+        return $this->render('register/register.html.twig', [
+            'controller_name' => 'UserController',
+            'error' => $error
         ]);
     }
 }

@@ -8,3 +8,9 @@ login:
 register:
   path: /register
   controller: App\Controller\UserController::registerPage
+
+
+login_form_submit_route:
+  path: /home
+  controller: App\Controller\UserController::loginCheck
+

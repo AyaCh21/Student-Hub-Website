@@ -11,6 +11,14 @@ register:
 
 
 login_form_submit_route:
-  path: /home
+  path: /login_submit
   controller: App\Controller\UserController::loginCheck
 
+
+register_form_submit_route:
+  path: /register_submit
+  controller: App\Controller\UserController::registerCheck
+
+home:
+  path: /home
+  controller: App\Controller\HomePageController:homePage

@@ -16,9 +16,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -46,7 +48,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/home', name: 'user_login_check')]
+    #[Route('/login_submit', name: 'user_login_check')]
     public function loginCheck(AuthenticationUtils $authenticationUtils,Request $request,UserPasswordHasherInterface $passwordHasher)
     {
 
@@ -85,51 +87,65 @@ class UserController extends AbstractController
 //====================================================================================================================//
 
     #[Route('/register', name: 'user_register_index')]
-    public function registerPage(): Response
-    {
-        return $this->render('register.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
-
-
-    #[Route('/register',name: 'user_register_confirm', methods: ['POST'])]
-    public function registerCheck(AuthenticationUtils $authenticationUtils, Request $request,UserPasswordHasherInterface $passwordHasher): Response
+    public function registerPage(AuthenticationUtils $authenticationUtils, Request $request,UserPasswordHasherInterface $passwordHasher): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        $username = $request->request->get('_username');
-        $password1 = $request->request->get('_password_1');
-        $password2 = $request->request->get('_password_2');
 
-        if(!$password1!==($password2)){
-            printf("mis matching password!!");
-            return $this->render('register.html.twig', [
-                'controller_name' => 'UserController',
-                '_username' =>$username,
-                '_password_1' => "",
-                '_password_2' => ""
-            ]);
-        }
-
-
-        // ... e.g. get the user data from a registration form
-        $user = new User("admin","","email");
-        $plaintextPassword = $password1;
-
-        // hash the password (based on the security.yaml config for the $user class)
-        $hashedPassword = $passwordHasher->hashPassword(
-            $user,
-            $plaintextPassword
-        );
-        $user->setPassword($hashedPassword);
-
-        //need some form stuff
-        printf("register successful! user: %s, password:%s, hashed password: %s",$username,$plaintextPassword,$hashedPassword);
-
-        return $this->render('register/register.html.twig', [
+        return $this->render('register.html.twig', [
             'controller_name' => 'UserController',
             'error' => $error
         ]);
     }
+
+
+    #[Route('/register_submit',name: 'user_register_check', methods: ['POST'])]
+    public function registerCheck(SessionInterface $session, Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $username = $request->request->get('_username');
+        $password1 = $request->request->get('_password_1');
+        $password2 = $request->request->get('_password_2');
+
+        if ($password1 !== $password2) {
+            // Passwords don't match, render the registration form again with an error message
+            return $this->render('register.html.twig', [
+                'controller_name' => 'UserController',
+                '_username' => $username,
+                '_password_1' => '',
+                '_password_2' => '',
+                'error' => 'Passwords do not match'
+            ]);
+        }
+
+        $user = new User($username,);
+        // Hash the password
+        $hashedPassword = $passwordHasher->hashPassword($user, $password1);
+
+        // Create a new User entity
+
+        $user->setUsername($username);
+        $user->setPassword($hashedPassword);
+        // Add other properties if needed (e.g., email)
+
+        // Store the User entity in the session
+        $session->set('user_to_register', $user);
+
+        // Redirect to the controller action responsible for persisting the user
+        return $this->redirectToRoute('persist_user');
+    }
+
+    #[Route('/persist_user', name: 'persist_user')]
+    public function persistUser(SessionInterface $session, EntityManagerInterface $entityManager): Response
+    {
+        // Retrieve the User entity from the session
+        $user = $session->get('user_to_register');
+
+        // Persist the User entity to the database
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        // Redirect the user to the home page or any other page
+        return $this->redirectToRoute('home');
+    }
+
 }

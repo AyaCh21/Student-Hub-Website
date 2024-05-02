@@ -9,11 +9,11 @@
 <body>
 <h1>Register</h1>
 
-{#{% if error %}#}
-{#    <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>#}
-{#{% endif %}#}
+{% if error %}
+    <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+{% endif %}
 
-<form method="post">
+<form method="post" action="{{ path('register_form_submit_route') }}">
     <label for="username">Username:</label>
     <input type="text" id="username" name="_username" required><br><br>
 

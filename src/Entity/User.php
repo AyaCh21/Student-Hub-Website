@@ -153,6 +153,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->newUser = $newUser;
     }
 
+    public function pushToDatabase():void
+    {
+
+    }
 
 
     /**

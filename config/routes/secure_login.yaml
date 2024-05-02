@@ -1,0 +1,28 @@
+
+
+#routing for a login, without logging in u would always direct to this link.
+login:
+  path: /login
+  controller: App\Controller\UserController::loginPage
+
+register:
+  path: /register
+  controller: App\Controller\UserController::registerPage
+
+
+login_form_submit_route:
+  path: /login_submit
+  controller: App\Controller\UserController::loginCheck
+
+
+register_form_submit_route:
+  path: /register_submit
+  controller: App\Controller\UserController::registerCheck
+
+home:
+  path: /home
+  controller: App\Controller\HomePageController:homePage
+
+_symfony_logout:
+  resource: security.route_loader.logout
+  type: service

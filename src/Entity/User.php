@@ -14,7 +14,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string')]
     private string $username;
@@ -38,16 +38,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @param string $username
      * @param string|null $email
      * @param string $password
      */
-    public function __construct(int $id, string $username, ?string $email, string $password)
+    public function __construct(string $username, string $password,?string $email, ?int $id=null)
     {
         $this->id = $id;
         $this->username = $username;
-        $this->email = $email;
+        $this->email = $email??'';  //to be filled in, should get from the db
         $this->password = $password;
     }
 

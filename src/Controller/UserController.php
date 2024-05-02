@@ -18,12 +18,14 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 
 class UserController extends AbstractController
 {
@@ -49,7 +51,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/login_submit', name: 'user_login_check')]
-    public function loginCheck(AuthenticationUtils $authenticationUtils,Request $request,UserPasswordHasherInterface $passwordHasher)
+    public function loginCheck(AuthenticationUtils $authenticationUtils,Request $request,UserPasswordHasherInterface $passwordHasher,Security $security)
     {
 
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -67,14 +69,17 @@ class UserController extends AbstractController
         );
         $user->setPassword($password_hash);
 
+        // log the user in on the current firewall
+        $security->login($user);
+
 
         printf("user: %s, password:%s, hashed password: %s",$username,$password,$password_hash);
 
         // This method is only used to define the route for login form submission.
         // Symfony's security system will handle the actual authentication process.
 //        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
-
-        return $this->render('home.html.twig', [
+        //replece with reroute in the future
+        return $this->render('login.html.twig', [
             'username' => $username,
             'error' => $error,
         ]);
@@ -100,52 +105,53 @@ class UserController extends AbstractController
 
 
     #[Route('/register_submit',name: 'user_register_check', methods: ['POST'])]
-    public function registerCheck(SessionInterface $session, Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function registerCheck(AuthenticationUtils $authenticationUtils,SessionInterface $session, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $error = $authenticationUtils->getLastAuthenticationError();
+
         $username = $request->request->get('_username');
+        $email = $request->request->get('_email');
         $password1 = $request->request->get('_password_1');
         $password2 = $request->request->get('_password_2');
 
         if ($password1 !== $password2) {
-            // Passwords don't match, render the registration form again with an error message
+            printf("mis matching password!!");
             return $this->render('register.html.twig', [
                 'controller_name' => 'UserController',
                 '_username' => $username,
                 '_password_1' => '',
                 '_password_2' => '',
-                'error' => 'Passwords do not match'
+                'error' => $error
             ]);
         }
 
-        $user = new User($username,);
+        $user = new User($username,"dummy_password",$email);
         // Hash the password
         $hashedPassword = $passwordHasher->hashPassword($user, $password1);
-
-        // Create a new User entity
-
-        $user->setUsername($username);
         $user->setPassword($hashedPassword);
         // Add other properties if needed (e.g., email)
 
         // Store the User entity in the session
-        $session->set('user_to_register', $user);
+//        $session->set('user_to_register', $user);
+
+        printf("register successful! user: %s, password:%s, hashed password: %s",$username,$password1,$hashedPassword);
 
         // Redirect to the controller action responsible for persisting the user
-        return $this->redirectToRoute('persist_user');
-    }
-
-    #[Route('/persist_user', name: 'persist_user')]
-    public function persistUser(SessionInterface $session, EntityManagerInterface $entityManager): Response
-    {
-        // Retrieve the User entity from the session
-        $user = $session->get('user_to_register');
-
-        // Persist the User entity to the database
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        // Redirect the user to the home page or any other page
         return $this->redirectToRoute('home');
     }
+
+//====================================================================================================================//
+//              LOGOUT FUNCTIONS
+//====================================================================================================================//
+
+    public function logOut(Security $security): Response
+    {
+        // logout the user in on the current firewall
+        $response = $security->logout();
+
+        // ... return $response (if set) or e.g. redirect to the homepage
+        return $this->redirectToRoute('login');
+    }
+
 
 }

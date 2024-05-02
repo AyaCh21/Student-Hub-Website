@@ -16,14 +16,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(type: 'string')]
+    private string $username;
+
+    #[ORM\Column(type: 'string', length: 400, unique: true)]
     private ?string $email;
+
+    #[ORM\Column(type: 'string')]
+    private string $password;
+
+    #[ORM\Column(type: 'int')]
+    private int $phase;
+
+    #[ORM\Column(type: 'string')]
+    private string $specialization;
+
+    #[ORM\Column(type: 'int')]
+    private int $newUser;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\Column(type: 'string')]
-    private string $password;
+    /**
+     * @param int $id
+     * @param string $username
+     * @param string|null $email
+     * @param string $password
+     */
+    public function __construct(int $id, string $username, ?string $email, string $password)
+    {
+        $this->id = $id;
+        $this->username = $username;
+        $this->email = $email;
+        $this->password = $password;
+    }
+
 
     public function getId(): ?int
     {
@@ -85,6 +112,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
+    public function getPhase(): int
+    {
+        return $this->phase;
+    }
+
+    public function setPhase(int $phase): void
+    {
+        $this->phase = $phase;
+    }
+
+    public function getSpecialization(): string
+    {
+        return $this->specialization;
+    }
+
+    public function setSpecialization(string $specialization): void
+    {
+        $this->specialization = $specialization;
+    }
+
+    public function getNewUser(): int
+    {
+        return $this->newUser;
+    }
+
+    public function setNewUser(int $newUser): void
+    {
+        $this->newUser = $newUser;
+    }
+
+
 
     /**
      * @see UserInterface

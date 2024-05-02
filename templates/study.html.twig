@@ -35,7 +35,9 @@
                             {{ course.name }}
                             {% if course.pdf is defined and course.pdf is not null %}
                             <div class="pdf-viewer">
-                               <a href="{{ course.pdf }}" target="_blank">View PDF</a>
+                               {% set pdf_parts = course.pdf | split('/') %}
+                                <!-- Link to open PDF in a new tab -->
+                                <a href="{{ course.pdf }}" target="_blank" rel="noopener noreferrer">{{ pdf_parts | last }}</a>
                             </div>
                             {% endif %}
                         </span>

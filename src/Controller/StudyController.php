@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Course;
+use App\Repository\CourseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,48 +16,23 @@ class StudyController extends AbstractController
      * @Route("/study", name="study")
      */
     #[Route("/study", name:"study")]
-    public function study(): Response
+    public function study(EntityManagerInterface $entityManager, CourseRepository $courseRepository): Response
     {
-        // Dummy data for demonstration
-        $phases = [
+        $courses = $courseRepository->findAll();
+        $phaseWiseCourses = [];
 
-            [
-                'name' => 'Phase 1',
-                'courses' => [
-                    ['name' => 'Course A1'],
-                    ['name' => 'Course A2'],
-                ],
-            ],
-            [
-                'name' => 'Phase 2',
-                'courses' => [
-                    ['name' => 'Course B1'],
-                    ['name' => 'Course B2'],
-                ],
-            ],
-            [
-                'name' => 'Phase 3',
-                'courses' => [
-                    ['name' => 'Course C1'],
-                    ['name' => 'Course C2'],
-                    ['name' => 'Course C3'],
-                ],
-            ],
-            [
-                'name' => 'Phase 4',
-                'courses' => [
-                    ['name' => 'Course D1'],
-                    ['name' => 'Course D2'],
-                    ['name' => 'Course D3'],
-                ],
-            ],
-        ];
-
+        foreach ($courses as $course) {
+            $phase = $course->getPhase();
+            if (!isset($phaseWiseCourses[$phase])) {
+                $phaseWiseCourses[$phase] = [];
+            }
+            $phaseWiseCourses[$phase][] = $course;
+    }
         $this->stylesheets[]='study.css';
 
         return $this->render('study.html.twig', [
-            'phases' => $phases,
-            'stylesheets' => $this->stylesheets
+            'stylesheets' => $this->stylesheets,
+            'phaseWiseCourses' => $phaseWiseCourses
         ]);
     }
 }

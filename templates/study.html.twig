@@ -35,7 +35,7 @@
                             {{ course.name }}
                             {% if course.pdf is defined and course.pdf is not null %}
                             <div class="pdf-viewer">
-                               <embed src="{{ asset(course.pdf) }}" type="application/pdf" width="600" height="400"></embed>
+                               <a href="{{ course.pdf }}" target="_blank">View PDF</a>
                             </div>
                             {% endif %}
                         </span>

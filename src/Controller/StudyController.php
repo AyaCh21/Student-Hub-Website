@@ -22,8 +22,8 @@ class StudyController extends AbstractController
                 'name' => 'Phase 1',
                 'courses' => [
                     ['name' => 'Course A1',
-//                        'pdf' => 'http://a23www301.studev.groept.be/DeleAyeni_Transistor_Lab3_Prep.pdf'
-                    'pdf' => null
+                        'pdf' => 'https://a23www301.studev.groept.be/Sustainability/Team1_Sustainability_OpinionEssay.pdf'
+
                     ],
                     ['name' => 'Course A2',
                         'pdf' => null

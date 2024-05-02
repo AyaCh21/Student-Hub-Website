@@ -8,4 +8,5 @@ enum MaterialType: string
     case summary = "summary";
 
     case lecture ="lecture";
+
 }

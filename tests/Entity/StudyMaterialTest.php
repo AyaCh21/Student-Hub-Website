@@ -13,6 +13,7 @@ class StudyMaterialTest extends TestCase
         $studyMaterial = new StudyMaterial();
         $studyMaterial->setId(1);
         $this->assertEquals(1, $studyMaterial->getId());
+
     }
 
     public function testSetId()

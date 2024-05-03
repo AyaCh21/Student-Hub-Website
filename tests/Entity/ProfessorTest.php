@@ -54,7 +54,7 @@ class ProfessorTest extends TestCase
         $this->assertNotEquals($invalidCourseId, $professor->getCourseId());
     }
 
-    public function testFailGetName()
+    public function testGetNameFail()
     {
         $professor = new Professor();
         $professor->setName("Arn Mignon");
@@ -62,21 +62,21 @@ class ProfessorTest extends TestCase
         $this->assertNotEquals("John Doe", $professor->getName());
     }
 
-    public function testFailSetName()
+    public function testSetNameFail()
     {
         $professor = new Professor();
         $professor->setName("Joost Vennekens");
         $this->assertNotEquals("Jane Smith", $professor->getName());
     }
 
-    public function testFailGetCourseId()
+    public function testGetCourseIdFail()
     {
         $professor = new Professor();
         $professor->setCourseId(1);
         $this->assertNotEquals(2, $professor->getCourseId());
     }
 
-    public function testFailSetCourseId()
+    public function testSetCourseIdFail()
     {
         $professor = new Professor();
         $professor->setCourseId(5);

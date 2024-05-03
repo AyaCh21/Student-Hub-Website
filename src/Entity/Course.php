@@ -16,7 +16,6 @@ class Course
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column]
     #[ORM\ManyToOne(inversedBy: 'courses')]
     #[ORM\JoinColumn(name:'professor',nullable: false)]
     private ?Professor $professor = null;

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProfessorRepository;
-use Couchbase\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 

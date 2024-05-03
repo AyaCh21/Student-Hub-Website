@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StudyMaterialRepository::class)]
+#[ORM\Table ('studyMaterial')]
 class StudyMaterial
 {
     #[ORM\Id]
@@ -17,14 +18,16 @@ class StudyMaterial
 
     private ?MaterialType $materialType = null;
 
-    #[ORM\Column]
+    #[ORM\ManyToOne(inversedBy: 'studyMaterial')]
+    #[ORM\JoinColumn(name: 'student',nullable: false)]
     private ?int $uploaded_by = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $uploaded_at = null;
 
-    #[ORM\Column]
-    private ?int $course_id = null;
+    #[ORM\ManyToOne(inversedBy: 'studyMaterial')]
+    #[ORM\JoinColumn(name:'course',nullable: false)]
+    private ?Course $course= null;
 
     #[ORM\Column(length: 50)]
     private ?string $file_type = null;
@@ -78,14 +81,14 @@ class StudyMaterial
         return $this;
     }
 
-    public function getCourseId(): ?int
+    public function getCourse(): ?Course
     {
-        return $this->course_id;
+        return $this->course;
     }
 
-    public function setCourseId(int $course_id): static
+    public function setCourse(?Course $course): static
     {
-        $this->course_id = $course_id;
+        $this->$course = $course;
 
         return $this;
     }

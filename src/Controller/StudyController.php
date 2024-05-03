@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Course;
+use App\Repository\CourseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,69 +16,23 @@ class StudyController extends AbstractController
      * @Route("/study", name="study")
      */
     #[Route("/study", name:"study")]
-    public function study(): Response
+    public function study(EntityManagerInterface $entityManager): Response
     {
-        // Dummy data for demonstration
-        $phases = [
+        $courses = $entityManager->getRepository(Course::class)->findAll();
+        $phaseWiseCourses = [];
 
-            [
-                'name' => 'Phase 1',
-                'courses' => [
-                    ['name' => 'Course A1',
-                        'pdf' => 'https://a23www301.studev.groept.be/Sustainability/Team1_Sustainability_OpinionEssay.pdf'
-
-                    ],
-                    ['name' => 'Course A2',
-                        'pdf' => null
-                    ],
-                ],
-            ],
-            [
-                'name' => 'Phase 2',
-                'courses' => [
-                    ['name' => 'Course B1',
-                        'pdf' => 'http://a23www301.studev.groept.be/TDI_Lab_1.pdf'
-                        ],
-                    ['name' => 'Course B2',
-                        'pdf' => null
-                    ],
-                ],
-            ],
-            [
-                'name' => 'Phase 3',
-                'courses' => [
-                    ['name' => 'Course C1',
-                        'pdf' => null
-                    ],
-                    ['name' => 'Course C2',
-                        'pdf' => null
-                    ],
-                    ['name' => 'Course C3',
-                        'pdf' => null
-                    ],
-                ],
-            ],
-            [
-                'name' => 'Phase 4',
-                'courses' => [
-                    ['name' => 'Course D1',
-                        'pdf' => null
-                    ],
-                    ['name' => 'Course D2',
-                        'pdf' => null
-                    ],
-                    ['name' => 'Course D3',
-                        'pdf' => null
-                    ],
-                ],
-            ],
-        ];
-
+        foreach ($courses as $course) {
+            $phase = $course->getPhase();
+            if (!isset($phaseWiseCourses[$phase])) {
+                $phaseWiseCourses[$phase] = [];
+            }
+            $phaseWiseCourses[$phase][] = $course;
+        }
         $this->stylesheets[]='study.css';
 
         return $this->render('study.html.twig', [
-            'phases' => $phases,
-            'stylesheets' => $this->stylesheets
+            'stylesheets' => $this->stylesheets,
+            'phaseWiseCourses' => $phaseWiseCourses
         ]);
     }
 }

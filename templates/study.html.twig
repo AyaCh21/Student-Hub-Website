@@ -14,29 +14,36 @@
 {% endblock %}
 
 {% block content %}
-    {% if phaseWiseCourses is empty %}
-        <p>No Courses Found:(</p>
-    {% else %}
-        <ul class="phase-wrapper">
-            {% for phase,courses in phaseWiseCourses %}
-                <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
-                    <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
-                </svg>
-                <li>Phase {{ phase }}</li>
-                <ul class="courses-wrapper" style="display: none">
+    <div class="phases-wrapper">
+        {% for phase, courses in phaseWiseCourses %}
+            <div class="phase-wrapper">
+                <div class="phase-header">
+                    <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
+                        <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+                    </svg>
+                    <h2 class="phase-toggle">
+                        Phase {{ phase }}
+                    </h2>
+                </div>
+                <ul class="courses" style="display: none;">
                     {% for course in courses %}
-                        <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
-                            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
-                        </svg>
-                        <li>{{ course.name }}</li>
-                        <ul class="options-wrapper" style="display: none">
-                            <li>Lectures</li>
-                            <li>Labs</li>
-                        </ul>
+                        <li class="course">
+                            <svg class="course-icon" xmlns="http://www.w3.org/2000/svg" height="24" fill="#efd0ce" viewBox="0 -960 960 960" width="24">
+                                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+                            </svg>
+                            <span class="course-toggle">
+                            {{ course.name }}
+                        </span>
+                            <ul class="options" style="display: none;">
+                                <li>Lecture</li>
+                                <li>Lab</li>
+                            </ul>
+                        </li>
                     {% endfor %}
                 </ul>
-            {% endfor %}
-        </ul>
-    {% endif %}
+            </div>
 
+        {% endfor %}
+    </div>
+    <div id="selected-option"></div> {# Display selected option here #}
 {% endblock %}

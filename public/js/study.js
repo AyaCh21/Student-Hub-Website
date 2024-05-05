@@ -21,9 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const animation = anime({
             targets: courses,
             height: isCollapsed ? `${outerHeight}px` : '0px',
-            duration: 300,
+            duration: 700,
             easing: 'easeInOutSine',
-            delay: 50,
             complete: function() {
                 console.log("Animation complete!",courses.scrollHeight);
             }

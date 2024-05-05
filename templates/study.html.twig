@@ -21,16 +21,12 @@
                     <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
                         <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
                     </svg>
-                    <h2 class="phase-toggle">
-                        Phase {{ phase }}
-                    </h2>
+                    <h2 class="phase-toggle">Phase {{ phase }}</h2>
                 </div>
                 <ul class="courses" style="display: none;">
                     {% for course in courses %}
                         <li class="course">
-                            <span class="course-toggle">
-                                {{ course.name }}
-                            </span>
+                            <h3 class="course-toggle">{{ course.name }}</h3>
                             <ul class="options" style="display: none;">
                                 <li class="option">Lecture</li>
                                 <li class="option">Lab</li>

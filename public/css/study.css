@@ -21,10 +21,11 @@
     align-items: center;
 }
 .courses {
-    display: flex;
     background: var(--minor-color);
-    height: fit-content;
     padding: 10px 0;
+}
+.courses.expanded {
+    height: fit-content;
 }
 .courses li {
     list-style: none;

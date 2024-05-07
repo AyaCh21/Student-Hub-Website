@@ -17,7 +17,9 @@ class Course
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?int $professor = null;
+    #[ORM\ManyToOne(inversedBy: 'courses')]
+    #[ORM\JoinColumn(name:'professor',nullable: false)]
+    private ?Professor $professor = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $phase = null;
@@ -46,12 +48,12 @@ class Course
         return $this;
     }
 
-    public function getProfessor(): ?int
+    public function getProfessor(): ?Professor
     {
         return $this->professor;
     }
 
-    public function setProfessor(int $professor): static
+    public function setProfessor(?Professor $professor): static
     {
         $this->professor = $professor;
 

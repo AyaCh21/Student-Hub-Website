@@ -16,10 +16,9 @@ class StudyController extends AbstractController
      * @Route("/study", name="study")
      */
     #[Route("/study", name:"study")]
-    public function study(EntityManagerInterface $entityManager, CourseRepository $courseRepository): Response
+    public function study(EntityManagerInterface $entityManager): Response
     {
-
-        $courses = $courseRepository->findAll();
+        $courses = $entityManager->getRepository(Course::class)->findAll();
         $phaseWiseCourses = [];
 
         foreach ($courses as $course) {

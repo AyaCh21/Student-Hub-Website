@@ -1,0 +1,19 @@
+#define the base docker image file
+image : composer:2.2
+
+#prepare container with some extra configuration
+before_script:
+  - mkdir -p ~/.ssh
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
+  - apk add rsync
+
+deploy-job:
+  only:
+    - main
+  script:
+    - composer install
+    - rsync -rv --exclude=".git/"
+                --exclude=".env"
+                ./ a23www301@shell.studev.groept.be:/var/www/html

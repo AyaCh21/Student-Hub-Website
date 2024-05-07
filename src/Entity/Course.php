@@ -23,6 +23,9 @@ class Course
     #[ORM\Column(nullable: true)]
     private ?int $phase = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $phase = null;
+
     public function getId(): ?int
     {
         return $this->id;

@@ -19,6 +19,9 @@ class Course
     #[ORM\Column]
     private ?int $professor = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $phase = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +54,18 @@ class Course
     public function setProfessor(int $professor): static
     {
         $this->professor = $professor;
+
+        return $this;
+    }
+
+    public function getPhase(): ?int
+    {
+        return $this->phase;
+    }
+
+    public function setPhase(?int $phase): static
+    {
+        $this->phase = $phase;
 
         return $this;
     }

@@ -1,5 +1,9 @@
-
-/* Your existing CSS styles */
+.phase-wrapper {
+    display: block;
+    height: fit-content;
+    padding: 5px;
+    overflow: hidden;
+}
 .phase-header {
     background: var(--minor-color);
     display: flex;
@@ -7,50 +11,33 @@
     align-items: center;
     margin: 5px;
 }
-
-.phase-wrapper {
-    background: var(--main-color);
-    display: block;
-    height: fit-content;
-    padding: 5px;
-
+.icon-toggle {
+    position: relative;
+    margin-right: 5px;
 }
 .phase-toggle, .course-toggle {
     cursor: pointer;
     display: flex;
     align-items: center;
 }
-
-.icon-toggle {
-    margin-right: 5px;
-}
-
 .courses {
-    background: #6D28D9;
+    background: var(--minor-color);
+    padding: 10px 0;
+}
+.courses.expanded {
     height: fit-content;
-    padding-bottom: 10px;
 }
-
-.course {
-    display: flex;
-    flex-direction: row;
-}
-
 .courses li {
     list-style: none;
 }
-
-.options {
-    background: #3b82f6;
-    display: none;
+.course {
+    display: block;
+    padding: 10px;
 }
-
+.options {
+    display: block;
+}
 .option {
     cursor: pointer;
     margin-right: 10px;
-}
-
-.option:hover {
-    text-decoration: underline;
-    font-weight: bold;
 }

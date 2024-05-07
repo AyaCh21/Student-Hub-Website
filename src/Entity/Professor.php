@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProfessorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +20,12 @@ class Professor
 
     #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'professor')]
     private Collection $courses;
+
+    public function __construct()
+    {
+        $this->courses = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {

@@ -19,15 +19,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const isCollapsed = window.getComputedStyle(courses).display === 'none';
 
         const animation = anime({
-            targets: '.courses',
-            height: isCollapsed ? `${courses.scrollHeight}px` : '0px',
-            duration: 700,
-            easing: 'easeInOutSine'
+            targets: courses,
+            height: isCollapsed ? `${outerHeight}px` : '0px',
+            duration: 300,
+            easing: 'easeInOutSine',
+            delay: 50,
+            complete: function() {
+                console.log("Animation complete!",courses.scrollHeight);
+            }
+
         });
 
         animation.play();
         courses.style.display = isCollapsed ? 'block' : 'none';
-        //courses.style.display = isCollapsed ? 'block' : 'none';
         phase.dataset.expanded = isCollapsed ? 'true' : 'false';
 
         //const toggleIcon = phase.querySelector('.phase-toggle svg path');

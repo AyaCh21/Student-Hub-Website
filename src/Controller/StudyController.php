@@ -27,7 +27,8 @@ class StudyController extends AbstractController
                 $phaseWiseCourses[$phase] = [];
             }
             $phaseWiseCourses[$phase][] = $course;
-    }
+
+        }
         $this->stylesheets[]='study.css';
 
         return $this->render('study.html.twig', [

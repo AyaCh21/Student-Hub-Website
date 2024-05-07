@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const phaseHeaders = document.querySelectorAll('.phase-header');
     const footer = document.querySelector('footer');
-    const phaseContainers = document.querySelectorAll('.phase-container');
+    const phaseContainers = document.querySelectorAll('.courses');
 
     function adjustLastPhaseMargin() {
         const lastPhaseContainer = phaseContainers[phaseContainers.length - 1];
@@ -19,12 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const courses = phase.nextElementSibling;
         const isCollapsed = window.getComputedStyle(courses).display === 'none';
 
+        const animation = anime({
+            targets: '.courses',
+            height: isCollapsed ? `${courses.scrollHeight}px` : '0px',
+            duration: 700,
+            easing: 'easeInOutSine'
+        });
+
+        animation.play();
         courses.style.display = isCollapsed ? 'block' : 'none';
+        //courses.style.display = isCollapsed ? 'block' : 'none';
         phase.dataset.expanded = isCollapsed ? 'true' : 'false';
 
-        const toggleIcon = phase.querySelector('.phase-toggle svg path');
+        //const toggleIcon = phase.querySelector('.phase-toggle svg path');
        /// toggleIcon.setAttribute('d', isCollapsed ? 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z' : 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z');
-        toggleIcon.setAttribute('d', isCollapsed ? 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z' : 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z');
+        //toggleIcon.setAttribute('d', isCollapsed ? 'M296-345-56-56 240-240 240 240-56 56-184-184-184 184Z' : 'M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z');
 
         adjustLastPhaseMargin();
     }

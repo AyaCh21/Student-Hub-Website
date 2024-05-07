@@ -30,7 +30,7 @@
                         <li>{{ course.name }}</li>
                         {% if course.pdf is defined and course.pdf is not null %}
                             <div class="pdf-viewer">
-                                {% set pdf_parts = course.pdf | split('/') %}
+                               {% set pdf_parts = course.pdf | split('/') %}
                                 <!-- Link to open PDF in a new tab -->
                                 <a href="{{ course.pdf }}" target="_blank" rel="noopener noreferrer">{{ pdf_parts | last }}</a>
                             </div>

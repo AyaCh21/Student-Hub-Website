@@ -26,6 +26,7 @@ class Professor
         $this->courses = new ArrayCollection();
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,19 +65,16 @@ class Professor
             $this->courses->add($course);
             $course->setProfessor($this);
         }
-
         return $this;
     }
 
     public function removeCourse(Course $course): static
     {
         if ($this->courses->removeElement($course)) {
-            // set the owning side to null (unless already changed)
-            if ($course->getProfessor() === $this) {
+            if ($course->getProfessor() == $this) {
                 $course->setProfessor(null);
             }
         }
-
         return $this;
     }
 }

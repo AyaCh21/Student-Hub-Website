@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CourseRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
+#[ORM\Table ('course')]
 class Course
 {
     #[ORM\Id]
@@ -17,11 +19,11 @@ class Course
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
-    #[ORM\JoinColumn(name:'professor_id', nullable: false)]
+    #[ORM\JoinColumn(name:'professor',nullable: false)]
     private ?Professor $professor = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $phase = null;
+    #[ORM\OneToMany(targetEntity: StudyMaterial::class, mappedBy: 'course')]
+    private Collection $studyMaterials;
 
     public function getId(): ?int
     {
@@ -59,14 +61,29 @@ class Course
         return $this;
     }
 
-    public function getPhase(): ?int
+    /**
+     * @return Collection<int, StudyMaterial>
+     */
+    public function getStudyMaterials()
     {
-        return $this->phase;
+        return $this->studyMaterials;
+    }
+    public function addStudyMaterial(StudyMaterial $material): static
+    {
+        if (!$this->studyMaterials->contains($material)) {
+            $this->studyMaterials->add($material);
+            $material->setCourse($this);
+        }
+        return $this;
     }
 
-    public function setPhase(?int $phase): static
+    public function removeStudyMaterial(StudyMaterial $material): static
     {
-        $this->phase = $phase;
+        if ($this->studyMaterials->removeElement($material)) {
+            if ($material->getCourse() === $this) {
+                $material->setCourse(null);
+            }
+        }
 
         return $this;
     }

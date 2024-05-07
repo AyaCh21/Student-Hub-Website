@@ -22,7 +22,7 @@
                     <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
                 </svg>
                 <li>Phase {{ phase }}</li>
-                <ul>
+                <ul class="courses-wrapper" style="display: none">
                     {% for course in courses %}
                         <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
                             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
@@ -35,6 +35,10 @@
                                 <a href="{{ course.pdf }}" target="_blank" rel="noopener noreferrer">{{ pdf_parts | last }}</a>
                             </div>
                         {% endif %}
+                        <ul class="options-wrapper" style="display: none">
+                            <li>Lectures</li>
+                            <li>Labs</li>
+                        </ul>
                     {% endfor %}
                 </ul>
             {% endfor %}

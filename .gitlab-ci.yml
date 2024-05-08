@@ -11,7 +11,9 @@ before_script:
 
 deploy-job:
   only:
+    - dev
     - main
+  when: manual
   script:
     - composer install
     - rsync -rv --exclude=".git/"

@@ -5,7 +5,7 @@ image : composer:2.2
 before_script:
   - mkdir -p ~/.ssh
   - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - ssh-add - "$SSH_PRIVATE_KEY"
   - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
   - apk add rsync
 

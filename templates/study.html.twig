@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Study{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="{{ asset('css/study.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/study.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {% if phaseWiseCourses is empty %}
+        <p>fix the fuck-up, no courses found</p>
+    {% else %}
+        <ul>{% for phase,courses in phaseWiseCourses %}
+                <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
+                    <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+                </svg>
+                <li>Phase {{ phase }}</li>
+                <ul class="courses-wrapper" style="display: none">
+                    {% for course in courses %}
+                        <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
+                            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+                        </svg>
+                        <li>{{ course.name }}</li>
+                        {% if course.pdf is defined and course.pdf is not null %}
+                            <div class="pdf-viewer">
+                               {% set pdf_parts = course.pdf | split('/') %}
+                                <!-- Link to open PDF in a new tab -->
+                                <a href="{{ course.pdf }}" target="_blank" rel="noopener noreferrer">{{ pdf_parts | last }}</a>
+                            </div>
+                        {% endif %}
+                        <ul class="options-wrapper" style="display: none">
+                            <li>Lectures</li>
+                            <li>Labs</li>
+                        </ul>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

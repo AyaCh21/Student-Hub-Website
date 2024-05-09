@@ -2,8 +2,15 @@
 
 namespace App\Entity;
 
-class professorRate
+use App\Repository\ProfessorRateRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: ProfessorRateRepository::class)]
+class ProfessorRate
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private ?int $id = null;
     private ?string $type = null;
     private ?int $uploaded_by = null;
@@ -23,14 +30,6 @@ class professorRate
         $this->rate = $rate;
     }
 
-    /**
-     * @param int|null $id
-     * @param string|null $type
-     * @param int|null $uploaded_by
-     * @param \DateTimeInterface|null $uploaded_at
-     * @param string|null $file_type
-     * @param string|null $file_path
-     */
     public function __construct()
     {
     }

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     value.textContent = input.value;
 
-    input.addEventListener("change", (event) => {
+    input.addEventListener("input", (event) => {
         value.textContent = event.target.value;
     });
 });

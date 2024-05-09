@@ -7,7 +7,6 @@ class rating_exam
     private ?int $id = null;
     private ?int $course_id = null;
     private ?int $student_id = null;
-
     private ?int $rate_value = null;
 
     /**

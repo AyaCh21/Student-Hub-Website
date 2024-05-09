@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class rating_prof
+class professorRate
 {
     private ?int $id = null;
     private ?string $type = null;
@@ -10,6 +10,18 @@ class rating_prof
     private ? \DateTimeInterface $uploaded_at = null;
     private ?string $file_type = null;
     private ?string $file_path = null;
+
+    private ?int $rate = null;
+
+    public function getRate(): ?int
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?int $rate): void
+    {
+        $this->rate = $rate;
+    }
 
     /**
      * @param int|null $id
@@ -19,14 +31,8 @@ class rating_prof
      * @param string|null $file_type
      * @param string|null $file_path
      */
-    public function __construct(?int $id, ?string $type, ?int $uploaded_by, ?\DateTimeInterface $uploaded_at, ?string $file_type, ?string $file_path)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->type = $type;
-        $this->uploaded_by = $uploaded_by;
-        $this->uploaded_at = $uploaded_at;
-        $this->file_type = $file_type;
-        $this->file_path = $file_path;
     }
 
     public function getId(): ?int

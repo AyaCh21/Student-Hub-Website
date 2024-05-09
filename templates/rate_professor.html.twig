@@ -7,12 +7,16 @@
 
 {% block content %}
 
-    <form>
+    <form method="post">
         <div class="rate_prof_space">
             <h2 class="prof_name">Professor Name</h2>
             <p>When rating professors, focus on how effectively they teach and how much you gain from attending lectures.</p>
             <p> Did they explain concepts clearly? Did they make learning engaging?  Would you recommend their class to others?</p>
             <div class="prof_feedback_grid">
+                <div class="user_info">
+                    <label for="student_id">Student: </label>
+                    <input type="text" id="student_id"/>
+                </div>
                 <div class="range_wrap">
                     <div class="range_text">
                         <label for="rate_range">Value: <output id="value"></output></label>

@@ -1,0 +1,26 @@
+.rate_prof_space {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: -8px -8px 16px #242928, 10px 10px 16px #121414;
+    border-radius: 50px;
+
+}
+
+.prof_feedback_grid {
+    display: block;
+}
+
+.range_text {
+    align-items: flex-start;
+}
+.range_wrap {
+    display: block;
+    padding: 4px;
+}
+
+.slider {
+    width: 90%;
+    background: deeppink;
+}

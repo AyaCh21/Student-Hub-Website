@@ -29,7 +29,10 @@ class HomePageController extends AbstractController
     #[Route("/rate_prof", name:"professor")]
     public function profPage(): Response
     {
-        return $this->render('rate_professor.html.twig');
+        $this->stylesheets[]='rate_form.css';
+        return $this->render('rate_professor.html.twig',[
+            'stylesheets'=>$this->stylesheets
+        ]);
     }
     //#[Route("/study", name:"study")]
     //public function study(): Response

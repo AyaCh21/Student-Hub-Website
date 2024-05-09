@@ -14,13 +14,14 @@
             <p> Did they explain concepts clearly? Did they make learning engaging?  Would you recommend their class to others?</p>
             <div class="prof_feedback_grid">
                 <div class="range_wrap">
-                    <label for="rate_range">Value: <output id="value"></output></label>
-                    <input type="range" id="rate_range" min="0" max="20" step="1"/>
+                    <div class="range_text">
+                        <label for="rate_range">Value: <output id="value"></output></label>
+                    </div>
+                    <input type="range" id="rate_range" class="slider" min="0" max="20" step="1"/>
                 </div>
-                <div class="comment_wrap">
-                    <label for="prof_feedback">Feedback</label>
-                    <input class="input" id="prof_feedback"/>
-                </div>
+            </div>
+            <div class="prof_rate_button">
+                <button type="submit">Submit</button>
             </div>
         </div>
     </form>

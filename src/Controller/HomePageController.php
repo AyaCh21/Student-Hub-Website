@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\professorRate;
+use App\Entity\ProfessorRate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +38,7 @@ class HomePageController extends AbstractController
         $prof_rate = new professorRate();
         $form = $this->createFormBuilder()
             ->add('student', TextType::class,["attr" => array('style' => 'margin-left: 40px;')])
+            ->add('professor', TextType::class, ['label' => 'Professor'])
             ->add('rate', RangeType::class, ['label' => 'Rate'])
             ->add('save', SubmitType::class, ['label' => 'Submit'])
             ->getForm();

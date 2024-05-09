@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="professor_list">
+        {% foreach professor in professors %}
+        <h3>{{ professor.name }}</h3>
+    </div>
+{% endblock %}

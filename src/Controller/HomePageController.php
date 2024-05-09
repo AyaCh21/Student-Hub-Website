@@ -26,6 +26,11 @@ class HomePageController extends AbstractController
             'stylesheets'=>$this->stylesheets
         ]);
     }
+    #[Route("/rate_prof", name:"professor")]
+    public function profPage(): Response
+    {
+        return $this->render('rate_professor.html.twig');
+    }
     //#[Route("/study", name:"study")]
     //public function study(): Response
     //{

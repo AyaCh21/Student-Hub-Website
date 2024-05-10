@@ -69,4 +69,17 @@ class Student
 
         return $this;
     }
+
+    static function getAllStudent() : array {
+        $stm = $db->prepare('SELECT id, email, password, username,phase,FROM student');
+        $stm->execute();
+        $result = array();
+        while ($item = $stm->fetch()) {
+            $Student = new Student($item['email']);
+            $Student->setId($item['id']);
+
+            $result[] = $Student;
+        };
+        return $result;
+    }
 }

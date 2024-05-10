@@ -1,0 +1,43 @@
+.phase-wrapper {
+    display: block;
+    height: fit-content;
+    padding: 5px;
+    overflow: hidden;
+}
+.phase-header {
+    background: var(--minor-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+}
+.icon-toggle {
+    position: relative;
+    margin-right: 5px;
+}
+.phase-toggle, .course-toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.courses {
+    background: var(--minor-color);
+    padding: 10px 0;
+}
+.courses.expanded {
+    height: fit-content;
+}
+.courses li {
+    list-style: none;
+}
+.course {
+    display: block;
+    padding: 10px;
+}
+.options {
+    display: block;
+}
+.option {
+    cursor: pointer;
+    margin-right: 10px;
+}

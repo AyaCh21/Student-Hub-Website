@@ -1,33 +1,16 @@
-[
-The user story should have a reason to exist: what do I need as the user described in the summary?
-This part details any detail that could not be passed by the summary.
-]
+## Summary
 
+[describe the task assigned to you, no bad answers, based on how you understand the task given, you will implement it, right?]
 
-### Acceptance Criteria
+## User Story
 
-1. [If I do A.]
-1. [B should happen.]
+[paste in user story from the backlog corresponding to the task given]
 
-[
-Also, here are a few points that need to be addressed:
+## Functionalities To Be Implemented:
+- [] example 1
+- [] example 2
+- [] example 3
 
-1. Constraint 1;
-1. Constraint 2;
-1. Constraint 3.
-]
+## When Can We Say We Are Done With This Task?
 
-
-### Resources:
-
-* Mockups: [Here goes a URL to or the name of the mockup(s) in inVision];
-* Testing URL: [Here goes a URL to the testing branch or IP];
-* Staging URL: [Here goes a URL to the feature on staging];
-
-
-### Notes
-
-[Some complementary notes if necessary:]
-
-* > Here goes a quote from an email
-* Here goes whatever useful information can exist…
+[when the core functionality is implemented? when you can display all documents for a class? when every button is animated? when database connection doesn't fail?]

@@ -1,0 +1,133 @@
+.container-title {
+    width: 100%;
+    height: 80%;
+    isolation: isolate;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-title {
+    width: 100%;
+    height: 80%;
+    margin: 30px 0;
+    padding: 26px 40px;
+    display: flex;
+    font-size: 302px;
+    font-weight: 600;
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.blob {
+    position: absolute;
+    z-index: -1;
+    background: linear-gradient(45deg, var(--main-color), var(--extra-color));
+    width: 400px;
+    height: 300px;
+    border-radius: 16px;
+    filter: blur(35px);
+    opacity: 0.4;
+    -webkit-backdrop-filter: blur(35px);
+    animation: animate 7s cubic-bezier(0.76, 0.15, 0.27, 0.9) infinite alternate;
+}
+
+@keyframes animate {
+    0% {
+        translate: -10% -25%;
+        border-radius: 60% 40% 30% 70% / 100% 85% 92% 74%;
+    }
+    20% {
+        translate: 60% 33%;
+        border-radius: 20% 71% 47% 70% / 81% 15% 22% 54%;
+        rotate: 41deg;
+        scale: 1.95;
+    }
+    60% {
+        translate: 190% 73%;
+        border-radius: 70% 30% 30% 70% / 60% 40% 40% 40%;
+        rotate: 41deg;
+        scale: 0.65;
+    }
+    90% {
+        translate: 45% 73%;
+        border-radius: 100% 75% 92% 74% / 60% 80% 30% 70%;
+        rotate: -60deg;
+        scale: 1.05;
+    }
+}
+
+.home-buttons {
+    display: flex;
+    position: relative;
+    justify-content: space-evenly;
+}
+
+.home-buttons a {
+}
+
+.home-button {
+}
+
+input[type=button] {
+    background: transparent;
+    color: var(--light-color);
+    margin: 0 20px;
+    border-radius: 40px;
+    border: 1px solid var(--extra-color);
+    padding: 20px 80px;
+    font-size: 22px;
+    overflow: hidden;
+    transition: all 0.5s;
+
+    &:before, &:after {
+        width: 0;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
+
+    &:hover {
+        /* background-color: var(--extra-color); */
+        color: var(--dark-color);
+        cursor: pointer;
+        box-shadow: inset -6em 0 0 var(--extra-color), inset 6em 0 0 var(--extra-color);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    main {
+        padding: 4px;
+    }
+    .main-title {
+        width: 100%;
+        height: 80%;
+        margin: 0;
+        padding: 0;
+        font-size: 47px;
+    }
+
+    .home-button {
+        background: #3b82f6;
+    }
+
+    input[type=button] {
+        padding: 5px 20px;
+        font-size: 16px;
+        overflow: hidden;
+        margin: 15px;
+        align-content: space-between;
+    }
+    .blob {
+        width: 30%;
+        height: 40%;
+    }
+}

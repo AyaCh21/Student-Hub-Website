@@ -3,15 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\ProfessorRateRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfessorRateRepository::class)]
+#[ORM\Table('professorRate')]
 class ProfessorRate
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     protected ?int $id = null;
+    #[ORM\ManyToOne(targetEntity: Professor::class, inversedBy: 'professorRate')]
+    #[ORM\JoinColumn(name: 'professor',referencedColumnName: 'id')]
     protected ?Professor $professor = null;
+    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'professorRate')]
+    #[ORM\JoinColumn(name: 'student',referencedColumnName: 'id')]
     protected ?Student $student = null;
 
     public function getId(): ?int

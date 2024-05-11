@@ -24,11 +24,8 @@ class Student
     #[ORM\Column(length: 20)]
     private ?string $password = null;
 
-    /**
-     * @var Collection<int, ProfessorRate>
-     */
     #[ORM\OneToMany(targetEntity: ProfessorRate::class, mappedBy: 'student')]
-    private Collection $rates;
+    private ProfessorRate $rate;
 
     public function __construct()
     {

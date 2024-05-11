@@ -21,7 +21,7 @@ class Professor
     private Collection $courses;
 
     #[ORM\OneToMany(targetEntity: ProfessorRate::class, mappedBy: 'professor')]
-    private Collection $rates;
+    private ProfessorRate $rate;
 
     public function getId(): ?int
     {

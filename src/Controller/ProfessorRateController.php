@@ -12,10 +12,12 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ProfessorRateController extends AbstractController
 {
-    public function new(Request $request): Response
+    #[Route("/rate_prof", name:"professor_rate")]
+    public function new(): Response
     {
         $professor_rate = new ProfessorRate();
 
@@ -27,7 +29,7 @@ class ProfessorRateController extends AbstractController
         $form = $this->createForm(ProfessorRateType::class, $professor_rate);
 
         return $this->render('rate_professor.html.twig',[
-            'form' => $form
+            'form_rate_prof' => $form
         ]);
     }
 }

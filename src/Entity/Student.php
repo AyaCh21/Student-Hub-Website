@@ -24,7 +24,7 @@ class Student
     #[ORM\Column(length: 20)]
     private ?string $password = null;
 
-    #[ORM\OneToMany(targetEntity: ProfessorRate::class, mappedBy: 'student')]
+    #[ORM\OneToOne(targetEntity: ProfessorRate::class, mappedBy: 'student')]
     private ProfessorRate $rate;
 
     public function __construct()

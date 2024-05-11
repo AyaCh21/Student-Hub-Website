@@ -1,10 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/rate_range_prof.js') }}"></script>
-{% endblock %}
-
 {% block content %}
 
     {#<form method="post">
@@ -30,6 +25,13 @@
         </div>
     </form>#}
 
-    {{ form(form) }}
+    {{ form_start(form_rate_prof) }}
+    {{ form_errors(form_rate_prof) }}
+
+    {{ form_row(form_rate_prof.student) }}
+    {{ form_row(form_rate_prof.professor) }}
+
+    {{ form_row(form_rate_prof.save, { 'label': 'submit rate' }) }}
+    {{ form_end(form_rate_prof) }}
 
 {% endblock %}

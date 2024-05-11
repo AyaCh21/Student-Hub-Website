@@ -12,6 +12,7 @@ home:
 study:
         path: /study
         controller: App\Controller\StudyController::study
-professor:
-    path: /prof_list
-    controller: App\Controller\ProfessorsController::list_professors
+
+professor_rate:
+    path: /rate_prof
+    controller: App\Controller\ProfessorRateController::new

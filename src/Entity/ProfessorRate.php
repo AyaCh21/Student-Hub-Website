@@ -6,18 +6,18 @@ use App\Repository\ProfessorRateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfessorRateRepository::class)]
-#[ORM\Table('professorRate')]
+#[ORM\Table('rating_prof')]
 class ProfessorRate
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     protected ?int $id = null;
-    #[ORM\ManyToOne(targetEntity: Professor::class, inversedBy: 'professorRate')]
-    #[ORM\JoinColumn(name: 'professor',referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: Professor::class, inversedBy: 'rate')]
+    #[ORM\JoinColumn(name: 'professor_id',referencedColumnName: 'id')]
     protected ?Professor $professor = null;
     #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'professorRate')]
-    #[ORM\JoinColumn(name: 'student',referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'student_id',referencedColumnName: 'id')]
     protected ?Student $student = null;
 
     public function getId(): ?int

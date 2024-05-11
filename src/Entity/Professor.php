@@ -20,7 +20,7 @@ class Professor
     #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'professor')]
     private Collection $courses;
 
-    #[ORM\OneToMany(targetEntity: ProfessorRate::class, mappedBy: 'professor')]
+    #[ORM\OneToOne(targetEntity: ProfessorRate::class, mappedBy: 'professor')]
     private ProfessorRate $rate;
 
     public function getId(): ?int
@@ -67,22 +67,10 @@ class Professor
     public function removeCourse(Course $course): static
     {
         if ($this->courses->removeElement($course)) {
-            if ($course->getProfessor() == $this) {
+            if ($course->getProfessor() === $this) {
                 $course->setProfessor(null);
             }
         }
-        return $this;
-    }
-
-    public function getRates(): ?ProfessorRate
-    {
-        return $this->rates;
-    }
-
-    public function setRates(?ProfessorRate $rates): static
-    {
-        $this->rates = $rates;
-
         return $this;
     }
 }

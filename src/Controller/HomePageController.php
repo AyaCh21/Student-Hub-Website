@@ -32,7 +32,7 @@ class HomePageController extends AbstractController
             'stylesheets'=>$this->stylesheets
         ]);
     }
-    #[Route("/rate_prof", name:"professor")]
+    /*#[Route("/rate_prof", name:"professor")]
     public function rateProfessor(Request $request, EntityManagerInterface $entityManager): Response
     {
         $prof_rate = new professorRate();
@@ -60,7 +60,7 @@ class HomePageController extends AbstractController
             'stylesheets'=>$this->stylesheets,
             'form' => $form
         ]);
-    }
+    }*/
     //#[Route("/study", name:"study")]
     //public function study(): Response
     //{

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
@@ -21,6 +23,17 @@ class Student
 
     #[ORM\Column(length: 20)]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, ProfessorRate>
+     */
+    #[ORM\OneToMany(targetEntity: ProfessorRate::class, mappedBy: 'student')]
+    private Collection $rates;
+
+    public function __construct()
+    {
+        $this->rates = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -81,5 +94,35 @@ class Student
             $result[] = $Student;
         };
         return $result;
+    }
+
+    /**
+     * @return Collection<int, ProfessorRate>
+     */
+    public function getRates(): Collection
+    {
+        return $this->rates;
+    }
+
+    public function addRate(ProfessorRate $rate): static
+    {
+        if (!$this->rates->contains($rate)) {
+            $this->rates->add($rate);
+            $rate->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRate(ProfessorRate $rate): static
+    {
+        if ($this->rates->removeElement($rate)) {
+            // set the owning side to null (unless already changed)
+            if ($rate->getStudent() === $this) {
+                $rate->setStudent(null);
+            }
+        }
+
+        return $this;
     }
 }

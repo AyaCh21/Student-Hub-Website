@@ -20,6 +20,9 @@ class Professor
     #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'professor')]
     private Collection $courses;
 
+    #[ORM\OneToMany(targetEntity: ProfessorRate::class, mappedBy: 'professor')]
+    private Collection $rates;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +71,18 @@ class Professor
                 $course->setProfessor(null);
             }
         }
+        return $this;
+    }
+
+    public function getRates(): ?ProfessorRate
+    {
+        return $this->rates;
+    }
+
+    public function setRates(?ProfessorRate $rates): static
+    {
+        $this->rates = $rates;
+
         return $this;
     }
 }

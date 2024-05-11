@@ -20,7 +20,7 @@ class StudyMaterial
 
     #[ORM\ManyToOne(inversedBy: 'studyMaterial')]
     #[ORM\JoinColumn(name: 'student',nullable: false)]
-    private ?int $uploaded_by = null;
+    private ?Student $uploaded_by = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $uploaded_at = null;

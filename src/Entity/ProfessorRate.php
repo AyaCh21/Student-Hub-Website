@@ -3,36 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\ProfessorRateRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfessorRateRepository::class)]
 class ProfessorRate
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-    private ?string $type = null;
-    private ?int $uploaded_by = null;
-    private ? \DateTimeInterface $uploaded_at = null;
-    private ?string $file_type = null;
-    private ?string $file_path = null;
-
-    private ?int $rate = null;
-
-    public function getRate(): ?int
-    {
-        return $this->rate;
-    }
-
-    public function setRate(?int $rate): void
-    {
-        $this->rate = $rate;
-    }
-
-    public function __construct()
-    {
-    }
+    protected ?int $id = null;
+    protected ?Professor $professor = null;
+    protected ?Student $student = null;
 
     public function getId(): ?int
     {
@@ -44,55 +24,29 @@ class ProfessorRate
         $this->id = $id;
     }
 
-    public function getType(): ?string
+    public function getProfessor(): ?Professor
     {
-        return $this->type;
+        return $this->professor;
     }
 
-    public function setType(?string $type): void
+    public function setProfessor(?Professor $professor): void
     {
-        $this->type = $type;
+        $this->professor = $professor;
     }
 
-    public function getUploadedBy(): ?int
+    public function getStudent(): ?Student
     {
-        return $this->uploaded_by;
+        return $this->student;
     }
 
-    public function setUploadedBy(?int $uploaded_by): void
+    public function setStudent(?Student $student): void
     {
-        $this->uploaded_by = $uploaded_by;
+        $this->student = $student;
     }
 
-    public function getUploadedAt(): ?\DateTimeInterface
-    {
-        return $this->uploaded_at;
-    }
 
-    public function setUploadedAt(?\DateTimeInterface $uploaded_at): void
-    {
-        $this->uploaded_at = $uploaded_at;
-    }
 
-    public function getFileType(): ?string
-    {
-        return $this->file_type;
-    }
 
-    public function setFileType(?string $file_type): void
-    {
-        $this->file_type = $file_type;
-    }
-
-    public function getFilePath(): ?string
-    {
-        return $this->file_path;
-    }
-
-    public function setFilePath(?string $file_path): void
-    {
-        $this->file_path = $file_path;
-    }
 
 
 

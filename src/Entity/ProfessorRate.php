@@ -20,6 +20,9 @@ class ProfessorRate
     #[ORM\JoinColumn(name: 'student_id',referencedColumnName: 'id')]
     protected ?Student $student = null;
 
+    #[ORM\Column]
+    private ?int $rate_value = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -48,6 +51,18 @@ class ProfessorRate
     public function setStudent(?Student $student): void
     {
         $this->student = $student;
+    }
+
+    public function getRate(): ?int
+    {
+        return $this->rate_value;
+    }
+
+    public function setRate(int $rate): static
+    {
+        $this->rate_value = $rate;
+
+        return $this;
     }
 
 

@@ -4,10 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
-use App\Form\ProfessorRateType;
+use App\Entity\Student;
+use App\Repository\StudentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,26 +25,38 @@ class ProfessorRateController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $professor_rate = new ProfessorRate();
+        $professors = $entityManager->getRepository(Professor::class)->findAll();
 
-        /*$form = $this->createFormBuilder($professor_rate)
-            ->add('professor',ChoiceType::class)
-            ->add('student',TextType::class)
+        $form = $this->createFormBuilder($professor_rate)
+            ->add('professor',ChoiceType::class,[
+                'choices'=>$professors,
+                'choice_label'=>function (Professor $professor) {
+                    return $professor->getName(); // Assuming getName() exists
+                },
+            ])
+            ->add('student', TextType::class)
+            ->add('rate',IntegerType::class)
             ->add('save',SubmitType::class,['label'=>'submit rate'])
-            ->getForm();*/
-        $form = $this->createForm(ProfessorRateType::class, $professor_rate);
+            ->getForm();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $professor_rate=$form->getData();
+            $studentId = $form->get('student')->getData();
+            $student = $entityManager->getRepository(Student::class)->findOneBy($studentId);
+            if ($student) {
+                $professor_rate->setStudent($student);
+            } else {
+                return $this->redirectToRoute('professor_rate', ['error' => 'Invalid student ID']);
+            }
             $entityManager->persist($professor_rate);
             $entityManager->flush();
-            echo 'Saved new rate with id ' . $professor_rate->getId();
+            //echo 'Saved new rate with id ' . $professor_rate->getId();
 
             return $this->redirectToRoute('study');
         }
 
         return $this->render('rate_professor.html.twig',[
-            'form_rate_prof' => $form
+            'form_rate_prof' => $form,
         ]);
     }
 }

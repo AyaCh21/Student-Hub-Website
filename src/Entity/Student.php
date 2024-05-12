@@ -80,7 +80,7 @@ class Student
         return $this;
     }
 
-    static function getAllStudent() : array {
+/*    static function getAllStudent() : array {
         $stm = $db->prepare('SELECT id, email, password, username,phase,FROM student');
         $stm->execute();
         $result = array();
@@ -91,7 +91,7 @@ class Student
             $result[] = $Student;
         };
         return $result;
-    }
+    }*/
 
     /**
      * @return Collection<int, ProfessorRate>

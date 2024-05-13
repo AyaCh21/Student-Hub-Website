@@ -57,12 +57,12 @@ class StudyMaterial
         $this->materialType = $materialType;
     }
 
-    public function getUploadedBy(): ?int
+    public function getUploadedBy(): ?Student
     {
         return $this->uploaded_by;
     }
 
-    public function setUploadedBy(int $uploaded_by): static
+    public function setUploadedBy(Student $uploaded_by): static
     {
         $this->uploaded_by = $uploaded_by;
 

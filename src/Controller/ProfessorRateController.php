@@ -33,8 +33,11 @@ class ProfessorRateController extends AbstractController
                     return $professor->getName(); // Assuming getName() exists
                 },
             ])
-            ->add('student_id',IntegerType::class,[
-                'label'=>'student id'
+            ->add('student', EntityType::class, [
+                'class' => Student::class,
+                'choice_label' => function (Student $student) {
+                    return $student->getId();
+                },
             ])
             ->add('rate',IntegerType::class)
             ->add('save',SubmitType::class,['label'=>'submit rate'])
@@ -42,8 +45,8 @@ class ProfessorRateController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $studentId = $form->get('student_id')->getData();
-            $student = $entityManager->getRepository(Student::class)->findOneBy($studentId);
+            $studentId = $form->get('student')->getData();
+            $student = $entityManager->getRepository(Student::class)->find($studentId);
             if (!$student) {
                 echo "Student not found.";
             } else {

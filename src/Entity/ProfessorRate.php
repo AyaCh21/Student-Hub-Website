@@ -12,14 +12,13 @@ class ProfessorRate
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    protected ?int $id = null;
+    private ?int $id = null;
     #[ORM\ManyToOne(targetEntity: Professor::class, inversedBy: 'rate')]
     #[ORM\JoinColumn(name: 'professor_id',referencedColumnName: 'id')]
-    protected ?Professor $professor = null;
-    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'professorRate')]
+    private ?Professor $professor = null;
+    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'rate')]
     #[ORM\JoinColumn(name: 'student_id',referencedColumnName: 'id')]
-    protected ?Student $student = null;
-
+    private ?Student $student = null;
     #[ORM\Column]
     private ?int $rate_value = null;
 

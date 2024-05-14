@@ -1,19 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-
-    <div>Hello World!</div>
-    <div class="prof_card">
-        <h2 class="prof_name">Albus Dumbledore</h2>
-        <div class="prof_classes_wrapper">
-            {# foreach class in classes #}
-            <div class="prof_class">some class</div>
-            <div class="prof_class">Transfiguration</div>
-            {# endfor #}
+    {% for professor in professors %}
+        <div class="prof_card">
+            <h2 class="prof_name">{{ professor.name }}</h2>
+            <div class="prof_classes_wrapper">
+                {# foreach class in classes #}
+                <div class="prof_class">some class</div>
+                <div class="prof_class">Transfiguration</div>
+                {# endfor #}
+            </div>
+            <div class="prof_rate">20</div>
+            <input type="button" class="rate_button" value="rate me">
+            <input type="button" class="feedback_button" value="leave feedback">
         </div>
-        <div class="prof_rate">20</div>
-        <input type="button" class="rate_button" value="rate me">
-        <input type="button" class="feedback_button" value="leave feedback">
-    </div>
-
+    {% endfor %}
 {% endblock %}

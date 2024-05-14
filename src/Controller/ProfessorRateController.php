@@ -64,12 +64,15 @@ class ProfessorRateController extends AbstractController
     }
 
     #[Route("/display_rate_prof", name:"display_professor_rate")]
-    public function viewProfRate(): Response
+    public function viewProfRate(EntityManagerInterface $entityManager): Response
     {
+        $professors = $entityManager->getRepository(Professor::class)->findAll();
+
         $this->stylesheets[]='rate_form.css';
 
         return $this->render('display_rate_professor.html.twig',[
-            'stylesheets'=>$this->stylesheets
+            'stylesheets'=>$this->stylesheets,
+            'professors'=>$professors
         ]);
     }
 }

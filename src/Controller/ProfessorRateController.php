@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProfessorRateController extends AbstractController
 {
     #[Route("/rate_prof", name:"professor_rate")]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function addProfRate(Request $request, EntityManagerInterface $entityManager): Response
     {
         $professor_rate = new ProfessorRate();
         $professors = $entityManager->getRepository(Professor::class)->findAll();
@@ -60,5 +60,11 @@ class ProfessorRateController extends AbstractController
         return $this->render('rate_professor.html.twig',[
             'form_rate_prof' => $form
         ]);
+    }
+
+    #[Route("/display_rate_prof", name:"display_professor_rate")]
+    public function viewProfRate(): Response
+    {
+        return $this->render('display_rate_professor.html.twig');
     }
 }

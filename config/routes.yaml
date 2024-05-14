@@ -15,4 +15,8 @@ study:
 
 professor_rate:
     path: /rate_prof
-    controller: App\Controller\ProfessorRateController::new
+    controller: App\Controller\ProfessorRateController::addProfRate
+
+display_professor_rate:
+    path: /display_rate_prof
+    controller: App\Controller\ProfessorRateController::viewProfRate

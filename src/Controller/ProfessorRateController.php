@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Course;
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
 use App\Entity\Student;
@@ -66,13 +67,22 @@ class ProfessorRateController extends AbstractController
     #[Route("/display_rate_prof", name:"display_professor_rate")]
     public function viewProfRate(EntityManagerInterface $entityManager): Response
     {
-        $professors = $entityManager->getRepository(Professor::class)->findAll();
+        $courses = $entityManager->getRepository(Course::class)->findAll();
+        $professorWiseCourses = [];
+
+        foreach ($courses as $course) {
+            $professor = $course->getProfessor();
+            if (!isset($professorWiseCourses[$professor])) {
+                $professorWiseCourses[$professor] = [];
+            }
+            $professorWiseCourses[$professor][] = $course;
+        }
 
         $this->stylesheets[]='rate_form.css';
 
         return $this->render('display_rate_professor.html.twig',[
             'stylesheets'=>$this->stylesheets,
-            'professors'=>$professors
+            'professorWiseCourses'=>$professorWiseCourses
         ]);
     }
 }

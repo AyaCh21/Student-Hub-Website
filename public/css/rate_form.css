@@ -26,9 +26,17 @@
 }
 
 /* THIS IS SPACE FOR DISPLAY RATE */
+.prof_cards_wrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: auto;
+    background: #2e4949;
+    justify-content: center;
+}
 .prof_card {
     box-shadow: 0 4px 8px 0 var(--light-color);
-    width: fit-content;
+    border-radius: 20px;
+    width: 20%;
     padding: 15px 20px;
     margin: 5px;
 }

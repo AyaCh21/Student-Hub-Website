@@ -1,13 +1,32 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="rating_exam")
+ */
 class rating_exam
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column
+     */
     private ?int $id = null;
+    /**
+     * @ORM\Column
+     * @ORM\JoinColumn(name="course_id", referencedColumnName="id")
+     */
     private ?int $course_id = null;
+    /**
+     * @ORM\Column
+     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
+     */
     private ?int $student_id = null;
-
+    /**
+     * @ORM\Column
+     */
     private ?int $rate_value = null;
 
     /**

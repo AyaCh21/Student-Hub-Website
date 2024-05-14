@@ -20,7 +20,7 @@ class RatingType extends AbstractType
         $builder
             ->add('course_id', null, [
                 'label' => 'Course ID:',
-                'attr' => ['readonly' => true], // Assuming you want to display the course ID but not allow changes
+                'attr' => ['readonly' => true], // display the course ID but not allow changes
             ])
             ->add('rate_value', ChoiceType::class, [
                 'choices' => [

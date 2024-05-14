@@ -72,10 +72,11 @@ class ProfessorRateController extends AbstractController
 
         foreach ($courses as $course) {
             $professor = $course->getProfessor();
-            if (!isset($professorWiseCourses[$professor])) {
-                $professorWiseCourses[$professor] = [];
+            $professor_name = $professor->getName();
+            if (!isset($professorWiseCourses[$professor_name])) {
+                $professorWiseCourses[$professor_name] = [];
             }
-            $professorWiseCourses[$professor][] = $course;
+            $professorWiseCourses[$professor_name][] = $course;
         }
 
         $this->stylesheets[]='rate_form.css';

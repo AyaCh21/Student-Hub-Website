@@ -20,6 +20,7 @@ class StudyController extends AbstractController
     {
         $courses = $entityManager->getRepository(Course::class)->findAll();
         $phaseWiseCourses = [];
+
         foreach ($courses as $course) {
             $phase = $course->getPhase();
             if (!isset($phaseWiseCourses[$phase])) {

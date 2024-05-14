@@ -14,3 +14,7 @@ study:
         controller: App\Controller\StudyController::study
 
 
+# config/routes.yaml
+rate_course:
+    path: /rate
+    controller: App\Controller\RatingController::rateCourse

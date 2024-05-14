@@ -1,0 +1,21 @@
+{# rate_course.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Rate Course{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/rating.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <h1>Rate Course</h1>
+    {{ form_start(form, {'attr': {'id': 'rating-form'}}) }}
+    {{ form_row(form.rateValue, {'attr': {'id': 'rating_exam_rateValue'}}) }}
+    <button type="submit" class="btn btn-primary">Submit Rating</button>
+    {{ form_end(form) }}
+
+    <script src="{{ asset('js/rating.js') }}"></script>
+{% endblock %}

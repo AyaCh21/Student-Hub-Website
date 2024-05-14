@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProfessorRateController extends AbstractController
 {
+    private array $stylesheets;
     #[Route("/rate_prof", name:"professor_rate")]
     public function addProfRate(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -65,6 +66,10 @@ class ProfessorRateController extends AbstractController
     #[Route("/display_rate_prof", name:"display_professor_rate")]
     public function viewProfRate(): Response
     {
-        return $this->render('display_rate_professor.html.twig');
+        $this->stylesheets[]='rate_form.css';
+
+        return $this->render('display_rate_professor.html.twig',[
+            'stylesheets'=>$this->stylesheets
+        ]);
     }
 }

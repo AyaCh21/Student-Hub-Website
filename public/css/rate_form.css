@@ -24,3 +24,11 @@
     width: 90%;
     background: deeppink;
 }
+
+/* THIS IS SPACE FOR DISPLAY RATE */
+.prof_card {
+    box-shadow: 0 4px 8px 0 var(--light-color);
+    width: fit-content;
+    padding: 15px 20px;
+    margin: 5px;
+}

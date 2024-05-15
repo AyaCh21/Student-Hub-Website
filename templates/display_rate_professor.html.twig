@@ -4,7 +4,7 @@
     <div class="prof_cards_wrapper">
         {% for professor, courses in professorWiseCourses %}
             <div class="prof_card">
-                <h2 class="prof_name">{{ professor.name }}</h2>
+                <h2 class="prof_name">{{ professor }}</h2>
                 <div class="prof_classes_wrapper">
                     {% for course in courses %}
                         <div class="prof_class">{{ course.name }}</div>

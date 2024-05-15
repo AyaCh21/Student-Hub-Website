@@ -1,10 +1,11 @@
 <?php
-
 namespace App\Entity;
+
+use App\Repository\CourseRateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CourseRateRepository::class)]
-#[ORM\Table('rating_exam')]
+#[ORM\Table('ratingExam')]
 class rating_exam
 {
     #[ORM\Id]
@@ -12,61 +13,43 @@ class rating_exam
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'rate')]
-    #[ORM\JoinColumn(name: 'course_id', referencedColumnName: 'id')]
-    private ?Course $course = null;
+    #[ORM\Column(name: 'course_id', type: 'integer', nullable: true)]
+    private ?int $courseId = null;
 
-    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'rate')]
-    #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id')]
-    private ?Student $student = null;
+    #[ORM\Column(name: 'student_id', type: 'integer', nullable: true)]
+    private ?int $studentId = null;
 
-    #[ORM\Column]
-    private ?int $rate_value = null;
+    #[ORM\Column(name: 'rate_value', type: 'integer', nullable: true)]
+    private ?int $rateValue = null;
 
-    public function __construct()
+    // Getters and setters for courseId, studentId, and rateValue properties
+    public function getCourseId(): ?int
     {
+        return $this->courseId;
     }
 
-    public function getId(): ?int
+    public function setCourseId(?int $courseId): void
     {
-        return $this->id;
+        $this->courseId = $courseId;
     }
 
-    public function setId(?int $id): void
+    public function getStudentId(): ?int
     {
-        $this->id = $id;
+        return $this->studentId;
     }
 
-    public function getCourse(): ?Course
+    public function setStudentId(?int $studentId): void
     {
-        return $this->course;
-    }
-
-    public function setCourse(?Course $course): void
-    {
-        $this->course = $course;
-    }
-
-    public function getStudent(): ?Student
-    {
-        return $this->student;
-    }
-
-    public function setStudent(?Student $student): void
-    {
-        $this->student = $student;
+        $this->studentId = $studentId;
     }
 
     public function getRateValue(): ?int
     {
-        return $this->rate_value;
+        return $this->rateValue;
     }
 
-    public function setRateValue(?int $rate_value): void
+    public function setRateValue(?int $rateValue): void
     {
-        $this->rate_value = $rate_value;
+        $this->rateValue = $rateValue;
     }
-
-
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\rating_exam;
@@ -24,11 +23,7 @@ class RatingController extends AbstractController
      */
     public function rateCourse(Request $request): Response
     {
-        // Assuming you have access to course and student IDs
-        $courseId = 1; // Replace with the actual course ID
-        $studentId = 1; // Replace with the actual student ID
-
-        $rating = new rating_exam(null, $courseId, $studentId, null); // Instantiate rating_exam with required parameters
+        $rating = new rating_exam(); // Instantiate rating_exam without constructor parameters
 
         $form = $this->createForm(RatingType::class, $rating);
 
@@ -37,6 +32,14 @@ class RatingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Set the rate_value property from the form data
             $rating->setRateValue($form->get('rate_value')->getData());
+
+            // Assuming you have access to course and student IDs
+            $courseId = 1; // Replace with the actual course ID
+            $studentId = 1; // Replace with the actual student ID
+
+            // Set the course and student IDs
+            $rating->setCourseId($courseId);
+            $rating->setStudentId($studentId);
 
             // Persist the rating to the database
             $this->entityManager->persist($rating);

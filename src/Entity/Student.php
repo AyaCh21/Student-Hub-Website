@@ -72,7 +72,7 @@ class Student
 
     static function getAllStudent() : array {
         $db= Db :: getConnection();
-        $stm = $db->prepare('SELECT id, email, password, username,phase FROM student');
+        $stm = $db->prepare('SELECT id, email, password, username,phase FROM Student');
         $stm->execute();
         $result = array();
         while ($item = $stm->fetch()) {

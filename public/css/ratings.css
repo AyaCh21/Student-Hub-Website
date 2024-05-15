@@ -21,3 +21,10 @@
     font-size: 1rem;
     color: #555;
 }
+.row{
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: auto;
+    background: #2e4949;
+    justify-content: center;
+}

@@ -20,7 +20,7 @@ class RatingExamRepository extends ServiceEntityRepository
     public function getAverageRatings(): array
     {
         $qb = $this->createQueryBuilder('r');
-        $qb->select('r.courseId', 'AVG(r.rateValue) AS average')
+        $qb->select('r.courseId', 'AVG(r.rateValue) AS average', 'COUNT(r.id) AS count')
             ->groupBy('r.courseId');
 
         $query = $qb->getQuery();
@@ -28,8 +28,10 @@ class RatingExamRepository extends ServiceEntityRepository
 
         $averageRatings = [];
         foreach ($results as $result) {
-            // Use 'courseId' instead of 'course_id' and 'rateValue' instead of 'rate_value'
-            $averageRatings[$result['courseId']] = $result['average'];
+            $averageRatings[$result['courseId']] = [
+                'average' => $result['average'],
+                'count' => $result['count']
+            ];
         }
 
         return $averageRatings;

@@ -35,7 +35,7 @@ class RatingController extends AbstractController
             $rating->setRateValue($form->get('rate_value')->getData());
 
             // Assuming you have access to course and student IDs
-            $courseId = 1; // Replace with the actual course ID
+            $courseId = $form->get('course_id')->getData();; // Replace with the actual course ID
             $studentId = 1; // Replace with the actual student ID
 
             // Set the course and student IDs

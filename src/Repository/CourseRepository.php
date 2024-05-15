@@ -20,4 +20,18 @@ class CourseRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Course::class);
     }
+    /**
+     * Find a course by its name.
+     *
+     * @param string $name The name of the course to find.
+     * @return Course|null The course entity if found, or null if not found.
+     */
+    public function findOneByName(string $name): ?Course
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

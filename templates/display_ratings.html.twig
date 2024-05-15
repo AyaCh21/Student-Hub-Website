@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Average Ratings{% endblock %}
+
+{% block content %}
+    <h1>Average Ratings</h1>
+    <div class="row">
+        {% for courseId, average in averageRatings %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Course ID: {{ courseId }}</h5>
+                        <p class="card-text">Average Rating: {{ average | number_format(2) }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

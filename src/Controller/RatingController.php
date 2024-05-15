@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\rating_exam;
 use App\Form\RatingType;
+use App\Repository\RatingExamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RatingController extends AbstractController
 {
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -49,12 +50,26 @@ class RatingController extends AbstractController
             $this->addFlash('success', 'Thank you for rating the course!');
 
             // Redirect to the homepage or any other page after successful submission
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('display_ratings');
         }
 
         // Render the form
         return $this->render('rate_course.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/ratings", name="display_ratings")
+     */
+    public function displayRatings(RatingExamRepository $ratingRepository): Response
+    {
+        // Get average ratings for each course
+        $averageRatings = $ratingRepository->getAverageRatings();
+
+        // Render the ratings display page
+        return $this->render('display_ratings.html.twig', [
+            'averageRatings' => $averageRatings,
         ]);
     }
 }

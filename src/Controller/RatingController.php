@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\rating_exam;
 use App\Form\RatingType;
+use App\Repository\CourseRepository;
 use App\Repository\RatingExamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,14 +63,21 @@ class RatingController extends AbstractController
     /**
      * @Route("/ratings", name="display_ratings")
      */
-    public function displayRatings(RatingExamRepository $ratingRepository): Response
+    public function displayRatings(RatingExamRepository $ratingRepository, CourseRepository $courseRepository): Response
     {
         // Get average ratings for each course
         $averageRatings = $ratingRepository->getAverageRatings();
 
+        // Fetch course names based on course IDs
+        $courseNames = [];
+        foreach ($averageRatings as $courseId => $ratingData) {
+            $courseNames[$courseId] = $courseRepository->find($courseId)->getName();
+        }
+
         // Render the ratings display page
         return $this->render('display_ratings.html.twig', [
             'averageRatings' => $averageRatings,
+            'courseNames' => $courseNames,
         ]);
     }
 }

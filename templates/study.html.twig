@@ -6,6 +6,28 @@
     {{ parent() }}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{{ asset('css/study.css') }}">
+    <style>
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .floating-button span {
+            font-size: 32px;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
@@ -52,6 +74,11 @@
         {% endfor %}
     </div>
     <div id="selected-option"></div> {# Display selected option here #}
+
+    <button class="floating-button" onclick="window.location.href='{{ path('lecture') }}'">
+        <span class="material-symbols-outlined">Btn</span>
+    </button>
+
     <script>
         function searchCourse() {
             document.querySelectorAll('.course').forEach(course => {
@@ -95,5 +122,4 @@
             }
         }
     </script>
-
 {% endblock %}

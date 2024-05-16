@@ -22,7 +22,9 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
@@ -138,6 +140,16 @@ class UserController extends AbstractController
 
         // Redirect to the controller action responsible for persisting the user
         return $this->redirectToRoute('home');
+    }
+
+    public function delete(UserPasswordHasherInterface $passwordHasher, UserInterface $user): void
+    {
+        // ... e.g. get the password from a "confirm deletion" dialog
+        $plaintextPassword = "place_holder()";
+
+        if (!$passwordHasher->isPasswordValid($user, $plaintextPassword)) {
+            throw new AccessDeniedHttpException();
+        }
     }
 
 //====================================================================================================================//

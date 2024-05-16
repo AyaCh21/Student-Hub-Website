@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Include any CSS files -->
+</head>
+<body>
+<h1>Register</h1>
+
+{% if error %}
+    <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+{% endif %}
+
+<form method="post" action="{{ path('register_form_submit_route') }}">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="_email" required><br><br>
+
+    <label for="password_1">Password:</label>
+    <input type="password" id="password_1" name="_password_1" required><br><br>
+
+    <label for="password_2">Confirm Password:</label>
+    <input type="password" id="password_2" name="_password_2" required><br><br>
+
+    <button type="submit">Login</button>
+</form>
+
+<!-- Include any JavaScript files -->
+</body>
+</html>

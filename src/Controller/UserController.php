@@ -155,16 +155,16 @@ class UserController extends AbstractController
         $hashedPassword = $passwordHasher->hashPassword($user, $password1);
         $user->setPassword($hashedPassword);
 
-//        //push new student record if valid
-//        $student=new Student();
-//        $student->setUsername($username);
-//        $student->setEmail($email);
-//        $student->setPassword($password1);
-//        $student->setPhase($phase);
-//        $student->setSpecialisation($specialization);
-//
-//        $entityManager->persist($student);
-//        $entityManager->flush();
+        //push new student record if valid
+        $student=new Student();
+        $student->setUsername($username);
+        $student->setEmail($email);
+        $student->setPassword($hashedPassword);
+        $student->setPhase($phase);
+        $student->setSpecialisation($specialization);
+
+        $entityManager->persist($student);
+        $entityManager->flush();
 
 
         // Store the User entity in the session
@@ -172,7 +172,8 @@ class UserController extends AbstractController
 
         printf("register successful! user: %s, password:%s, hashed password: %s\n",$username,$password1,$hashedPassword);
 
-        $isValid = $passwordHasher->isPasswordValid($user, "12");
+        //debug segment
+        $isValid = $passwordHasher->isPasswordValid($user, "password");
 
         // $isPasswordValid will be true if the password matches, false otherwise
         if ($isValid) {

@@ -138,10 +138,28 @@ class UserController extends AbstractController
         // Store the User entity in the session
 //        $session->set('user_to_register', $user);
 
-        printf("register successful! user: %s, password:%s, hashed password: %s",$username,$password1,$hashedPassword);
+        printf("register successful! user: %s, password:%s, hashed password: %s\n",$username,$password1,$hashedPassword);
+
+        $isValid = $passwordHasher->isPasswordValid($user, "12");
+
+        // $isPasswordValid will be true if the password matches, false otherwise
+        if ($isValid) {
+            // Password is valid
+            // Proceed with your logic here
+            printf("valid passoord");
+        } else {
+            // Password is invalid
+            // Handle the error or inform the user
+            printf("WRONG passoord");
+
+        }
 
         // Redirect to the controller action responsible for persisting the user
-        return $this->redirectToRoute('home');
+//        return $this->redirectToRoute('login');
+        return $this->render('register.html.twig', [
+            'username' => $username,
+            'error' => $error,
+        ]);
     }
 
     public function delete(UserPasswordHasherInterface $passwordHasher, UserInterface $user): void

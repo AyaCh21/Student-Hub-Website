@@ -32,7 +32,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 
 class UserController extends AbstractController
 {
-
+    private array $stylesheets;
 
 
 //====================================================================================================================//
@@ -90,27 +90,28 @@ class UserController extends AbstractController
 
         if ($isValid) {
             // Password is valid
-            printf("valid passoord\n");
-
-            //update password in db
-            $password_hash=$passwordHasher->hashPassword(
-                $user,
-                $password
-            );
-            $user->setPassword($password_hash);
-            $inDbStudent->setPassword($password_hash);
-            $entityManager->persist($inDbStudent);
-            $entityManager->flush();
-            printf("passoord updated\n");
+//            printf("valid passoord\n");
+//
+//            //update password in db
+//            $password_hash=$passwordHasher->hashPassword(
+//                $user,
+//                $password
+//            );
+//            $user->setPassword($password_hash);
+//            $inDbStudent->setPassword($password_hash);
+//            $entityManager->persist($inDbStudent);
+//            $entityManager->flush();
+//            printf("passoord updated\n");
 
             // log the user in on the current firewall
-            $security->login($user);
+            $security->login($inDbStudent);
 
-            printf("user: %s, password:%s, hashed password: %s",$username,$password,$password_hash);
-            return $this->render('login.html.twig', [
-                'username' => $username,
-                'error' => $error,
-            ]);
+//            printf("user: %s, password:%s",$username,$password);
+//            $this->stylesheets[]='home_header.css';
+//            return $this->render('home.html.twig',[
+//                'stylesheets'=>$this->stylesheets
+//            ]);
+            return $this->redirectToRoute('homepage');
 
         } else {
             // Password is invalid
@@ -222,19 +223,17 @@ class UserController extends AbstractController
 
         // $isPasswordValid will be true if the password matches, false otherwise
         if ($isValid) {
-            // Password is valid
             // Proceed with your logic here
             printf("valid passoord");
         } else {
-            // Password is invalid
             // Handle the error or inform the user
             printf("WRONG passoord");
-
         }
+
 
         // Redirect to the controller action responsible for persisting the user
 //        return $this->redirectToRoute('login');
-        return $this->render('register.html.twig', [
+        return $this->render('login.html.twig', [
             'username' => $username,
             'error' => $error,
         ]);
@@ -254,7 +253,8 @@ class UserController extends AbstractController
 //              LOGOUT FUNCTIONS
 //====================================================================================================================//
 
-    public function logOut(Security $security): Response
+    #[Route('/logout', name: 'user_logout_index')]
+    public function logout(Security $security): Response
     {
         // logout the user in on the current firewall
         $response = $security->logout();

@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
 #[ORM\Table('Student')]
-class Student
+class Student implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,6 +25,7 @@ class Student
     private ?int $phase = null;
     #[ORM\Column(length: 20)]
     private ?string $specialisation=null;
+    private array $roles = [];
 
 
 
@@ -95,16 +98,41 @@ class Student
     }
 
 
-//    static function getAllStudent() : array {
-//        $stm = $db->prepare('SELECT id, email, password, username,phase,FROM student');
-//        $stm->execute();
-//        $result = array();
-//        while ($item = $stm->fetch()) {
-//            $Student = new Student($item['email']);
-//            $Student->setId($item['id']);
-//
-//            $result[] = $Student;
-//        };
-//        return $result;
-//    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+    /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
 }

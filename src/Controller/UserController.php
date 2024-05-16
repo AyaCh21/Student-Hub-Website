@@ -15,6 +15,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Student;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -109,7 +110,7 @@ class UserController extends AbstractController
 
 
     #[Route('/register_submit',name: 'user_register_check', methods: ['POST'])]
-    public function registerCheck(AuthenticationUtils $authenticationUtils,SessionInterface $session, Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function registerCheck(AuthenticationUtils $authenticationUtils,SessionInterface $session, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -117,6 +118,18 @@ class UserController extends AbstractController
         $email = $request->request->get('_email');
         $password1 = $request->request->get('_password_1');
         $password2 = $request->request->get('_password_2');
+        $specialization = $request->request->get('_specialization');
+        $phase = $request->request->get('_phase');
+
+        //check if valid username
+
+        $studentRepository=$entityManager->getRepository(Student::class);
+        $inDbStudent=$studentRepository->findBy(['username'=>$username]);
+        if (!empty($inDbStudent)) {
+            printf($inDbStudent[0]->getEmail());
+        } else {
+            printf("No student found with username: %s\n", $username);
+        }
 
         if ($password1 !== $password2) {
             printf("mis matching password!!");
@@ -133,7 +146,18 @@ class UserController extends AbstractController
         // Hash the password
         $hashedPassword = $passwordHasher->hashPassword($user, $password1);
         $user->setPassword($hashedPassword);
-        // Add other properties if needed (e.g., email)
+
+//        //push new student record if valid
+//        $student=new Student();
+//        $student->setUsername($username);
+//        $student->setEmail($email);
+//        $student->setPassword($password1);
+//        $student->setPhase($phase);
+//        $student->setSpecialisation($specialization);
+//
+//        $entityManager->persist($student);
+//        $entityManager->flush();
+
 
         // Store the User entity in the session
 //        $session->set('user_to_register', $user);

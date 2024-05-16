@@ -12,15 +12,18 @@ class Student
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
     #[ORM\Column(length: 120)]
     private ?string $username = null;
-
     #[ORM\Column(length: 60)]
     private ?string $email = null;
-
     #[ORM\Column(length: 20)]
     private ?string $password = null;
+    #[ORM\Column]
+    private ?int $phase = null;
+    #[ORM\Column(length: 20)]
+    private ?string $specialisation=null;
+
+
 
     public function getId(): ?int
     {
@@ -69,6 +72,27 @@ class Student
 
         return $this;
     }
+
+    public function getPhase(): ?int
+    {
+        return $this->phase;
+    }
+
+    public function setPhase(?int $phase): void
+    {
+        $this->phase = $phase;
+    }
+
+    public function getSpecialisation(): ?string
+    {
+        return $this->specialisation;
+    }
+
+    public function setSpecialisation(?string $specialisation): void
+    {
+        $this->specialisation = $specialisation;
+    }
+
 
     static function getAllStudent() : array {
         $stm = $db->prepare('SELECT id, email, password, username,phase,FROM student');

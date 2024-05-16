@@ -46,8 +46,9 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         # matches /admin/users/*
         - { path: '^/home', roles: PUBLIC_ACCESS }
-
+        - { path: '^/login', roles: PUBLIC_ACCESS }
         - { path: '^/profile', roles: ROLE_USER }
+        - { path: '^/study', roles: ROLE_USER }
 
 when@test:
     security:

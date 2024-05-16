@@ -160,7 +160,7 @@ class UserController extends AbstractController
         $inDbStudent=$studentRepository->findBy(['username'=>$username]);
 
         if (!empty($inDbStudent)) {
-            printf($inDbStudent[0]->getEmail());
+            printf($inDbStudent[0]->getUsername());
             printf("\nexisting user name, choose another one!\n");
             return $this->render('register.html.twig', [
                 'controller_name' => 'UserController',
@@ -216,19 +216,19 @@ class UserController extends AbstractController
         // Store the User entity in the session
 //        $session->set('user_to_register', $user);
 
-        printf("register successful! user: %s, password:%s, hashed password: %s\n",$username,$password1,$hashedPassword);
+        printf("register successful! user: %s\n",$username);
 
         //debug segment
         $isValid = $passwordHasher->isPasswordValid($user, "password");
 
-        // $isPasswordValid will be true if the password matches, false otherwise
-        if ($isValid) {
-            // Proceed with your logic here
-            printf("valid passoord");
-        } else {
-            // Handle the error or inform the user
-            printf("WRONG passoord");
-        }
+//        // $isPasswordValid will be true if the password matches, false otherwise
+//        if ($isValid) {
+//            // Proceed with your logic here
+//            printf("valid passoord");
+//        } else {
+//            // Handle the error or inform the user
+//            printf("WRONG passoord");
+//        }
 
 
         // Redirect to the controller action responsible for persisting the user

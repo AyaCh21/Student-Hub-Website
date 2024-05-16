@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 #[ORM\Table ('course')]
+
 class Course
 {
     #[ORM\Id]

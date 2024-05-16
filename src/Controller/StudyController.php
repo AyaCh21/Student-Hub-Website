@@ -35,6 +35,4 @@ class StudyController extends AbstractController
             'phaseWiseCourses' => $phaseWiseCourses
         ]);
     }
-    
-
 }

@@ -6,7 +6,7 @@ use App\Repository\ProfessorRateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfessorRateRepository::class)]
-#[ORM\Table('rating_prof')]
+#[ORM\Table('ratingProf')]
 class ProfessorRate
 {
     #[ORM\Id]

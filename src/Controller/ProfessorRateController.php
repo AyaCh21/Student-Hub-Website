@@ -41,7 +41,7 @@ class ProfessorRateController extends AbstractController
                     return $student->getId();
                 },
             ])
-            ->add('rate',IntegerType::class)
+            ->add('rate',RangeType::class)
             ->add('save',SubmitType::class,['label'=>'submit rate'])
             ->getForm();
 

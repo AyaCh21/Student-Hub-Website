@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Average Ratings{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/ratings.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Average Ratings</h1>
+    <div class="row">
+        {% for courseId, averageRating in averageRatings %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Course Name: {{ courseNames[courseId]}}</h5>
+                        <p class="card-text">Average Rating: {{  averageRating['average']| number_format(2) }}</p>
+                        <p class="card-text">Number of Ratings: {{  averageRating['count'] }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

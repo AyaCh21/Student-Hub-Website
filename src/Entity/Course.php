@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 #[ORM\Table ('course')]
+
 class Course
 {
     #[ORM\Id]
@@ -19,7 +20,7 @@ class Course
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
-    #[ORM\JoinColumn(name:'professor',nullable: false)]
+    #[ORM\JoinColumn(name:'professor_id',nullable: false)]
     private ?Professor $professor = null;
 
     #[ORM\OneToMany(targetEntity: StudyMaterial::class, mappedBy: 'course')]

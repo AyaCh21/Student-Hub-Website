@@ -14,34 +14,86 @@
 {% endblock %}
 
 {% block content %}
-    {% if phaseWiseCourses is empty %}
-        <p>fix the fuck-up, no courses found</p>
-    {% else %}
-        <ul>{% for phase,courses in phaseWiseCourses %}
-                <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
-                    <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
-                </svg>
-                <li>Phase {{ phase }}</li>
-                <ul class="courses-wrapper" style="display: none">
+    <div class="search-form">
+        <input type="text" id="courseSearch" placeholder="Type a course name...">
+        <select id="typeSelect">
+            <option value="lecture">Lecture</option>
+            <option value="lab">Lab</option>
+        </select>
+        <button onclick="searchCourse()">Search</button>
+    </div>
+
+    <div class="phases-wrapper">
+        {% for phase, courses in phaseWiseCourses %}
+            <div class="phase-wrapper">
+                <div class="phase-header">
+                    <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
+                        <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+                    </svg>
+                    <h2 class="phase-toggle" onclick="togglePhase(this)">Phase {{ phase }}</h2>
+                </div>
+                <ul class="courses" style="display: none;">
                     {% for course in courses %}
-                        <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
-                            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
-                        </svg>
-                        <li>{{ course.name }}</li>
-                        {% if course.pdf is defined and course.pdf is not null %}
-                            <div class="pdf-viewer">
-                               {% set pdf_parts = course.pdf | split('/') %}
-                                <!-- Link to open PDF in a new tab -->
-                                <a href="{{ course.pdf }}" target="_blank" rel="noopener noreferrer">{{ pdf_parts | last }}</a>
-                            </div>
-                        {% endif %}
-                        <ul class="options-wrapper" style="display: none">
-                            <li>Lectures</li>
-                            <li>Labs</li>
-                        </ul>
+                        <li class="course" id="{{ course.name | lower | replace({' ': '_'}) }}">
+                            <h3 class="course-toggle" onclick="toggleCourse(this)">{{ course.name }}</h3>
+                            {% if course.pdf is defined and course.pdf is not null %}
+                                <div class="pdf-viewer">
+                                    <embed src="{{ asset(course.pdf) }}" type="application/pdf" width="600" height="400"></embed>
+                                </div>
+                            {% endif %}
+                            <ul class="options" style="display: none;">
+                                <li class="option" id="{{ course.name | lower | replace({' ': '_'}) }}-lecture">Lecture</li>
+                                <li class="option" id="{{ course.name | lower | replace({' ': '_'}) }}-lab">Lab</li>
+                            </ul>
+                        </li>
                     {% endfor %}
                 </ul>
-            {% endfor %}
-        </ul>
-    {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div id="selected-option"></div> {# Display selected option here #}
+    <script>
+        function searchCourse() {
+            document.querySelectorAll('.course').forEach(course => {
+                course.style.backgroundColor = '';
+                course.querySelector('.options').style.display = 'none';
+            });
+            document.querySelectorAll('.options li').forEach(option => {
+                option.style.backgroundColor = '';
+            });
+            var courseName = document.getElementById('courseSearch').value.trim().replace(/\s+/g, '_').toLowerCase();
+            var type = document.getElementById('typeSelect').value.toLowerCase();
+            var courseElement = document.getElementById(courseName);
+            var optionElement = document.getElementById(courseName + '-' + type);
+
+            if (courseElement && optionElement) {
+                courseElement.closest('.courses').style.display = 'block';
+                optionElement.closest('.options').style.display = 'block';
+                courseElement.style.backgroundColor = '#4A90E2';
+                optionElement.style.backgroundColor = '#D62D20';
+                optionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                alert('Course or type not found. Please check your input.');
+            }
+        }
+
+        function togglePhase(element) {
+            var courses = element.parentElement.nextElementSibling;
+            if (courses.style.display === 'none' || !courses.style.display) {
+                courses.style.display = 'block';
+            } else {
+                courses.style.display = 'none';
+            }
+        }
+
+        function toggleCourse(element) {
+            var options = element.nextElementSibling.nextElementSibling;
+            if (options.style.display === 'none' || !options.style.display) {
+                options.style.display = 'block';
+            } else {
+                options.style.display = 'none';
+            }
+        }
+    </script>
+
 {% endblock %}

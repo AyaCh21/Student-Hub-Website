@@ -127,8 +127,16 @@ class UserController extends AbstractController
         $inDbStudent=$studentRepository->findBy(['username'=>$username]);
         if (!empty($inDbStudent)) {
             printf($inDbStudent[0]->getEmail());
+            printf("\nexisting user name, choose another one!\n");
+            return $this->render('register.html.twig', [
+                'controller_name' => 'UserController',
+                '_username' => $username,
+                '_password_1' => '',
+                '_password_2' => '',
+                'error' => $error
+            ]);
         } else {
-            printf("No student found with username: %s\n", $username);
+            printf("No student found with username: %s, creating new account.\n", $username);
         }
 
         if ($password1 !== $password2) {

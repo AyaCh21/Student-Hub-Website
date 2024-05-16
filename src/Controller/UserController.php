@@ -56,7 +56,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/login_submit', name: 'user_login_check')]
-    public function loginCheck(AuthenticationUtils $authenticationUtils,Request $request,UserPasswordHasherInterface $passwordHasher,Security $security)
+    public function loginCheck(AuthenticationUtils $authenticationUtils,Request $request,UserPasswordHasherInterface $passwordHasher,Security $security,EntityManagerInterface $entityManager)
     {
 
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -67,27 +67,60 @@ class UserController extends AbstractController
         // Retrieve username and password from the form submission
         $username = $request->request->get('_username');
         $password = $request->request->get('_password');
-        $user = new User($username,$password,"");
-        $password_hash=$passwordHasher->hashPassword(
-            $user,
-            $password
-        );
-        $user->setPassword($password_hash);
+        $user = new User($username,"dummy_password","");
 
-        // log the user in on the current firewall
-        $security->login($user);
+        //verify user name
+        $studentRepository=$entityManager->getRepository(Student::class);
+        $inDbStudent=$studentRepository->findOneBy(['username'=>$username]);
+        if($inDbStudent===null)
+        {
+            $inDbStudent=$studentRepository->findOneBy(['email'=>$username]);
+            if($inDbStudent===null)
+            {
+                printf("Non existing username or email, please recheck");
+                return $this->render('login.html.twig', [
+                    'username' => $username,
+                    'error' => $error,
+                ]);
+            }
+        }
+        $user->setPassword($inDbStudent->getPassword());
+        //verify password
+        $isValid = $passwordHasher->isPasswordValid($user, $password);
 
+        if ($isValid) {
+            // Password is valid
+            printf("valid passoord\n");
 
-        printf("user: %s, password:%s, hashed password: %s",$username,$password,$password_hash);
+            //update password in db
+            $password_hash=$passwordHasher->hashPassword(
+                $user,
+                $password
+            );
+            $user->setPassword($password_hash);
+            $inDbStudent->setPassword($password_hash);
+            $entityManager->persist($inDbStudent);
+            $entityManager->flush();
+            printf("passoord updated\n");
 
-        // This method is only used to define the route for login form submission.
-        // Symfony's security system will handle the actual authentication process.
-//        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
-        //replece with reroute in the future
-        return $this->render('login.html.twig', [
-            'username' => $username,
-            'error' => $error,
-        ]);
+            // log the user in on the current firewall
+            $security->login($user);
+
+            printf("user: %s, password:%s, hashed password: %s",$username,$password,$password_hash);
+            return $this->render('login.html.twig', [
+                'username' => $username,
+                'error' => $error,
+            ]);
+
+        } else {
+            // Password is invalid
+            printf("WRONG passoord!\n");
+            return $this->render('login.html.twig', [
+                'username' => $username,
+                'error' => $error,
+            ]);
+        }
+
     }
 
 
@@ -122,9 +155,9 @@ class UserController extends AbstractController
         $phase = $request->request->get('_phase');
 
         //check if valid username
-
         $studentRepository=$entityManager->getRepository(Student::class);
         $inDbStudent=$studentRepository->findBy(['username'=>$username]);
+
         if (!empty($inDbStudent)) {
             printf($inDbStudent[0]->getEmail());
             printf("\nexisting user name, choose another one!\n");
@@ -136,8 +169,20 @@ class UserController extends AbstractController
                 'error' => $error
             ]);
         } else {
-            printf("No student found with username: %s, creating new account.\n", $username);
+            $inDbStudent=$studentRepository->findBy(['email'=>$email]);
+            if (!empty($inDbStudent)) {
+                printf($inDbStudent[0]->getUsername());
+                printf("\nexisting user email, choose another one!\n");
+                return $this->render('register.html.twig', [
+                    'controller_name' => 'UserController',
+                    '_username' => $username,
+                    '_password_1' => '',
+                    '_password_2' => '',
+                    'error' => $error
+                ]);
+            }
         }
+        printf("No student found with username: %s, nor email:%s, creating new account.\n", $username, $email);
 
         if ($password1 !== $password2) {
             printf("mis matching password!!");

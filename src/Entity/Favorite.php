@@ -19,12 +19,13 @@ class Favorite
     #[ORM\Column(name: 'StudentID', type: 'integer', nullable: true)]
     #[ORM\ManyToOne(targetEntity: "Student")]
     #[ORM\JoinColumn(name: "StudentID", referencedColumnName: "id")]
-    private ?int $StudentID = null;
+    private ?Student $student = null;
 
     #[ORM\Column(name: 'CourseID', type: 'integer', nullable: true)]
-    #[ORM\ManyToOne(targetEntity: "course")]
+    #[ORM\ManyToOne(targetEntity: "Course")]
     #[ORM\JoinColumn(name: "CourseID", referencedColumnName: "id")]
-    private ?int $CourseID = null;
+    private ?Course $course = null;
+
 
     public function getId(): ?int
     {

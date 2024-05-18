@@ -35,6 +35,9 @@ class StudyMaterial
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $file_path = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $text = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +106,17 @@ class StudyMaterial
     public function setFilePath(string $file_path): self
     {
         $this->file_path = $file_path;
+        return $this;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
         return $this;
     }
 }

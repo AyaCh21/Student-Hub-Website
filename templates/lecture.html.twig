@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/lecture.css') }}">
     <style>
         .pdf-container {
-            margin-bottom: 60px;
+            margin-bottom: 30px;
         }
 
         .pdf-viewer {
@@ -17,7 +17,6 @@
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
     </style>
 {% endblock %}
 
@@ -27,10 +26,13 @@
     <div>
         {% for material in studyMaterials %}
             <div class="pdf-container">
-                <div class="pdf-viewer">
-                    <embed src="{{ material.getFilePath() }}" type="application/pdf">
-                </div>
-                <a href="{{ material.getFilePath() }}" class="download-button" download>Download PDF</a>
+                <p>{{ material.getText() }}</p>
+                {% if material.getFilePath() %}
+                    <div class="pdf-viewer">
+                        <embed src="{{ material.getFilePath() }}" type="application/pdf">
+                    </div>
+                    <a href="{{ material.getFilePath() }}" class="download-button" download>Download PDF</a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

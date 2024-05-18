@@ -10,3 +10,4 @@ when@prod:
     framework:
         router:
             strict_requirements: null
+            default_uri: 'https://a23www301.studev.groept.be/public/'

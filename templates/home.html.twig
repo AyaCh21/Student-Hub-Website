@@ -11,10 +11,14 @@
 
     <div class="home-buttons">
         <div class="home-button">
-            <input type="button" value="Sign In">
+            <a href="{{ path('login') }}">
+                <input type="button" value="Sign In">
+            </a>
         </div>
         <div class="home-button">
-            <input type="button" value="Join Now">
+            <a href="{{ path('register') }}">
+                <input type="button" value="Join Now">
+            </a>
         </div>
     </div>
 

@@ -21,7 +21,15 @@ register_form_submit_route:
 
 home:
   path: /home
-  controller: App\Controller\HomePageController:homePage
+  controller: App\Controller\HomePageController::homePage
+
+logout:
+  path: /logout
+  controller: App\Controller\HomePageController::logout
+
+profile:
+  path: /profile
+  controller: App\Controller\HomePageController::profile
 
 _symfony_logout:
   resource: security.route_loader.logout

@@ -21,6 +21,17 @@ class StudentRepository extends ServiceEntityRepository
         parent::__construct($registry, Student::class);
     }
 
+//public function createStudent(string $username, string $email, string $password, int $phase, string $specialization)
+//{
+//    $entityManager = $this->getEntityManager();
+//    $student=new Student();
+//    $student->setUsername($username);
+//    $student->setEmail($email);
+//    $student->setPassword($password);
+//    $student->setPhase($phase);
+//    $student->setSpecialization($specialization);
+//}
+
 //    /**
 //     * @return Student[] Returns an array of Student objects
 //     */

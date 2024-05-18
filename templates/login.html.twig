@@ -14,11 +14,16 @@
 {% endif %}
 
 <form method="post" action="{{ path('login_form_submit_route') }}">
-    <label for="username">Username:</label>
+    <label for="username">Email:</label>
     <input type="text" id="username" name="_username" required><br><br>
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="_password" required><br><br>
+
+    <label>
+        <input type="checkbox" name="_remember_me" checked>
+        Keep me logged in
+    </label>
 
     <button type="submit">Login</button>
 </form>

@@ -33,6 +33,10 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 class UserController extends AbstractController
 {
     private array $stylesheets;
+    public function __construct(
+    private Security $security,
+){
+}
 
 
 //====================================================================================================================//
@@ -261,6 +265,22 @@ class UserController extends AbstractController
 
         // ... return $response (if set) or e.g. redirect to the homepage
         return $this->redirectToRoute('login');
+    }
+
+
+//====================================================================================================================//
+//              PROFILE FUNCTIONS
+//====================================================================================================================//
+
+    #[\Symfony\Component\Routing\Attribute\Route("/profile", name:"profile")]
+    public function profilePage(): Response
+    {
+        $user = $this->security->getUser();
+        
+        $this->stylesheets[]='profile.css';
+        return $this->render('profile.html.twig',[
+            'stylesheets'=>$this->stylesheets
+        ]);
     }
 
 

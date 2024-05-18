@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    {% if is_granted('ROLE_USER') %}
     <div class="profile-header">
         <h3 class="profile-h3">Your Profile</h3>
         <p class="profile-p">You can change your data here.</p>
@@ -31,5 +32,8 @@
         </div>
     </div>
 
+    {% else %}
+        <p>You are not authenticated.</p>
+    {% endif %}
 
 {% endblock %}

@@ -48,7 +48,7 @@
     margin-top: 20px;
 }
 .prof_card {
-    box-shadow: 0 4px 8px 0 var(--light-color);
+    box-shadow: 0 4px 8px 0 #272c2c;
     border-radius: 20px;
     width: 20%;
     padding: 15px 20px;
@@ -63,10 +63,37 @@ input[type=button] {
     padding: 7px;
     margin: 10px;
     border-radius: 20px;
-    border: 1px solid var(--extra-color);
+    border: 1px solid var(--dark-color);
     color: var(--dark-color);
+    transition: all 0.5s;
+
+    &:before, &:after {
+        width: 0;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
 
     &:hover {
         cursor: pointer;
+    }
+}
+
+.rate_button {
+    background: var(--extra-color);
+
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--light-color), inset 6em 0 0 var(--light-color);
+    }
+}
+
+.feedback_button {
+    background: var(--minor-color);
+
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--main-color), inset 6em 0 0 var(--main-color);
+
     }
 }

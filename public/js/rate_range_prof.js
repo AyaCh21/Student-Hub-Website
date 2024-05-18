@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById('rating_form');
-    const input = document.querySelector('#rate_range');
+    const input = document.querySelector('.rate_range');
     const value = document.querySelector('#rate_value');
+    const slider = document.getElementById('rate_range');
+    console.log(slider, "is the slider element");
 
     value.textContent = input.value;
 
@@ -9,9 +10,4 @@ document.addEventListener("DOMContentLoaded", function() {
         value.textContent = event.target.value;
         console.log(value, "is the value");
     });
-
-    // PART FOR THE DATABASE
-    form.addEventListener('submit', (event) => {
-
-    })
 });

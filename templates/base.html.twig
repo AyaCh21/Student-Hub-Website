@@ -16,9 +16,6 @@
 
     {% block javascripts %}
         <script src="{{ asset('js/keep_navbar.js') }}"></script>
-        {% for script in scripts %}
-            <script src="{{ asset('js/'~script) }}"></script>
-        {% endfor %}
     {% endblock %}
 </head>
 <body>

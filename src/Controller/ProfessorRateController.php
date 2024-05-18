@@ -76,7 +76,7 @@ class ProfessorRateController extends AbstractController
         }
 
         $this->stylesheets[]='rate_form.css';
-        $this->scripts[]='rate_range.prof.js';
+        $this->scripts[]='rate_range_prof.js';
 
         return $this->render('rate_professor.html.twig',[
             'form_rate_prof' => $form->createView(),
@@ -101,10 +101,12 @@ class ProfessorRateController extends AbstractController
         }
 
         $this->stylesheets[]='rate_form.css';
+        $this->scripts[]='';
 
         return $this->render('display_rate_professor.html.twig',[
             'stylesheets'=>$this->stylesheets,
-            'professorWiseCourses'=>$professorWiseCourses
+            'professorWiseCourses'=>$professorWiseCourses,
+            'scripts'=>$this->scripts
         ]);
     }
 }

@@ -14,7 +14,4 @@ study:
         controller: App\Controller\StudyController::study
 lecture:
     path: /lecture
-    controller: App\Controller\LectureController::lecturePage
-
-
-
+    controller: App\Controller\LectureController::lecture

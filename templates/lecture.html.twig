@@ -1,62 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lecture{% endblock %}
+{% block title %}Study Materials{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{{ asset('css/lecture.css') }}">
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/lecture.js') }}"></script>
-{% endblock %}
-
 {% block content %}
-    <div class="PDF-form">
-        <input type="number" id="pdfIdInput" placeholder="Enter PDF ID">
-        <button onclick="getPdfFromDatabase()">Get PDF</button>
-    </div>
+    <h1>Study Materials</h1>
 
-    <div id="pdfDetails"></div>
-    <div id="pdfViewer" style="margin-top: 20px;">
-        <!-- PDF will be displayed here -->
-    </div>
-
-    <script>
-        function getPdfFromDatabase() {
-            const pdfId = document.getElementById('pdfIdInput').value;
-            if (!pdfId) {
-                alert('Please enter a PDF ID.');
-                return;
-            }
-
-            fetch(`/get-pdf/${pdfId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        document.getElementById('pdfDetails').innerHTML = `<p>Error: ${data.error}</p>`;
-                    } else {
-                        document.getElementById('pdfDetails').innerHTML = `
-                            <p>ID: ${data.id}</p>
-                            <p>Type: ${data.type}</p>
-                            <p>File Path: <a href="${data.file_path}" target="_blank">${data.file_path}</a></p>
-                        `;
-                        displayPdf(data.file_path);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching PDF:', error);
-                    document.getElementById('pdfDetails').innerHTML = '<p>Error fetching PDF. Please try again.</p>';
-                });
-        }
-
-        function displayPdf(filePath) {
-            const pdfViewer = document.getElementById('pdfViewer');
-            pdfViewer.innerHTML = `
-                <iframe src="${filePath}" width="100%" height="600px"></iframe>
-            `;
-        }
-    </script>
+    {% for type, materials in typeWiseMaterials %}
+        <h2>{{ type }}</h2>
+        <ul>
+            {% for material in materials %}
+                <li>
+                    <a href="{{ material.getFilePath() }}" target="_blank">
+                        {{ material.getFilePath() }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
 {% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="prof_cards_wrapper">
+        {% for professor, courses in professorWiseCourses %}
+            <div class="prof_card">
+                <h2 class="prof_name">{{ professor }}</h2>
+                <div class="prof_classes_wrapper">
+                    {% for course in courses %}
+                        <div class="prof_class">{{ course.name }}</div>
+                    {% endfor %}
+                </div>
+                {% if professorVotes[professor] > 0 %}
+                    <div class="prof_rate">Average Rating: {{ professorRatings[professor]|number_format(2) }}</div>
+                    <div class="prof_votes">Votes: {{ professorVotes[professor] }}</div>
+                {% else %}
+                    <div class="prof_rate">Be the first to rate</div>
+                {% endif %}
+                <a href="{{ path('professor_rate') }}"><input type="button" class="rate_button" value="rate me"></a>
+                <input type="button" class="feedback_button" value="leave feedback">
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById('rating_form');
     const input = document.querySelector('#rate_range');
-    const value = document.querySelector('#value');
+    const value = document.querySelector('#rate_value');
 
     value.textContent = input.value;
 

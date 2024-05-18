@@ -1,28 +1,41 @@
-.rate_prof_space {
+.main {
+    justify-items: center;
+}
+
+.prof_rate_from {
     display: flex;
-    width: 100%;
-    flex-direction: column;
-    padding: 20px;
-    box-shadow: -8px -8px 16px #242928, 10px 10px 16px #121414;
-    border-radius: 50px;
-
-}
-
-.prof_feedback_grid {
-    display: block;
-}
-
-.range_text {
-    align-items: flex-start;
-}
-.range_wrap {
-    display: block;
-    padding: 4px;
-}
-
-.slider {
     width: 90%;
-    background: deeppink;
+    font-size: 23px;
+    margin: auto;
+    padding: 10px;
+}
+
+.prof_rate_form {
+    padding: 20px;
+}
+
+.prof_form_field {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.prof_list {
+    border-radius: 20px;
+    border: 1px solid var(--minor-color);
+    background: var(--minor-color);
+    color: var(--light-color);
+    padding: 7px;
+    margin: 10px;
+}
+
+.prof_rate_submit {
+    background: var(--extra-color);
+    padding: 7px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 1px solid var(--extra-color);
+    color: var(--dark-color)
 }
 
 /* THIS IS SPACE FOR DISPLAY RATE */

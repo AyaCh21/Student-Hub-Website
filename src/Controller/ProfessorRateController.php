@@ -18,10 +18,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ProfessorRateController extends AbstractController
 {
     private array $stylesheets;
+    private array $scripts;
     #[Route("/rate_prof", name:"professor_rate")]
     public function addProfRate(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -34,6 +36,13 @@ class ProfessorRateController extends AbstractController
                 'choice_label'=>function (Professor $professor) {
                     return $professor->getName(); // Assuming getName() exists
                 },
+                'placeholder' => '-- Select Professor --',
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Please select a professor.',
+                    ]),
+                ],
+                'label' => 'choose the professor:'
             ])
             ->add('student', EntityType::class, [
                 'class' => Student::class,
@@ -41,7 +50,10 @@ class ProfessorRateController extends AbstractController
                     return $student->getId();
                 },
             ])
-            ->add('rate',RangeType::class)
+            ->add('rate',RangeType::class,[
+                'attr' => ['min' => 0, 'max' => 10],
+                'label' => 'choose the rate:'
+            ])
             ->add('save',SubmitType::class,['label'=>'submit rate'])
             ->getForm();
 
@@ -54,13 +66,22 @@ class ProfessorRateController extends AbstractController
             } else {
                 $professor_rate->setStudent($student);
             }
+
+            $rate = $form->get('rate')->getData();
+            $professor_rate->setRate($rate);
+
             $entityManager->persist($professor_rate);
             $entityManager->flush();
             return $this->redirectToRoute('study');
         }
 
+        $this->stylesheets[]='rate_form.css';
+        $this->scripts[]='rate_range.prof.js';
+
         return $this->render('rate_professor.html.twig',[
-            'form_rate_prof' => $form
+            'form_rate_prof' => $form,
+            'stylesheets'=>$this->stylesheets,
+            'scripts'=>$this->scripts
         ]);
     }
 

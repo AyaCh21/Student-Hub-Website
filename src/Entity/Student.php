@@ -3,35 +3,31 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
 #[ORM\Table('Student')]
-class Student
+class Student implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
     #[ORM\Column(length: 120)]
     private ?string $username = null;
-
     #[ORM\Column(length: 60)]
     private ?string $email = null;
-
     #[ORM\Column(length: 20)]
     private ?string $password = null;
+    #[ORM\Column]
+    private ?int $phase = null;
+    #[ORM\Column(length: 20)]
+    private ?string $specialisation=null;
+    private array $roles = [];
 
-    #[ORM\OneToOne(targetEntity: ProfessorRate::class, mappedBy: 'student')]
-    private ProfessorRate $rate;
 
-    public function __construct()
-    {
-        $this->rates = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -81,46 +77,62 @@ class Student
         return $this;
     }
 
-/*    static function getAllStudent() : array {
-        $stm = $db->prepare('SELECT id, email, password, username,phase,FROM student');
-        $stm->execute();
-        $result = array();
-        while ($item = $stm->fetch()) {
-            $Student = new Student($item['email']);
-            $Student->setId($item['id']);
+    public function getPhase(): ?int
+    {
+        return $this->phase;
+    }
 
-            $result[] = $Student;
-        };
-        return $result;
-    }*/
+    public function setPhase(?int $phase): void
+    {
+        $this->phase = $phase;
+    }
+
+    public function getSpecialisation(): ?string
+    {
+        return $this->specialisation;
+    }
+
+    public function setSpecialisation(?string $specialisation): void
+    {
+        $this->specialisation = $specialisation;
+    }
+
+
+
 
     /**
-     * @return Collection<int, ProfessorRate>
+     * @see UserInterface
      */
-    public function getRates(): Collection
+    public function eraseCredentials(): void
     {
-        return $this->rates;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+    /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->id;
     }
 
-    public function addRate(ProfessorRate $rate): static
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        if (!$this->rates->contains($rate)) {
-            $this->rates->add($rate);
-            $rate->setStudent($this);
-        }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
 
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
         return $this;
     }
 
-    public function removeRate(ProfessorRate $rate): static
-    {
-        if ($this->rates->removeElement($rate)) {
-            // set the owning side to null (unless already changed)
-            if ($rate->getStudent() === $this) {
-                $rate->setStudent(null);
-            }
-        }
-
-        return $this;
-    }
 }

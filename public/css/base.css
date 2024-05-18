@@ -2,10 +2,9 @@
     --main-color: #b3bcbb;
     --minor-color: #7c938e;
     --extra-color: #eaafa9;
-    --dark-color: #323939;
+    --dark-color: #3c4443;
     --light-color: #efd0ce;
 }
-
 html, body {
     height: 100%;
     margin: 0;
@@ -73,11 +72,12 @@ body{
 }
 
 main {
-    width: 100%;
+    width: 70%;
     margin: auto;
-    text-align: justify;
-    text-justify: inter-word;
-    justify-items: center;
+    padding-bottom: 100px;
+    display: block;
+    align-items: center;
+    top: 50%;
 }
 
 section {
@@ -100,7 +100,7 @@ footer {
     width: 100%;
     background-color: transparent;
     color: var(--light-color);
-    z-index: 999; /* Ensure the footer appears above other elements -> lowkey don't like this*/
+    z-index: 999; /* Ensure the footer appears above other elements */
 }
 
 

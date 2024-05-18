@@ -79,7 +79,7 @@ class ProfessorRateController extends AbstractController
         $this->scripts[]='rate_range.prof.js';
 
         return $this->render('rate_professor.html.twig',[
-            'form_rate_prof' => $form,
+            'form_rate_prof' => $form->createView(),
             'stylesheets'=>$this->stylesheets,
             'scripts'=>$this->scripts
         ]);

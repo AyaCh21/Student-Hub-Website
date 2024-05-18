@@ -54,6 +54,9 @@
     padding: 15px 20px;
     margin: 10px;
 }
+.prof_name {
+    color: var(--extra-color);
+}
 .prof_classes_wrapper {
     font-size: 11px;
     margin-bottom: 4px;

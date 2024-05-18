@@ -31,6 +31,10 @@ profile:
   path: /profile
   controller: App\Controller\HomePageController::profile
 
+changeProfile:
+  path: /change_profile
+  controller: App\Controller\UserController::changeProfile
+
 _symfony_logout:
   resource: security.route_loader.logout
   type: service

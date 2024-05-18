@@ -2,9 +2,54 @@
 
 {% block content %}
     {% if is_granted('ROLE_USER') %}
+
     <div class="profile-header">
-        <h3 class="profile-h3">Your Profile</h3>
-        <p class="profile-p">You can change your data here.</p>
+        <h3 class="profile-h3">Your Phase and Specialization</h3>
+        <p class="profile-p">You can change your academic information here.</p>
+    </div>
+    <div class="user-info-all">
+        <dl class="line-breaker"></dl>
+
+
+        <form id="academic-info-form" action="{{ path('changeProfile') }}" method="post">
+            <div class="spec-box">
+                <dd class="input-box">
+                    <label for="specialisation">specialisation:&nbsp;&nbsp;&nbsp;</label><select name="specialisation" id="specialisation">
+                        <option value="Chemical" {% if app.user.specialisation == 'Chemical' %}selected{% endif %}>Chemical Engineering</option>
+                        <option value="Electromechanics" {% if app.user.specialisation == 'Electromechanics' %}selected{% endif %}>Electromechanics</option>
+                        <option value="Electronics" {% if app.user.specialisation == 'Electronics' %}selected{% endif %}>Electronics and ICT</option>
+                    </select>
+                </dd>
+            </div>
+
+            <div class="spec-box">
+                <dd class="input-box">
+                    <label for="phase">Phase:&nbsp;&nbsp;&nbsp;</label><select name="phase" id="phase">
+                        <option value="1" {% if app.user.phase == '1' %}selected{% endif %}>Bac 1</option>
+                        <option value="2" {% if app.user.phase == '2' %}selected{% endif %}>Bac 2</option>
+                        <option value="3" {% if app.user.phase == '3' %}selected{% endif %}>Bac 3</option>
+                        <option value="4" {% if app.user.phase == '4' %}selected{% endif %}>Master</option>
+                    </select>
+                </dd>
+            </div>
+        </form>
+        {% block javascripts %}
+            <script>
+                document.getElementById('specialisation').addEventListener('change', function() {
+                    document.getElementById('academic-info-form').submit();
+                });
+                document.getElementById('phase').addEventListener('change', function() {
+                    document.getElementById('academic-info-form').submit();
+                });
+            </script>
+        {% endblock %}
+    </div>
+
+
+
+    <div class="profile-header">
+    <h3 class="profile-h3">Your Basic Profile</h3>
+    <p class="profile-p">You can change your personal information here.</p>
     </div>
     <div class="user-info-all">
         <dl class="line-breaker"></dl>
@@ -21,10 +66,6 @@
             <dd class="input-box">bolin.great@is</dd>
         </div>
 
-        <div class="spec-box">
-            <dt class="label-box">specialisation: </dt>
-            <dd class="input-box">Electronics and ICT</dd>
-        </div>
 
         <div class="option-edit">
             <input type="button" value="Edit">

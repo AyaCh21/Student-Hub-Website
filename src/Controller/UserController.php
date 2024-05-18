@@ -283,5 +283,27 @@ class UserController extends AbstractController
         ]);
     }
 
+    #\Symfony\Component\Routing\Attribute\Route("/change_profile", name:"change_profile")]
+    public function changeProfile(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->security->getUser();
+        if($user===null){
+            return $this->render('login.html.twig', [
+            ]);
+        }
+//        $username=$user->getUsername();
+        $specialisation = $request->request->get('specialisation');
+        $phase = $request->request->get('phase');
+        $user->setPhase($phase);
+        $user->setSpecialisation($specialisation);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $this->stylesheets[]='profile.css';
+        return $this->render('profile.html.twig',[
+            'stylesheets'=>$this->stylesheets
+        ]);
+    }
 
 }

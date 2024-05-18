@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Study Materials{% endblock %}
+{% block title %}{{ type }} Materials{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,18 +8,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Study Materials</h1>
+    <h1>{{ type }} Materials</h1>
 
-    {% for type, materials in typeWiseMaterials %}
-        <h2>{{ type }}</h2>
-        <ul>
-            {% for material in materials %}
-                <li>
-                    <a href="{{ material.getFilePath() }}" target="_blank">
-                        {{ material.getFilePath() }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endfor %}
+    <ul>
+        {% for material in studyMaterials %}
+            <li>{{ material.getFilePath() }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -10,8 +10,8 @@ home:
     controller: App\Controller\HomePageController::homePage
 
 study:
-        path: /study
-        controller: App\Controller\StudyController::study
+    path: /study
+    controller: App\Controller\StudyController::study
 lecture:
-    path: /lecture
+    path: /lecture/{id}/{type}
     controller: App\Controller\LectureController::lecture

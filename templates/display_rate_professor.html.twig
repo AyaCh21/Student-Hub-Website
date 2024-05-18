@@ -10,7 +10,7 @@
                         <div class="prof_class">{{ course.name }}</div>
                     {% endfor %}
                 </div>
-                <div class="prof_rate">20</div>
+                <div class="prof_rate">{{ professorRatings[professor]|number_format(2) }}</div>
                 <a href="{{ path('professor_rate') }}"><input type="button" class="rate_button" value="rate me"></a>
                 <input type="button" class="feedback_button" value="leave feedback">
             </div>

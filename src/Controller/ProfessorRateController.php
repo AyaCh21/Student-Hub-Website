@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
 use App\Entity\Student;
+use App\Repository\ProfessorRateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ProfessorRateController extends AbstractController
 {
     private array $stylesheets;
-    private array $scripts;
+
     #[Route("/rate_prof", name:"professor_rate")]
     public function addProfRate(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -90,23 +91,37 @@ class ProfessorRateController extends AbstractController
     {
         $courses = $entityManager->getRepository(Course::class)->findAll();
         $professorWiseCourses = [];
+        $professorRatings = [];
 
         foreach ($courses as $course) {
             $professor = $course->getProfessor();
-            $professor_name = $professor->getName();
-            if (!isset($professorWiseCourses[$professor_name])) {
-                $professorWiseCourses[$professor_name] = [];
+            $professorName = $professor->getName();
+            if (!isset($professorWiseCourses[$professorName])) {
+                $professorWiseCourses[$professorName] = [];
             }
-            $professorWiseCourses[$professor_name][] = $course;
+            $professorWiseCourses[$professorName][] = $course;
         }
 
-        $this->stylesheets[]='rate_form.css';
-        $this->scripts[]='';
+        $professors = $entityManager->getRepository(Professor::class)->findAll();
 
-        return $this->render('display_rate_professor.html.twig',[
-            'stylesheets'=>$this->stylesheets,
-            'professorWiseCourses'=>$professorWiseCourses,
-            'scripts'=>$this->scripts
+        foreach ($professors as $professor) {
+            $rates = $entityManager->getRepository(ProfessorRate::class)->findBy(['professor' => $professor]);
+            $totalRate = array_reduce($rates, function ($sum, $rate) {
+                return $sum + $rate->getRate();
+            }, 0);
+
+            $averageRate = count($rates) > 0 ? $totalRate / count($rates) : 0;
+            $professorRatings[$professor->getName()] = $averageRate;
+        }
+
+        $this->stylesheets[] = 'rate_form.css';
+        $this->scripts[] = '';
+
+        return $this->render('display_rate_professor.html.twig', [
+            'stylesheets' => $this->stylesheets,
+            'professorWiseCourses' => $professorWiseCourses,
+            'professorRatings' => $professorRatings,
+            'scripts' => $this->scripts
         ]);
     }
 }

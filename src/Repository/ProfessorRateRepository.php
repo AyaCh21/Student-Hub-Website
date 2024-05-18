@@ -13,6 +13,20 @@ class ProfessorRateRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ProfessorRate::class);
     }
+
+    public function getAverage(int $professorId): float|string
+    {
+        $qb = $this->createQueryBuilder('pr');
+        $qb->select($qb->expr()->avg('pr.rate_value'))
+            ->from(ProfessorRate::class, 'professor_rate')
+            ->where('professor_rate.professor = :professorId')
+            ->setParameter('professorId', $professorId);
+
+        $result = $qb->getQuery()->getSingleScalarResult();
+
+        $show = is_null($result) ? "be the first to rate!" : $result;
+        return $show;
+    }
     //    /**
 //     * @return ProfessorRate[] Returns an array of Course objects
 //     */

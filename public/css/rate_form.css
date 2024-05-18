@@ -43,13 +43,13 @@
     display: inline-flex;
     flex-wrap: wrap;
     width: auto;
-    background: #2e4949;
     justify-content: center;
+    margin-top: 20px;
 }
 .prof_card {
     box-shadow: 0 4px 8px 0 var(--light-color);
     border-radius: 20px;
     width: 20%;
     padding: 15px 20px;
-    margin: 5px;
+    margin: 10px;
 }

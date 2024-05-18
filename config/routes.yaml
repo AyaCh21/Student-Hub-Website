@@ -13,10 +13,13 @@ study:
         path: /study
         controller: App\Controller\StudyController::study
 
-professor_rate:
-    path: /rate_prof
-    controller: App\Controller\ProfessorRateController::addProfRate
 
-display_professor_rate:
-    path: /display_rate_prof
-    controller: App\Controller\ProfessorRateController::viewProfRate
+# config/routes.yaml
+rate_course:
+    path: /rate
+    controller: App\Controller\RatingController::rateCourse
+
+
+display_ratings:
+    path: /ratings
+    controller: App\Controller\RatingController::displayRatings

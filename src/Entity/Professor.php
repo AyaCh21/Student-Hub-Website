@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ProfessorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfessorRepository::class)]
-#[ORM\Table ('Professor')]
 class Professor
 {
     #[ORM\Id]
@@ -21,8 +21,11 @@ class Professor
     #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'professor')]
     private Collection $courses;
 
-    #[ORM\OneToOne(targetEntity: ProfessorRate::class, mappedBy: 'professor')]
-    private ProfessorRate $rate;
+    public function __construct()
+    {
+        $this->courses = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -68,7 +71,7 @@ class Professor
     public function removeCourse(Course $course): static
     {
         if ($this->courses->removeElement($course)) {
-            if ($course->getProfessor() === $this) {
+            if ($course->getProfessor() == $this) {
                 $course->setProfessor(null);
             }
         }

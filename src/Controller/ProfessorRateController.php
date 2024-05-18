@@ -92,6 +92,7 @@ class ProfessorRateController extends AbstractController
         $courses = $entityManager->getRepository(Course::class)->findAll();
         $professorWiseCourses = [];
         $professorRatings = [];
+        $professorVotes = [];
 
         foreach ($courses as $course) {
             $professor = $course->getProfessor();
@@ -112,6 +113,7 @@ class ProfessorRateController extends AbstractController
 
             $averageRate = count($rates) > 0 ? $totalRate / count($rates) : 0;
             $professorRatings[$professor->getName()] = $averageRate;
+            $professorVotes[$professor->getName()] = count($rates);
         }
 
         $this->stylesheets[] = 'rate_form.css';
@@ -121,6 +123,7 @@ class ProfessorRateController extends AbstractController
             'stylesheets' => $this->stylesheets,
             'professorWiseCourses' => $professorWiseCourses,
             'professorRatings' => $professorRatings,
+            'professorVotes' => $professorVotes,
             'scripts' => $this->scripts
         ]);
     }

@@ -35,7 +35,8 @@
     margin: 10px;
     border-radius: 20px;
     border: 1px solid var(--extra-color);
-    color: var(--dark-color)
+    color: var(--dark-color);
+
 }
 
 /* THIS IS SPACE FOR DISPLAY RATE */
@@ -52,4 +53,20 @@
     width: 20%;
     padding: 15px 20px;
     margin: 10px;
+}
+.prof_classes_wrapper {
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+input[type=button] {
+    padding: 7px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 1px solid var(--extra-color);
+    color: var(--dark-color);
+
+    &:hover {
+        cursor: pointer;
+    }
 }

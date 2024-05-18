@@ -33,16 +33,6 @@
                 </dd>
             </div>
         </form>
-        {% block javascripts %}
-            <script>
-                document.getElementById('specialisation').addEventListener('change', function() {
-                    document.getElementById('academic-info-form').submit();
-                });
-                document.getElementById('phase').addEventListener('change', function() {
-                    document.getElementById('academic-info-form').submit();
-                });
-            </script>
-        {% endblock %}
     </div>
 
 
@@ -52,25 +42,67 @@
     <p class="profile-p">You can change your personal information here.</p>
     </div>
     <div class="user-info-all">
-        <dl class="line-breaker"></dl>
-        <div class="spec-box">
-            <div class="label-box">username: </div>
-            <dd class="input-box">r683362</dd>
-        </div>
-        <div class="spec-box">
-            <div class="label-box">password: </div>
-            <dd class="input-box">*********</dd>
-        </div>
-        <div class="spec-box">
-            <dt class="label-box">email: </dt>
-            <dd class="input-box">bolin.great@is</dd>
+        <div id="user-info-display" style="display: inline">
+            <dl class="line-breaker"></dl>
+            <div class="spec-box">
+                <div class="label-box">username: </div>
+                <dd class="input-box">{{ app.user.username }}</dd>
+            </div>
+            <div class="spec-box">
+                <div class="label-box">password: </div>
+                <dd class="input-box">*********</dd>
+            </div>
+            <div class="spec-box">
+                <dt class="label-box">email: </dt>
+                <dd class="input-box">{{ app.user.email }}</dd>
+            </div>
+            <div class="option-edit">
+                <input id="init-edit" type="button" value="Edit">
+            </div>
         </div>
 
-
-        <div class="option-edit">
-            <input type="button" value="Edit">
-            <input type="button" value="Cancel">
+        <div id="user-info-edit" style="display: none">
+            <dl class="line-breaker"></dl>
+            <div class="spec-box">
+                <div class="label-box">username: </div>
+                <dd class="input-box">r683362</dd>
+            </div>
+            <div class="spec-box">
+                <div class="label-box">password: </div>
+                <dd class="input-box">*********</dd>
+            </div>
+            <div class="spec-box">
+                <dt class="label-box">email: </dt>
+                <dd class="input-box">bolin.great@is</dd>
+            </div>
+            <div class="option-edit">
+                <input id="confirm-edit" type="button" value="Confirm">
+            </div>
         </div>
+
+        {% block javascripts %}
+            {#      changing academic info      #}
+            <script>
+                document.getElementById('specialisation').addEventListener('change', function() {
+                    document.getElementById('academic-info-form').submit();
+                });
+                document.getElementById('phase').addEventListener('change', function() {
+                    document.getElementById('academic-info-form').submit();
+                });
+            </script>
+
+            {#    user basic info dynamic display    #}
+            <script>
+                display = document.getElementById('user-info-display');
+                edit = document.getElementById('user-info-edit');
+                document.getElementById('init-edit').addEventListener('click', function() {
+                        display.style.display = 'none';
+                        edit.style.display = 'inline';
+                });
+            </script>
+        {% endblock %}
+
+
     </div>
 
     {% else %}

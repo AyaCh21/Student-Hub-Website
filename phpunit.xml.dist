@@ -15,6 +15,10 @@
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.6" />
+        <env name="APP_ENV" value="test"/>
+        <env name="DATABASE_URL" value="mysql://a23www301:ra3wnmlO@mysql.studev.groept.be:3306/a23www301"/>
+        <env name="DATABASE_USER" value="a23www301"/>
+        <env name="DATABASE_PASSWORD" value="ra3wnmlO"/>
     </php>
 
     <testsuites>
@@ -22,6 +26,10 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+
+
+
 
     <coverage processUncoveredFiles="true">
         <include>

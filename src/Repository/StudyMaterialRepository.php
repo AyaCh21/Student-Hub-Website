@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<StudyMaterial>
+ * @extends ServiceEntityRepository<Student>
  *
  * @method StudyMaterial|null find($id, $lockMode = null, $lockVersion = null)
  * @method StudyMaterial|null findOneBy(array $criteria, array $orderBy = null)
@@ -20,29 +20,4 @@ class StudyMaterialRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StudyMaterial::class);
     }
-
-//    /**
-//     * @return StudyMaterial[] Returns an array of StudyMaterial objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?StudyMaterial
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

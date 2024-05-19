@@ -1,0 +1,20 @@
+.search-form {
+    margin: 20px;
+    text-align: center;
+}
+
+#pdfList {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+    margin: 20px auto;
+}
+
+#pdfList li {
+    padding: 8px;
+    margin: 5px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}

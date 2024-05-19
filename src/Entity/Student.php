@@ -134,5 +134,4 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
         return $this;
     }
-
 }

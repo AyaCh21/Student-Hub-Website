@@ -20,3 +20,7 @@ professor_rate:
 display_professor_rate:
     path: /display_rate_prof
     controller: App\Controller\ProfessorRateController::viewProfRate
+
+lecture:
+  path: /lecture/{id}/{type}
+  controller: App\Controller\LectureController::lecture

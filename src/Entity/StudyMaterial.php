@@ -13,21 +13,22 @@ class StudyMaterial
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    private ?MaterialType $materialType = null;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $type = null;
 
-    #[ORM\ManyToOne(inversedBy: 'studyMaterial')]
-    #[ORM\JoinColumn(name: 'student',nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'studyMaterials')]
+    #[ORM\JoinColumn(name: 'uploaded_by', referencedColumnName: 'id', nullable: false)]
     private ?Student $uploaded_by = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $uploaded_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'studyMaterial')]
-    #[ORM\JoinColumn(name:'course',nullable: false)]
-    private ?Course $course= null;
+    #[ORM\ManyToOne(inversedBy: 'studyMaterials')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Course $course = null;
 
     #[ORM\Column(length: 50)]
     private ?string $file_type = null;
@@ -35,15 +36,22 @@ class StudyMaterial
     #[ORM\Column(length: 255)]
     private ?string $file_path = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $text = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function getType(): ?string
     {
-        $this->id = $id;
+        return $this->type;
+    }
 
+    public function setType(string $type): self
+    {
+        $this->type = $type;
         return $this;
     }
 
@@ -62,7 +70,7 @@ class StudyMaterial
         return $this->uploaded_by;
     }
 
-    public function setUploadedBy(Student $uploaded_by): static
+    public function setUploadedBy(int $uploaded_by): static
     {
         $this->uploaded_by = $uploaded_by;
 
@@ -74,7 +82,7 @@ class StudyMaterial
         return $this->uploaded_at;
     }
 
-    public function setUploadedAt(\DateTimeInterface $uploaded_at): static
+    public function setUploadedAt(?\DateTimeInterface $uploaded_at): self
     {
         $this->uploaded_at = $uploaded_at;
 
@@ -88,8 +96,7 @@ class StudyMaterial
 
     public function setCourse(?Course $course): static
     {
-        $this->$course = $course;
-
+        $this->course = $course;
         return $this;
     }
 
@@ -101,7 +108,6 @@ class StudyMaterial
     public function setFileType(string $file_type): static
     {
         $this->file_type = $file_type;
-
         return $this;
     }
 
@@ -113,7 +119,17 @@ class StudyMaterial
     public function setFilePath(string $file_path): static
     {
         $this->file_path = $file_path;
+        return $this;
+    }
 
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
         return $this;
     }
 }

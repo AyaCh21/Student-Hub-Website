@@ -20,6 +20,4 @@ deploy-job:
     - composer install
     - rsync -rv --exclude=".git/"
                 --exclude=".env"
-                --exclude="vendor/"
-                --exclude="var/"
                 ./ a23www301@shell.studev.groept.be:/var/www/html

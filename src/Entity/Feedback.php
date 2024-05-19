@@ -33,8 +33,9 @@ class Feedback
 
     public function getStudentId(): ?int
     {
-        return $this->studentId;
+        return $this->student?->getId();
     }
+
 
     public function setStudentId(?int $studentId): self
     {

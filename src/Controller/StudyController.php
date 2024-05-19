@@ -3,11 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Course;
+use App\Entity\Favorite;
 use App\Repository\CourseRepository;
+use App\Repository\FavoriteRepositoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class StudyController extends AbstractController
 {
@@ -35,4 +40,33 @@ class StudyController extends AbstractController
             'phaseWiseCourses' => $phaseWiseCourses
         ]);
     }
+
+    #[Route("/favorite/toggle", name: "favorite_toggle", methods: ["POST"])]
+    public function toggleFavorite(Request $request, EntityManagerInterface $entityManager, FavoriteRepository $favoriteRepository, UserInterface $user): JsonResponse
+    {
+        $courseId = $request->request->get('courseId');
+        $course = $entityManager->getRepository(Course::class)->find($courseId);
+
+        if (!$course) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Course not found'], 404);
+        }
+
+        $favorite = $favoriteRepository->findOneBy(['user' => $user, 'course' => $course]);
+
+        if ($favorite) {
+            $entityManager->remove($favorite);
+            $entityManager->flush();
+            return new JsonResponse(['status' => 'removed']);
+        } else {
+            $favorite = new Favorite();
+            $favorite->setUser($user);
+            $favorite->setCourse($course);
+            $entityManager->persist($favorite);
+            $entityManager->flush();
+            return new JsonResponse(['status' => 'added']);
+        }
+    }
+
+
+
 }

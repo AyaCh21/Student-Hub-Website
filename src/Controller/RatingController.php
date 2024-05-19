@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RatingController extends AbstractController
 {
@@ -45,7 +46,7 @@ class RatingController extends AbstractController
             $rating->setRateValue($form->get('rate_value')->getData());
 
             // Assuming you have access to course and student IDs
-            $courseId = $form->get('course_id')->getData();; // Replace with the actual course ID
+            $courseId = $form->get('course_id')->getData(); // Replace with the actual course ID
             $studentId = 1; // Replace with the actual student ID
 
             // Set the course and student IDs
@@ -60,7 +61,7 @@ class RatingController extends AbstractController
             $this->addFlash('success', 'Thank you for rating the course!');
 
             // Redirect to the homepage or any other page after successful submission
-            return $this->redirectToRoute('display_ratings');
+            return $this->redirectToRoute('display_course_rate');
         }
 
         // Render the form
@@ -142,12 +143,10 @@ class RatingController extends AbstractController
         }
 
         $this->stylesheets[]='rate_form.css';
-        $this->scripts[]='rate_range_prof.js';
 
         return $this->render('rate_professor.html.twig',[
             'form_rate_prof' => $form->createView(),
             'stylesheets'=>$this->stylesheets,
-            'scripts'=>$this->scripts
         ]);
     }
 
@@ -182,14 +181,12 @@ class RatingController extends AbstractController
         }
 
         $this->stylesheets[] = 'rate_form.css';
-        $this->scripts[] = '';
 
         return $this->render('display_rate_professor.html.twig', [
             'stylesheets' => $this->stylesheets,
             'professorWiseCourses' => $professorWiseCourses,
             'professorRatings' => $professorRatings,
             'professorVotes' => $professorVotes,
-            'scripts' => $this->scripts
         ]);
     }
 }

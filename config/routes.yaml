@@ -15,11 +15,19 @@ study:
 
 professor_rate:
     path: /rate_prof
-    controller: App\Controller\ProfessorRateController::addProfRate
+    controller: App\Controller\RatingController::addProfRate
 
 display_professor_rate:
     path: /display_rate_prof
-    controller: App\Controller\ProfessorRateController::viewProfRate
+    controller: App\Controller\RatingController::viewProfRate
+
+course_rate:
+    path: /rate_course
+    controller: App\Controller\RatingController::addCourseRate
+
+display_course_rate:
+    path: /display_rate_course
+    controller: App\Controller\RatingController::viewCourseRate
 
 lecture:
   path: /lecture/{id}/{type}

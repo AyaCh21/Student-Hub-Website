@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RatingController extends AbstractController
+class  RatingController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private array $stylesheets;

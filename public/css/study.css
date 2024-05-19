@@ -95,14 +95,19 @@ body, html {
 .options {
     display: block;
 }
-.option {
+
+.option a{
     cursor: pointer;
     margin-right: 10px;
+    color: #d3c35b;  /*so that the text for lecture and lab stands out*/
+    text-decoration: none;
 }
-.option:hover {
+.option a:hover {
     text-decoration: underline;
     font-weight: bold;
 }
+
+
 .search-form {
     display: flex;
     justify-content: center;

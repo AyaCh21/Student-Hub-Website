@@ -101,5 +101,6 @@ class StudyController extends AbstractController
             return new JsonResponse(['status' => 'added']);
         }
     }
+    
 
 }

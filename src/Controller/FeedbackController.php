@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FeedbackController extends AbstractController
 {
     #[Route('/feedback/{courseId}', name: 'feedback')]
-    public function feedback($courseId, Request $request, EntityManagerInterface $entityManager, StudentRepository $studentRepository): Response
+    public function feedback($courseId, Request $request, EntityManagerInterface $entityManager): Response
     {
         $course = $entityManager->getRepository(Course::class)->find($courseId);
         if (!$course) {
@@ -32,16 +32,17 @@ class FeedbackController extends AbstractController
             $studentUsername = $form->get('studentUsername')->getData();
 
             // Query the Student entity based on the provided username
-            $studentId = $studentRepository->findStudentIdByUsername($studentUsername);
-            if (!$studentId) {
+            $student = $entityManager->getRepository(Student::class)->findOneBy(['username' => $studentUsername]);
+            if (!$student) {
                 throw $this->createNotFoundException('Student not found');
             }
-            $feedback->setStudentId($studentId);
 
-            // Set other feedback properties
+            // Set the student entity and other feedback properties
+            $feedback->setStudent($student);
             $feedback->setCourse($course);
             $feedback->setFeedback($form->get('feedback')->getData());
 
+            // Persist and flush the feedback entity
             $entityManager->persist($feedback);
             $entityManager->flush();
 

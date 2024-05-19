@@ -23,7 +23,6 @@
         "symfony/framework-bundle": "6.4.*",
         "symfony/mailer": "6.4.*",
         "symfony/runtime": "6.4.*",
-        "symfony/security-bundle": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
         "symfony/ux-icons": "^2.17",
         "symfony/validator": "6.4.*",

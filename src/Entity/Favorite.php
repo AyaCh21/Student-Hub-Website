@@ -13,52 +13,42 @@ class Favorite
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(name: 'StudentID', type: 'integer', nullable: true)]
-    #[ORM\ManyToOne(targetEntity: "Student")]
-    #[ORM\JoinColumn(name: "StudentID", referencedColumnName: "id")]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Student")]
+    #[ORM\JoinColumn(name: "StudentID", referencedColumnName: "id", nullable: false)]
     private ?Student $student = null;
 
-    #[ORM\Column(name: 'CourseID', type: 'integer', nullable: true)]
-    #[ORM\ManyToOne(targetEntity: "Course")]
-    #[ORM\JoinColumn(name: "CourseID", referencedColumnName: "id")]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Course")]
+    #[ORM\JoinColumn(name: "CourseID", referencedColumnName: "id", nullable: false)]
     private ?Course $course = null;
-
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function getStudent(): ?Student
     {
-        $this->id = $id;
+        return $this->student;
+    }
+
+    public function setStudent(?Student $student): self
+    {
+        $this->student = $student;
 
         return $this;
     }
 
-    public function getStudentID(): ?int
+    public function getCourse(): ?Course
     {
-        return $this->StudentID;
+        return $this->course;
     }
 
-    public function setStudentID(?int $StudentID): static
+    public function setCourse(?Course $course): self
     {
-        $this->StudentID = $StudentID;
-
-        return $this;
-    }
-
-    public function getCourseID(): ?int
-    {
-        return $this->CourseID;
-    }
-
-    public function setCourseID(?int $CourseID): static
-    {
-        $this->CourseID = $CourseID;
+        $this->course = $course;
 
         return $this;
     }

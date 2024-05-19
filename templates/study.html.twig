@@ -11,6 +11,42 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/study.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.favorite-toggle').forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const courseId = this.dataset.courseId;
+                    const isChecked = this.checked;
+
+                    fetch('{{ path('favorite_toggle') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': '{{ csrf_token('favorite_toggle') }}'
+                        },
+                        body: JSON.stringify({ courseId: courseId })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'added') {
+                                console.log('Course added to favorites');
+                            } else if (data.status === 'removed') {
+                                console.log('Course removed from favorites');
+                            } else {
+                                console.error(data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+
+            document.getElementById('show-favorites').addEventListener('click', () => {
+                const favorites = Array.from(document.querySelectorAll('.favorite-toggle:checked')).map(checkbox => checkbox.closest('.course').querySelector('.course-toggle').textContent);
+                alert('Favorites: ' + favorites.join(', '));
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block content %}

@@ -3,19 +3,20 @@
 {% block title %}Provide Feedback{% endblock %}
 
 {% block content %}
-    <h1>Provide Feedback</h1>
-    {{ form_start(form) }}
-    <div>
-        {{ form_label(form.studentUsername) }}
-        {{ form_widget(form.studentUsername) }}
+    <div class="container">
+        <h1>Provide Feedback</h1>
+        {{ form_start(form) }}
+        <div>
+            {{ form_label(form.studentUsername) }}
+            {{ form_widget(form.studentUsername) }}
+        </div>
+        <div>
+            {{ form_label(form.feedback) }}
+            {{ form_widget(form.feedback) }}
+        </div>
+        <div>
+            {{ form_widget(form.save) }}
+        </div>
+        {{ form_end(form) }}
     </div>
-    <div>
-        {{ form_label(form.feedback) }}
-        {{ form_widget(form.feedback) }}
-    </div>
-    <div>
-        {{ form_label(form.save) }}
-        {{ form_widget(form.save) }}
-    </div>
-    {{ form_end(form) }}
 {% endblock %}

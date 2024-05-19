@@ -115,7 +115,7 @@ class ProfessorRateController extends AbstractController
             $professorRatings[$professor->getName()] = $averageRate;
             $professorVotes[$professor->getName()] = count($rates);
         }
-
+        $student = $this->getUser();
         $this->stylesheets[] = 'rate_form.css';
         $this->scripts[] = '';
 
@@ -124,7 +124,8 @@ class ProfessorRateController extends AbstractController
             'professorWiseCourses' => $professorWiseCourses,
             'professorRatings' => $professorRatings,
             'professorVotes' => $professorVotes,
-            'scripts' => $this->scripts
+            'scripts' => $this->scripts,
+            'student' => $student
         ]);
     }
 }

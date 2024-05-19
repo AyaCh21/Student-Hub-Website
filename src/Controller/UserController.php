@@ -306,4 +306,24 @@ class UserController extends AbstractController
         ]);
     }
 
+    #\Symfony\Component\Routing\Attribute\Route("/change_username", name:"change_username")]
+    public function changeUsername(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->security->getUser();
+        if($user===null){
+            return $this->render('login.html.twig', [
+            ]);
+        }
+        $username = $request->request->get('username');
+        $user->setUsername($username);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $this->stylesheets[]='profile.css';
+        return $this->render('profile.html.twig',[
+            'stylesheets'=>$this->stylesheets
+        ]);
+    }
+
 }

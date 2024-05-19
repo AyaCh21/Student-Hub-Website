@@ -42,38 +42,62 @@
     <p class="profile-p">You can change your personal information here.</p>
     </div>
     <div class="user-info-all">
-        <div id="user-info-display" style="display: inline">
+
+
             <dl class="line-breaker"></dl>
             <div class="spec-box">
                 <div class="label-box">username: </div>
-                <dd class="input-box">{{ app.user.username }}</dd>
+                <div id="username-info-display" style="display: inline">
+                    <dd class="input-box">
+                        {{ app.user.username }}
+                            <input id="username-edit-init" type="button" value="Edit">
+                    </dd>
+                </div>
+                <div id="username-edit-display" style="display: none">
+                    <dd class="input-box">
+                        <form id="username-edit-form" action="{{ path('changeUsername') }}" method="post">
+                            <input type="text" id="edit-username" name="username" value="{{ app.user.username }}">
+                            <input id="username-edit-confirm" type="button" value="Confirm">
+                            <input id="username-edit-cancel" type="button" value="Cancel">
+                        </form>
+
+                    </dd>
+                </div>
             </div>
-            <div class="spec-box">
-                <div class="label-box">password: </div>
-                <dd class="input-box">*********</dd>
-            </div>
+
+
+
+
+
             <div class="spec-box">
                 <dt class="label-box">email: </dt>
                 <dd class="input-box">{{ app.user.email }}</dd>
             </div>
+
+            <div class="spec-box">
+                <div class="label-box">password: </div>
+                <dd class="input-box">*********</dd>
+            </div>
+
             <div class="option-edit">
                 <input id="init-edit" type="button" value="Edit">
             </div>
-        </div>
+
 
         <div id="user-info-edit" style="display: none">
             <dl class="line-breaker"></dl>
             <div class="spec-box">
                 <div class="label-box">username: </div>
-                <dd class="input-box">r683362</dd>
+                <dd class="input-box">
+                    <input type="text" id="username-edit" value="{{ app.user.username }}">
+                </dd>
             </div>
-            <div class="spec-box">
-                <div class="label-box">password: </div>
-                <dd class="input-box">*********</dd>
-            </div>
+
             <div class="spec-box">
                 <dt class="label-box">email: </dt>
-                <dd class="input-box">bolin.great@is</dd>
+                <dd class="input-box">
+                    <input type="text" id="email-edit" value="{{ app.user.email }}">
+                </dd>
             </div>
             <div class="option-edit">
                 <input id="confirm-edit" type="button" value="Confirm">
@@ -91,13 +115,22 @@
                 });
             </script>
 
-            {#    user basic info dynamic display    #}
+            {#    username info dynamic display    #}
             <script>
-                display = document.getElementById('user-info-display');
-                edit = document.getElementById('user-info-edit');
-                document.getElementById('init-edit').addEventListener('click', function() {
+                display = document.getElementById('username-info-display');
+                edit = document.getElementById('username-edit-display');
+                document.getElementById('username-edit-init').addEventListener('click', function() {
                         display.style.display = 'none';
                         edit.style.display = 'inline';
+                });
+                document.getElementById('username-edit-cancel').addEventListener('click', function() {
+                    display.style.display = 'inline';
+                    edit.style.display = 'none';
+                });
+                document.getElementById('username-edit-confirm').addEventListener('click', function() {
+                    display.style.display = 'inline';
+                    edit.style.display = 'none';
+                    document.getElementById('username-edit-form').submit();
                 });
             </script>
         {% endblock %}

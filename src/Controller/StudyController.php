@@ -20,6 +20,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+use App\Entity\Student;
+use Symfony\Bundle\SecurityBundle\Security;
+
 
 
 class StudyController extends AbstractController
@@ -54,7 +57,7 @@ class StudyController extends AbstractController
     }
 
     #[Route("/favorite/toggle", name: "favorite_toggle", methods: ["POST"])]
-    public function toggleFavorite(Request $request, EntityManagerInterface $entityManager, FavoriteRepository $favoriteRepository, UserInterface $user): JsonResponse
+    public function toggleFavorite(Request $request, EntityManagerInterface $entityManager, FavoriteRepository $favoriteRepository): JsonResponse
     {
         $courseId = $request->request->get('courseId');
         $course = $entityManager->getRepository(Course::class)->find($courseId);
@@ -64,7 +67,7 @@ class StudyController extends AbstractController
             return new JsonResponse(['status' => 'error', 'message' => 'Course not found'], 404);
         }
 
-        $favorite = $favoriteRepository->findOneBy(['user' => $user, 'course' => $course]);
+        $favorite = $favoriteRepository->findOneBy(['student' => $user, 'course' => $course]);
 
         if ($favorite) {
             $entityManager->remove($favorite);
@@ -72,7 +75,7 @@ class StudyController extends AbstractController
             return new JsonResponse(['status' => 'removed']);
         } else {
             $favorite = new Favorite();
-            $favorite->setUser($user);
+            $favorite->setStudent($user);
             $favorite->setCourse($course);
             $entityManager->persist($favorite);
             $entityManager->flush();
@@ -80,6 +83,22 @@ class StudyController extends AbstractController
         }
     }
 
+    #[Route('/favorite/list', name: 'favorite_list', methods: ['GET'])]
+    public function favoriteList(FavoriteRepository $favoriteRepository): JsonResponse
+    {
+        $user = $this->security->getUser();
+        $favorites = $favoriteRepository->findBy(['student' => $user]);
 
+        $favoriteData = array_map(function ($favorite) {
+            return [
+                'course' => [
+                    'id' => $favorite->getCourse()->getId(),
+                    'name' => $favorite->getCourse()->getName(),
+                ],
+            ];
+        }, $favorites);
+
+        return new JsonResponse(['favorites' => $favoriteData]);
+    }
 
 }

@@ -45,6 +45,7 @@
 
 
             <dl class="line-breaker"></dl>
+
             <div class="spec-box">
                 <div class="label-box">username: </div>
                 <div id="username-info-display" style="display: inline">
@@ -60,19 +61,30 @@
                             <input id="username-edit-confirm" type="button" value="Confirm">
                             <input id="username-edit-cancel" type="button" value="Cancel">
                         </form>
-
                     </dd>
                 </div>
             </div>
 
-
-
-
-
-            <div class="spec-box">
-                <dt class="label-box">email: </dt>
-                <dd class="input-box">{{ app.user.email }}</dd>
+        <div class="spec-box">
+            <div class="label-box">username: </div>
+            <div id="email-info-display" style="display: inline">
+                <dd class="input-box">
+                    {{ app.user.email }}
+                    <input id="email-edit-init" type="button" value="Edit">
+                </dd>
             </div>
+            <div id="email-edit-display" style="display: none">
+                <dd class="input-box">
+{#                    <form id="email-edit-form" action="{{ path('changeEmail') }}" method="post">#}
+                        <input type="text" id="edit-username" name="username" value="{{ app.user.email }}">
+                        <input id="email-edit-confirm" type="button" value="Confirm">
+                        <input id="email-edit-cancel" type="button" value="Cancel">
+{#                    </form>#}
+                </dd>
+            </div>
+        </div>
+
+
 
             <div class="spec-box">
                 <div class="label-box">password: </div>

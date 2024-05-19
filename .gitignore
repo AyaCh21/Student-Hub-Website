@@ -16,4 +16,4 @@
 /phpunit.xml.dist
 .phpunit.result.cache
 ###< phpunit/phpunit ###
-/.idea/
+/.idea/*

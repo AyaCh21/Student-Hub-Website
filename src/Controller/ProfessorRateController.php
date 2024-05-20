@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
 use App\Entity\Student;
+use App\Form\ProfessorRateForm;
 use App\Repository\ProfessorRateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,61 +26,39 @@ class ProfessorRateController extends AbstractController
 {
     private array $stylesheets;
 
-    #[Route("/rate_prof", name:"professor_rate")]
-    public function addProfRate(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route("/rate_prof/{professorId}", name:"professor_rate")]
+    public function addProfRate(int $professorId,Request $request, EntityManagerInterface $entityManager): Response
     {
         $professor_rate = new ProfessorRate();
-        $professors = $entityManager->getRepository(Professor::class)->findAll();
-
-        $form = $this->createFormBuilder($professor_rate)
-            ->add('professor',ChoiceType::class,[
-                'choices'=>$professors,
-                'choice_label'=>function (Professor $professor) {
-                    return $professor->getName(); // Assuming getName() exists
-                },
-                'placeholder' => '-- Select Professor --',
-                'constraints' => [
-                    new Assert\NotBlank([
-                        'message' => 'Please select a professor.',
-                    ]),
-                ],
-                'label' => 'choose the professor:'
-            ])
-            ->add('student', EntityType::class, [
-                'class' => Student::class,
-                'choice_label' => function (Student $student) {
-                    return $student->getId();
-                },
-            ])
-            ->add('rate',RangeType::class,[
-                'attr' => ['min' => 0, 'max' => 10],
-                'label' => 'choose the rate:'
-            ])
-            ->add('save',SubmitType::class,['label'=>'submit rate'])
-            ->getForm();
-
+        $professors = $entityManager->getRepository(Professor::class)->find($professorId);
+        if (!$professors) {
+            throw $this->createNotFoundException('Professor not found');
+        }
+        $form = $this->createForm(ProfessorRateForm::class, $professor_rate);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $studentId = $form->get('student')->getData();
-            $student = $entityManager->getRepository(Student::class)->find($studentId);
-            if (!$student) {
-                echo "Student not found.";
-            } else {
-                $professor_rate->setStudent($student);
-            }
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $studentUsername = $form->get('studentUsername')->getData();
+            $student = $entityManager->getRepository(Student::class)->findOneBy(['username' => $studentUsername]);
+            if (!$student) {
+                throw $this->createNotFoundException('Student not found');
+            }
+            $professor_rate ->setStudent($student);
+            $professor_rate ->setProfessor($professors);
             $rate = $form->get('rate')->getData();
             $professor_rate->setRate($rate);
 
             $entityManager->persist($professor_rate);
             $entityManager->flush();
-            return $this->redirectToRoute('study');
+            return $this->redirectToRoute('display_professor_rate');
         }
-
+        $student = $this->getUser();
         $this->stylesheets[]='rate_form.css';
         $this->scripts[]='rate_range_prof.js';
 
         return $this->render('rate_professor.html.twig',[
+            'professor' => $professors,
+             'student'=>$student,
             'form_rate_prof' => $form->createView(),
             'stylesheets'=>$this->stylesheets,
             'scripts'=>$this->scripts

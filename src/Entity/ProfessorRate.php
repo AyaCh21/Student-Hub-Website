@@ -46,10 +46,24 @@ class ProfessorRate
     {
         return $this->student;
     }
+    private ?string $studentUsername = null;
+    public function getStudentUsername(): ?string
+    {
+        return $this->studentUsername;
+    }
 
-    public function setStudent(?Student $student): void
+    public function setStudentUsername(?string $studentUsername): self
+    {
+        $this->studentUsername = $studentUsername;
+        return $this;
+    }
+    public function setStudent(?Student $student): self
     {
         $this->student = $student;
+        if ($student) {
+            $this->studentUsername = $student->getUsername();
+        }
+        return $this;
     }
 
     public function getRate(): ?int

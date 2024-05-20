@@ -14,7 +14,7 @@ study:
         controller: App\Controller\StudyController::study
 
 professor_rate:
-    path: /rate_prof
+    path: /rate_prof/{professorId}
     controller: App\Controller\ProfessorRateController::addProfRate
 
 display_ratings:

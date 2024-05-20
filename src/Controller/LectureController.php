@@ -26,10 +26,10 @@ class LectureController extends AbstractController
             'type' => $type
         ]);
 
+//        here the correct comments are gotten, it includes the replies to those comments
         $comments = $entityManager->getRepository(Comment::class)->findBy([
             'course_id' => $id,
             'type' => $type,
-            'parent_id' => null,
         ]);
 
         $comment = new Comment();

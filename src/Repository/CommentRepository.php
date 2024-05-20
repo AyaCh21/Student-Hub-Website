@@ -13,4 +13,15 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function findByCourseAndType(int $courseId, string $type)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.course_id = :course_id')
+            ->andWhere('c.type = :type')
+            ->setParameter('course_id', $courseId)
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

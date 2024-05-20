@@ -6,7 +6,8 @@
 
 {% block content %}
 
-    <div class="prof_rate_from">
+    <h1 class="rate_header">Rate Professor</h1>
+    <div class="prof_rate_form">
         {{ form_start(form_rate_prof, {'attr': {'class': 'prof_rate_form'}}) }}
         {{ form_errors(form_rate_prof) }}
         {{ form_row(form_rate_prof.student) }}

@@ -2,19 +2,23 @@
 .main {
     justify-items: center;
 }
-.prof_rate_from {
+.rate_header {
+    margin: 20px;
+}
+.prof_rate_form, .course_rate_form {
     display: flex;
+    flex-direction: column;
     width: 90%;
     font-size: 23px;
-    margin: 40px 20px;
+    margin: 20px 20px;
     padding: 10px;
 }
-.prof_form_field {
+.prof_form_field, .course_rate_field {
     margin: 10px;
     display: flex;
     flex-direction: column;
 }
-.prof_list {
+.prof_list, .course_list {
     border-radius: 20px;
     border: 1px solid var(--minor-color);
     background: var(--minor-color);
@@ -22,17 +26,16 @@
     padding: 7px;
     margin: 10px;
 }
-
 /* general definitions for the slider */
 input[type="range"] {
     appearance: none;
+    width: 15%;
     background-color: transparent;
     --thumb-height: 2.125em;
     --thumb-width: 1em;
     --track-height: 0.5em;
     --clip-edges: 0.125em;
 }
-
 input[type="range"],
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -59,7 +62,6 @@ input[type="range"]::-webkit-slider-runnable-track {
     background-color: var(--minor-color);
     border-radius: var(--track-height);
 }
-
 /* this styles the thumb in the firefox browsers */
 input[type="range"],
 input[type="range"]::-moz-range-track,
@@ -91,8 +93,7 @@ input[type="range"]::-moz-range-progress {
     height: calc(var(--track-height) + 1px);
     border-radius: var(--track-height);
 }
-
-.prof_rate_submit {
+.prof_rate_submit, .btn-primary {
     background: var(--extra-color);
     padding: 7px;
     margin: 10px;
@@ -100,6 +101,7 @@ input[type="range"]::-moz-range-progress {
     border: 1px solid var(--extra-color);
     color: var(--dark-color);
     transition: all 0.5s;
+    width: 10%;
 
     &:hover {
         box-shadow: inset -8em 0 0 var(--light-color), inset 8em 0 0 var(--light-color);
@@ -107,6 +109,10 @@ input[type="range"]::-moz-range-progress {
     }
 
 }
+
+
+
+
 
 /* THIS IS SPACE FOR DISPLAY RATE */
 .prof_cards_wrapper {

@@ -97,6 +97,11 @@
             {% for favoriteCourse in favoriteData %}
                 <li class="course">
                     <h3 class="course-toggle" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
+                    <label>
+                        <input type="checkbox" class="favorite-toggle" data-course-id="{{ favoriteCourse.id }}" onchange="toggleFavorite(this)"
+                               {% if favoriteCourse.id in favoriteData|column('id') %}checked  {% endif %}>
+                        choose as favorite
+                    </label>
                     <!-- Assuming favorite courses have PDF and options as well -->
                     {% if favoriteCourse.pdf is defined and favoriteCourse.pdf is not null %}
                         <div class="pdf-viewer">
@@ -131,7 +136,11 @@
                         <li class="course" id="{{ course.name | lower | replace({' ': '_'}) }}">
                             <h3 class="course-toggle" onclick="toggleCourse(this)">{{ course.name }}</h3>
                             <!-- Add toggle favorite checkbox or button -->
-                            <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)">
+                            <label>
+                            <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)"
+                            {% if course.id in favoriteData|column('id') %}checked  {% endif %}>
+                                choose as favorite
+                            </label>
                             <!-- End of toggle favorite -->
                             {% if course.pdf is defined and course.pdf is not null %}
                                 <div class="pdf-viewer">

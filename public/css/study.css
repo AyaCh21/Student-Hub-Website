@@ -110,11 +110,13 @@ body, html {
 
 .search-form {
     display: flex;
+    height: fit-content;
     justify-content: center;
-    background-color: var(--minor-color);
+    align-items: center;
+    background-color: var(--extra-color);
     opacity: 0.6;
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 2px;
     transition: all ease 0.7s;
     color: var(--dark-color);
 
@@ -123,30 +125,53 @@ body, html {
     }
 }
 
+.search-form button,
 .search-form input[type="text"],
-.search-form select,
-.search-form button {
-    padding: 10px;
-    margin: 0 5px;
-    color: var(--extra-color);
-    background-color: #ecf0f1; /* Light background, adjust as needed */
-    border: 2px solid #bdc3c7; /* Slightly darker border */
-    border-radius: 4px;
-}
-
-.search-form button {
-    cursor: pointer;
+.search-form select {
     padding: 10px;
     margin: 10px;
     border-radius: 20px;
     border: 0;
-    background-color: var(--extra-color);
-    color: var(--dark-color);
     transition: all 0.7s; /* stretches out the change to the specified time interval */
 }
 
-.search-form button:hover {
-    box-shadow: inset -6em 0 0 var(--light-color), inset 6em 0 0 var(--light-color);
+.search-form button {
+    cursor: pointer;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--extra-color), inset 6em 0 0 var(--extra-color);
+    }
+}
+.search-form input[type="text"] {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    height: fit-content;
+
+
+    &:hover {
+        box-shadow: inset -8em 0 0 var(--extra-color), inset 8em 0 0 var(--extra-color);
+    }
+
+    &:focus {
+        background-color: var(--extra-color);
+        border: 0;
+    }
+}
+.search-form select {
+    background: var(--light-color);
+    color: var(--dark-color);
+    width: fit-content;
+    
+    &:hover {
+        cursor: pointer;
+        box-shadow: inset -8em 0 0 var(--extra-color), inset 8em 0 0 var(--extra-color);
+    }
+
+    &:focus {
+        background-color: var(--extra-color);
+    }
 }
 
 /* the following is for Custom scrollbar for WebKit browsers */

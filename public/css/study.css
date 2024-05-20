@@ -116,7 +116,7 @@ body, html {
     margin-bottom: 20px;
     padding: 10px;
     transition: all ease 0.7s;
-    color: #ffffff;
+    color: var(--dark-color);
 
     &:hover {
         opacity: 1;
@@ -128,7 +128,7 @@ body, html {
 .search-form button {
     padding: 10px;
     margin: 0 5px;
-    color: #5d6d7e; /* Light grey for text, adjust as needed */
+    color: var(--extra-color);
     background-color: #ecf0f1; /* Light background, adjust as needed */
     border: 2px solid #bdc3c7; /* Slightly darker border */
     border-radius: 4px;
@@ -136,13 +136,17 @@ body, html {
 
 .search-form button {
     cursor: pointer;
-    background-color: #3498db; /* Button color, adjust as needed */
-    color: #ffffff;
-    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+    background-color: var(--extra-color);
+    color: var(--dark-color);
+    transition: all 0.7s; /* stretches out the change to the specified time interval */
 }
 
 .search-form button:hover {
-    background-color: #2980b9; /* Darker shade for hover, adjust as needed */
+    box-shadow: inset -6em 0 0 var(--light-color), inset 6em 0 0 var(--light-color);
 }
 
 /* the following is for Custom scrollbar for WebKit browsers */
@@ -165,3 +169,4 @@ body, html {
 .courses::-webkit-scrollbar-thumb:hover {
     background-color: #3498db; /* Hover color */
 }
+

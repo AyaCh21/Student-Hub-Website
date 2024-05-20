@@ -16,8 +16,9 @@
                 {% else %}
                     <div class="prof_rate">Be the first to rate</div>
                 {% endif %}
-                <a href="{{ path('professor_rate') }}"><input type="button" class="rate_button" value="rate me"></a>
-                <input type="button" class="feedback_button" value="leave feedback">
+                <a href="{{ path('professor_rate') }}"><input type="button" class="rate_button" value="Rate Me"></a>
+                <a href="{{ path('feedback', { courseId: courses[0].id }) }}"><input type="button" class="feedback_button" value="Leave Feedback"></a>
+                <a href="{{ path('view_feedback', { courseId: courses[0].id }) }}"><input type="button" class="view_feedback_button" value="View Feedback"></a>
             </div>
         {% endfor %}
     </div>

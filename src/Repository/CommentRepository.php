@@ -24,4 +24,13 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findChildren(int $parentId)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.parent_id = :parent_id')
+            ->setParameter('parent_id', $parentId)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

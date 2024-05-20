@@ -10,12 +10,12 @@ home:
     controller: App\Controller\HomePageController::homePage
 
 study:
-        path: /study
-        controller: App\Controller\StudyController::study
+    path: /study
+    controller: App\Controller\StudyController::study
 
 professor_rate:
     path: /rate_prof/{professorId}
-    controller: App\Controller\ProfessorRateController::addProfRate
+    controller: App\Controller\RatingController::addProfRate
 
 display_professor_rate:
     path: /display_rate_prof

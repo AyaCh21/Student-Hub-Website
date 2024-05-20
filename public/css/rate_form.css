@@ -18,7 +18,7 @@
     border-radius: 20px;
     border: 1px solid var(--minor-color);
     background: var(--minor-color);
-    color: var(--light-color);
+    color: var(--dark-color);
     padding: 7px;
     margin: 10px;
 }
@@ -34,7 +34,6 @@ input[type="range"] {
 }
 
 input[type="range"],
-input[type="range"]::-webkit-slider-runnable-track,
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     transition: all ease 100ms;
@@ -47,7 +46,6 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: var(--thumb-width, var(--thumb-height));
     cursor: grab;
 }
-
 input[type="range"]:hover::-webkit-slider-thumb {
     filter: brightness(90%);
     cursor: grab;
@@ -57,8 +55,8 @@ input[type="range"]:active::-webkit-slider-thumb  {
 }
 input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
+    position: relative;
     background-color: var(--minor-color);
-    height: calc(var(--track-height));
     border-radius: var(--track-height);
 }
 

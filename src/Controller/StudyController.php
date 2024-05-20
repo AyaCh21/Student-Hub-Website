@@ -7,7 +7,6 @@ use App\Entity\Favorite;
 use App\Entity\User;
 use App\Repository\CourseRepository;
 use App\Repository\FavoriteRepository;
-use App\Repository\FavoriteRepositoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

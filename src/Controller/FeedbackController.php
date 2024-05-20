@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Entity\Feedback;
+use App\Entity\Feedbackprof;
+use App\Entity\Professor;
 use App\Entity\Student;
+use App\Form\FeedbackTypeC;
 use App\Form\FeedbackType;
 use App\Repository\StudentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FeedbackController extends AbstractController
 {
-    #[Route('/feedback/{courseId}', name: 'feedback')]
+    #[Route('/feedbacks/{courseId}', name: 'feedback_course')]
     public function feedback($courseId, Request $request, EntityManagerInterface $entityManager): Response
     {
         $course = $entityManager->getRepository(Course::class)->find($courseId);
@@ -24,7 +27,7 @@ class FeedbackController extends AbstractController
         }
 
         $feedback = new Feedback();
-        $form = $this->createForm(FeedbackType::class, $feedback);
+        $form = $this->createForm(FeedbackTypeC::class, $feedback);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -46,15 +49,15 @@ class FeedbackController extends AbstractController
             $entityManager->persist($feedback);
             $entityManager->flush();
 
-            return $this->redirectToRoute('display_professor_rate');
+
         }
 
         return $this->render('feedback.html.twig', [
-            'form' => $form->createView(),
+            'form_course' => $form->createView(),
         ]);
     }
 
-    #[Route('/view_feedback/{courseId}', name: 'view_feedback')]
+    #[Route('/view/{courseId}', name: 'view')]
     public function viewFeedback($courseId, EntityManagerInterface $entityManager): Response
     {
         $course = $entityManager->getRepository(Course::class)->find($courseId);
@@ -69,4 +72,56 @@ class FeedbackController extends AbstractController
             'feedbacks' => $feedbacks
         ]);
     }
+    #[Route('/feedback/{professorId}', name: 'feedback_prof')]
+    public function feedbackprof(int $professorId, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $professor = $entityManager->getRepository(Professor::class)->find($professorId);
+        $feedback = new Feedbackprof();
+        if (!$professor) {
+            throw $this->createNotFoundException('Professor not found');
+        }
+
+
+        $form = $this->createForm(FeedbackType::class, $feedback);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $studentUsername = $form->get('studentUsername')->getData();
+            $student = $entityManager->getRepository(Student::class)->findOneBy(['username' => $studentUsername]);
+            if (!$student) {
+                throw $this->createNotFoundException('Student not found');
+            }
+
+            //  $course = $form->get('course')->getData();
+            // $feedback->setCourse($course);
+            $feedback->setStudent($student);
+            $feedback->setProfessor($professor);
+            $feedback->setFeedback($form->get('feedback')->getData());
+            $entityManager->persist($feedback);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('display_professor_rate');
+        }
+
+        return $this->render('feedbackprof.html.twig', [
+            'professor' => $professor,
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/view_feedback/{professorId}', name: 'view_feedback')]
+    public function viewFeedbacks(int $professorId, EntityManagerInterface $entityManager): Response
+    {
+        $professor = $entityManager->getRepository(Professor::class)->find($professorId);
+        if (!$professor) {
+            throw $this->createNotFoundException('Professor not found');
+        }
+
+        $professorFeedbacks = $entityManager->getRepository(Feedbackprof::class)->findBy(['professor' => $professor]);
+
+        return $this->render('view_feedbackprof.html.twig', [
+            'professor' => $professor,
+            'professorFeedbacks' => $professorFeedbacks,
+        ]);
+    }
+
 }

@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class RatingController extends AbstractController
+class  RatingController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private array $stylesheets;

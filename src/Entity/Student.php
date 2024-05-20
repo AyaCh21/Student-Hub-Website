@@ -80,62 +80,6 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPhase(): ?int
     {
         return $this->phase;
-<<<<<<< HEAD
-    }
-
-    public function setPhase(?int $phase): void
-    {
-        $this->phase = $phase;
-    }
-
-    public function getSpecialisation(): ?string
-    {
-        return $this->specialisation;
-    }
-
-    public function setSpecialisation(?string $specialisation): void
-    {
-        $this->specialisation = $specialisation;
-    }
-
-
-
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-    /**
-     * The public representation of the user (e.g. a username, an email address, etc.)
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->id;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-        return $this;
-=======
->>>>>>> 0dee542 (toggle function in StudyController)
     }
 
     public function setPhase(?int $phase): void
@@ -190,5 +134,4 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
         return $this;
     }
-
 }

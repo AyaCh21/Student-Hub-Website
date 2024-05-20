@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Provide Feedback{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Provide Feedback</h1>
+        {{ form_start(form_course) }}
+        <div>
+            {{ form_label(form_course.studentUsername) }}
+            {{ form_widget(form_course.studentUsername) }}
+        </div>
+        <div>
+            {{ form_label(form_course.feedback) }}
+            {{ form_widget(form_course.feedback) }}
+        </div>
+        <div>
+            {{ form_widget(form_course.save) }}
+        </div>
+        {{ form_end(form_course) }}
+    </div>
+{% endblock %}

@@ -86,7 +86,7 @@ class ProfessorRateController extends AbstractController
         ]);
     }
 
-    #[Route("/display_rate_prof", name:"display_professor_rate")]
+    #[Route("/display_rate_prof", name: "display_professor_rate")]
     public function viewProfRate(EntityManagerInterface $entityManager): Response
     {
         $courses = $entityManager->getRepository(Course::class)->findAll();
@@ -96,11 +96,13 @@ class ProfessorRateController extends AbstractController
 
         foreach ($courses as $course) {
             $professor = $course->getProfessor();
-            $professorName = $professor->getName();
-            if (!isset($professorWiseCourses[$professorName])) {
-                $professorWiseCourses[$professorName] = [];
+            if (!isset($professorWiseCourses[$professor->getId()])) {
+                $professorWiseCourses[$professor->getId()] = [
+                    'professor' => $professor,
+                    'courses' => []
+                ];
             }
-            $professorWiseCourses[$professorName][] = $course;
+            $professorWiseCourses[$professor->getId()]['courses'][] = $course;
         }
 
         $professors = $entityManager->getRepository(Professor::class)->findAll();
@@ -112,19 +114,20 @@ class ProfessorRateController extends AbstractController
             }, 0);
 
             $averageRate = count($rates) > 0 ? $totalRate / count($rates) : 0;
-            $professorRatings[$professor->getName()] = $averageRate;
-            $professorVotes[$professor->getName()] = count($rates);
+            $professorRatings[$professor->getId()] = $averageRate;
+            $professorVotes[$professor->getId()] = count($rates);
         }
+
         $student = $this->getUser();
-        $this->stylesheets[] = 'rate_form.css';
-        $this->scripts[] = '';
+        $stylesheets = ['rate_form.css'];
+        $scripts = [];
 
         return $this->render('display_rate_professor.html.twig', [
-            'stylesheets' => $this->stylesheets,
+            'stylesheets' => $stylesheets,
             'professorWiseCourses' => $professorWiseCourses,
             'professorRatings' => $professorRatings,
             'professorVotes' => $professorVotes,
-            'scripts' => $this->scripts,
+            'scripts' => $scripts,
             'student' => $student
         ]);
     }

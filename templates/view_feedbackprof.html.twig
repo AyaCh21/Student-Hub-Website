@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Feedbacks for {{ professor.getName() }}{% endblock %}
+
+{% block content %}
+    <h1>Feedbacks for {{ professor.getName() }}</h1>
+    <div class="feedback_list">
+        {% for feedback in professorFeedbacks %}
+            <div class="feedback_item">
+                <p>{{ feedback.getFeedback()}}</p>
+                <small>Submitted by Student ID: {{ feedback.student.id }}</small>
+            </div>
+        {% else %}
+            <p>No feedback available for this professor.</p>
+        {% endfor %}
+    </div>
+    <a href="{{ path('display_professor_rate') }}">Back to Professor Ratings</a>
+{% endblock %}

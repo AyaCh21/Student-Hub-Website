@@ -34,6 +34,8 @@
             };
             xhr.send("courseId=" + courseId + "&isChecked=" + isChecked);
         }
+
+
     </script>
 
 {% endblock %}
@@ -49,38 +51,19 @@
     </div>
 
     <div class="favorite-wrapper">
-            <div class="phase-wrapper">
-                <div class="phase-header">
-                    <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
-                        <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
-                    </svg>
-                    <h2 class="phase-toggle" onclick="togglePhase(this)">Phase {{ phase }}</h2>
+        <div class="phase-header">
+            <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+            </svg>
+            <h2 class="phase-toggle" onclick="togglePhase(this)">FavoriteCourse</h2>
+        </div>
+        <ul class="courses" style="display: none;">
+            {% for favoriteCourse in favoriteData %}
+                <div class="course">
+                    <h3>{{ favoriteCourse.name }}</h3>
                 </div>
-                <ul class="courses" style="display: none;">
-                    {% for course in courses %}
-                        <li class="course" id="{{ course.name | lower | replace({' ': '_'}) }}">
-                            <h3 class="course-toggle" onclick="toggleCourse(this)">{{ course.name }}</h3>
-                            <!-- Add toggle favorite checkbox or button -->
-                            <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)">
-                            <!-- End of toggle favorite -->
-                            {% if course.pdf is defined and course.pdf is not null %}
-                                <div class="pdf-viewer">
-                                    <embed src="{{ asset(course.pdf) }}" type="application/pdf" width="600" height="400"></embed>
-                                </div>
-                            {% endif %}
-                            <ul class="options" style="display: none;">
-                                <li class="option">
-                                    <a href="{{ path('lecture', {'id': course.id, 'type': 'lecture'}) }}">Lecture</a>
-                                </li>
-                                <li class="option">
-                                    <a href="{{ path('lecture', {'id': course.id, 'type': 'lab'}) }}">Lab</a>
-                                </li>
-                            </ul>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </ul>
     </div>
 
     <div class="phases-wrapper">

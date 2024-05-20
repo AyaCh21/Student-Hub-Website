@@ -1,7 +1,7 @@
+/* THIS IS RATING FORM STYLES */
 .main {
     justify-items: center;
 }
-
 .prof_rate_from {
     display: flex;
     width: 90%;
@@ -9,17 +9,11 @@
     margin: auto;
     padding: 10px;
 }
-
-.prof_rate_form {
-    padding: 20px;
-}
-
 .prof_form_field {
     margin: 10px;
     display: flex;
     flex-direction: column;
 }
-
 .prof_list {
     border-radius: 20px;
     border: 1px solid var(--minor-color);
@@ -29,6 +23,87 @@
     margin: 10px;
 }
 
+input[type="range"] {
+    --thumb-height: 2.125em;
+    --thumb-width: 1em;
+    --track-height: 0.5em;
+    --clip-edges: 0.125em;
+}
+
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+    position: relative;
+}
+
+.rate_range {
+    background-color: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.rate_range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    cursor: pointer;
+    --thumb-radius: calc((var(--thumb-height) * 0.5));
+    --clip-top: calc((var(--thumb-height) - var(--track-height)));
+    --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+    --clip-further: calc(100% + 1px);
+    width: var(--thumb-width, var(--thumb-height));
+    background: linear-gradient(currentColor 0 0, var(--light-color) 100%);
+    border-radius: var(--thumb-width, var(--thumb-height));
+
+    clip-path: polygon(
+            100% -1px,
+            var(--clip-edges) -1px,
+            0 var(--clip-top),
+            -100vmax var(--clip-top),
+            -100vmax var(--clip-bottom),
+            0 var(--clip-bottom),
+            var(--clip-edges) 100%,
+            var(--clip-further) var(--clip-further)
+    );
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(var(--minor-color) 0 0) scroll no-repeat center /
+		100% calc(var(--track-height) + 1px);
+}
+
+
+/* this styles the thumb in the firefox browsers */
+input[type="range"],
+input[type="range"]::-moz-range-track,
+input[type="range"]::-moz-range-thumb {
+    appearance: none;
+    transition: all ease 100ms;
+    height: var(--thumb-height);
+}
+input[type="range"]::-moz-range-thumb {
+    background: var(--light-color);
+    border: 0;
+    width: var(--thumb-width, var(--thumb-height));
+    border-radius: var(--thumb-width, var(--thumb-height));
+    cursor: grab;
+}
+input[type="range"]:active::-moz-range-thumb {
+    cursor: grabbing;
+}
+input[type="range"]::-moz-range-track {
+    width: 100%;
+    background: var(--minor-color);
+}
+input[type="range"]::-moz-range-progress {
+    appearance: none;
+    background: var(--light-color);
+}
+input[type="range"]::-moz-range-track,
+input[type="range"]::-moz-range-progress {
+    height: calc(var(--track-height) + 1px);
+    border-radius: var(--track-height);
+}
+
 .prof_rate_submit {
     background: var(--extra-color);
     padding: 7px;
@@ -36,6 +111,12 @@
     border-radius: 20px;
     border: 1px solid var(--extra-color);
     color: var(--dark-color);
+    transition: all 0.5s;
+
+    &:hover {
+        box-shadow: inset -8em 0 0 var(--light-color), inset 8em 0 0 var(--light-color);
+        cursor: pointer;
+    }
 
 }
 
@@ -97,6 +178,5 @@ input[type=button] {
 
     &:hover {
         box-shadow: inset -6em 0 0 var(--main-color), inset 6em 0 0 var(--main-color);
-
     }
 }

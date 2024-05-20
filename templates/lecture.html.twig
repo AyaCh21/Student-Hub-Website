@@ -39,6 +39,46 @@
         <div class="section comments-section">
             <h2 class="section-title">Comments</h2>
             <p>This is where the comments will go.</p>
+            {#this is where the user will post their own comment#}
+            <div class="comment-form">
+                {{ form_start(commentForm) }}
+                {{ form_widget(commentForm) }}
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+                {{ form_end(commentForm) }}
+            </div>
+           {# below this all the comments for this page will be displayed#}
+            <div class ="comment-list">
+                {% for comment in comments %}
+                <div class="comment">
+                    <p>{{ comment.getCommentText() }}</p>
+                    <small>Posted by User {{ comment.getUserId() }} on {{ comment.getCreatedAt()|date('Y-m-d H:i') }}</small>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+{# i put he javascript funcition here bc the file webage was not able to access it before#}
+    <script>
+        document.getElementById('comment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    form.reset();
+                }
+            }).catch(error => {
+                console.error('Error submitting form:', error);
+            });
+        });
+    </script>
+
+
 {% endblock %}

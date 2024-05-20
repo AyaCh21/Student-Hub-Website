@@ -3,7 +3,6 @@
 }
 
 .prof_rate_from {
-    display: flex;
     width: 90%;
     font-size: 23px;
     margin: auto;
@@ -16,8 +15,6 @@
 
 .prof_form_field {
     margin: 10px;
-    display: flex;
-    flex-direction: column;
 }
 
 .prof_list {
@@ -36,7 +33,6 @@
     border-radius: 20px;
     border: 1px solid var(--extra-color);
     color: var(--dark-color);
-
 }
 
 /* THIS IS SPACE FOR DISPLAY RATE */
@@ -47,6 +43,7 @@
     justify-content: center;
     margin-top: 20px;
 }
+
 .prof_card {
     box-shadow: 0 4px 8px 0 #272c2c;
     border-radius: 20px;
@@ -54,9 +51,11 @@
     padding: 15px 20px;
     margin: 10px;
 }
+
 .prof_name {
     color: var(--extra-color);
 }
+
 .prof_classes_wrapper {
     font-size: 11px;
     margin-bottom: 4px;
@@ -69,19 +68,6 @@ input[type=button] {
     border: 1px solid var(--dark-color);
     color: var(--dark-color);
     transition: all 0.5s;
-
-    &:before, &:after {
-        width: 0;
-        height: 100%;
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        z-index: -1;
-    }
-
-    &:hover {
-        cursor: pointer;
-    }
 }
 
 .rate_button {
@@ -97,6 +83,5 @@ input[type=button] {
 
     &:hover {
         box-shadow: inset -6em 0 0 var(--main-color), inset 6em 0 0 var(--main-color);
-
     }
 }

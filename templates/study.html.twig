@@ -59,12 +59,27 @@
         </div>
         <ul class="courses" style="display: none;">
             {% for favoriteCourse in favoriteData %}
-                <div class="course">
-                    <h3>{{ favoriteCourse.name }}</h3>
-                </div>
+                <li class="course">
+                    <h3 class="course-toggle" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
+                    <!-- Assuming favorite courses have PDF and options as well -->
+                    {% if favoriteCourse.pdf is defined and favoriteCourse.pdf is not null %}
+                        <div class="pdf-viewer">
+                            <embed src="{{ asset(favoriteCourse.pdf) }}" type="application/pdf" width="600" height="400"></embed>
+                        </div>
+                    {% endif %}
+                    <ul class="options" style="display: none;">
+                        <li class="option">
+                            <a href="{{ path('lecture', {'id': favoriteCourse.id, 'type': 'lecture'}) }}">Lecture</a>
+                        </li>
+                        <li class="option">
+                            <a href="{{ path('lecture', {'id': favoriteCourse.id, 'type': 'lab'}) }}">Lab</a>
+                        </li>
+                    </ul>
+                </li>
             {% endfor %}
         </ul>
     </div>
+
 
     <div class="phases-wrapper">
         {% for phase, courses in phaseWiseCourses %}

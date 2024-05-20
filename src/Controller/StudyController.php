@@ -35,7 +35,7 @@ class StudyController extends AbstractController
      * @Route("/study", name="study")
      */
     #[Route("/study", name:"study")]
-    public function study(EntityManagerInterface $entityManager): Response
+    public function study(EntityManagerInterface $entityManager, FavoriteRepository $favoriteRepository): Response
     {
         $courses = $entityManager->getRepository(Course::class)->findAll();
         $phaseWiseCourses = [];
@@ -49,10 +49,22 @@ class StudyController extends AbstractController
         }
         $this->stylesheets[]='study.css';
 
+        $user = $this->security->getUser();
+        $favorites = $favoriteRepository->findBy(['student' => $user]);
+
+        $favoriteData = [];
+        foreach ($favorites as $favorite) {
+            $courseId = $favorite->getCourse()->getId();
+            $courseName = $favorite->getCourse()->getName();
+            $favoriteData[] = ['id' => $courseId, 'name' => $courseName];
+        }
+
         return $this->render('study.html.twig', [
             'stylesheets' => $this->stylesheets,
-            'phaseWiseCourses' => $phaseWiseCourses
+            'phaseWiseCourses' => $phaseWiseCourses,
+            'favoriteData' => $favoriteData,
         ]);
+
     }
 
     #[Route("/favorite/toggle", name: "favorite_toggle", methods: ["POST"])]
@@ -61,6 +73,14 @@ class StudyController extends AbstractController
         $courseId = $request->request->get('courseId');
         $course = $entityManager->getRepository(Course::class)->find($courseId);
         $user = $this->security->getUser();
+
+        if (!$user) {
+            return new JsonResponse(['status' => 'error', 'message' => 'User not authenticated'], 401);
+        }
+
+        if (!$courseId) {
+            return new JsonResponse(['status' => 'error', 'message' => 'No course ID provided'], 400);
+        }
 
         if (!$course) {
             return new JsonResponse(['status' => 'error', 'message' => 'Course not found'], 404);
@@ -80,24 +100,6 @@ class StudyController extends AbstractController
             $entityManager->flush();
             return new JsonResponse(['status' => 'added']);
         }
-    }
-
-    #[Route('/favorite/list', name: 'favorite_list', methods: ['GET'])]
-    public function favoriteList(FavoriteRepository $favoriteRepository): JsonResponse
-    {
-        $user = $this->security->getUser();
-        $favorites = $favoriteRepository->findBy(['student' => $user]);
-
-        $favoriteData = array_map(function ($favorite) {
-            return [
-                'course' => [
-                    'id' => $favorite->getCourse()->getId(),
-                    'name' => $favorite->getCourse()->getName(),
-                ],
-            ];
-        }, $favorites);
-
-        return new JsonResponse(['favorites' => $favoriteData]);
     }
 
 }

@@ -212,6 +212,10 @@ body, html {
             box-shadow: 0 0;
         }
     }
+    .phase-header {
+        font-size: 7vw;
+        padding: 8px;
+    }
 
 
 }

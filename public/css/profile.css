@@ -1,16 +1,16 @@
 .profile-h3 {
     color: var(--extra-color);
     text-transform: uppercase;
-    font-size: 26px;
     letter-spacing: 2px;
+    margin: 1em 3em 0 3em;
 }
 
 .profile-p {
-    margin-top: -20px;
+    margin: 0 7em 1em 7em;
 }
 
 .line-breaker {
-    border: 1px solid var(--minor-color);
+    border: 1px solid var(--extra-color);
 }
 
 .spec-box {

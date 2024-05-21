@@ -212,10 +212,20 @@ body, html {
             box-shadow: 0 0;
         }
     }
-    .phase-header {
-        font-size: 7vw;
-        padding: 8px;
+    .options li{
+        display: inline-block;
     }
+    .option {
+        background: var(--extra-color);
+        color: var(--dark-color);
+        padding: 5px;
+        margin: 2px;
+        border-radius: 10px;
+        width: 7em;
+    }
+    .option a {
+        color: var(--dark-color);
 
+    }
 
 }

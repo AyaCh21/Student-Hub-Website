@@ -118,12 +118,12 @@
             <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
                 <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
             </svg>
-            <h2 class="phase-toggle" onclick="togglePhase(this)">FavoriteCourse</h2>
+            <h2 class="phase-toggle is-size-4-mobile" onclick="togglePhase(this)">FavoriteCourse</h2>
         </div>
         <ul class="courses" style="display: none;">
             {% for favoriteCourse in favoriteData %}
                 <li class="course">
-                    <h3 class="course-toggle" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
+                    <h3 class="course-toggle is-size-5-mobile" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
                     <label>
                         <input type="checkbox" class="favorite-toggle" data-course-id="{{ favoriteCourse.id }}" onchange="toggleFavorite(this)"
                                {% if favoriteCourse.id in favoriteData|column('id') %}checked  {% endif %}>
@@ -156,12 +156,12 @@
                     <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
                         <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
                     </svg>
-                    <h2 class="phase-toggle" onclick="togglePhase(this)">Phase {{ phase }}</h2>
+                    <h2 class="phase-toggle is-size-4-mobile" onclick="togglePhase(this)">Phase {{ phase }}</h2>
                 </div>
                 <ul class="courses" style="display: none;">
                     {% for course in courses %}
                         <li class="course" id="{{ course.name | lower | replace({' ': '_'}) }}">
-                            <h3 class="course-toggle" onclick="toggleCourse(this)">{{ course.name }}</h3>
+                            <h3 class="course-toggle is-size-5-mobile" onclick="toggleCourse(this)">{{ course.name }}</h3>
                             <!-- Add toggle favorite checkbox or button -->
                             <label>
                             <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)"
@@ -175,12 +175,12 @@
                                 </div>
                             {% endif %}
                             <ul class="options" style="display: none;">
-                                <li class="option">
-                                    <a href="{{ path('lecture', {'id': course.id, 'type': 'lecture'}) }}">Lecture</a>
-                                </li>
-                                <li class="option">
-                                    <a href="{{ path('lecture', {'id': course.id, 'type': 'lab'}) }}">Lab</a>
-                                </li>
+                                <a href="{{ path('lecture', {'id': course.id, 'type': 'lecture'}) }}">
+                                    <li class="option">Lecture</li>
+                                </a>
+                                <a href="{{ path('lecture', {'id': course.id, 'type': 'lab'}) }}">
+                                    <li class="option">Lab</li>
+                                </a>
                             </ul>
                         </li>
                     {% endfor %}

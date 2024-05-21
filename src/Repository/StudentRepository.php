@@ -20,7 +20,29 @@ class StudentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Student::class);
     }
+    /**
+     * Retrieve Student_id based on username
+     *
+     * @param string $username
+     * @return int|null
+     */
+    public function findStudentIdByUsername(string $username): ?int
+    {
+        $query = $this->createQueryBuilder('s')
+            ->select('s.id')
+            ->where('s.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery();
 
+        $result = $query->getOneOrNullResult();
+
+        // Check if the result is not null before accessing its properties
+        if ($result !== null) {
+            return $result['id'];
+        }
+
+        return null;
+    }
 //public function createStudent(string $username, string $email, string $password, int $phase, string $specialization)
 //{
 //    $entityManager = $this->getEntityManager();

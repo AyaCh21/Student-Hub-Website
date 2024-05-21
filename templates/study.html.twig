@@ -11,6 +11,96 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/study.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.favorite-toggle').forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const courseId = this.dataset.courseId;
+                    const isChecked = this.checked;
+
+                    fetch('{{ path('favorite_toggle') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': '{{ csrf_token('favorite_toggle') }}'
+                        },
+                        body: JSON.stringify({ courseId: courseId })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'added') {
+                                console.log('Course added to favorites');
+                            } else if (data.status === 'removed') {
+                                console.log('Course removed from favorites');
+                            } else {
+                                console.error(data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+
+            document.getElementById('show-favorites').addEventListener('click', () => {
+                const favorites = Array.from(document.querySelectorAll('.favorite-toggle:checked')).map(checkbox => checkbox.closest('.course').querySelector('.course-toggle').textContent);
+                alert('Favorites: ' + favorites.join(', '));
+            });
+        });
+    </script>
+    <script>
+        function toggleFavorite(checkbox) {
+            var courseId = checkbox.dataset.courseId;
+            var isChecked = checkbox.checked;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{{ path('favorite_toggle') }}", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.status === 'added') {
+                            console.log('Course added to favorites.');
+                        } else if (response.status === 'removed') {
+                            console.log('Course removed from favorites.');
+                        }
+                    } else {
+                        console.error('Failed to toggle favorite.');
+                    }
+                }
+            };
+            xhr.send("courseId=" + courseId + "&isChecked=" + isChecked);
+        }
+
+
+    </script>
+
+    <script>
+        function toggleFavorite(checkbox) {
+            var courseId = checkbox.dataset.courseId;
+            var isChecked = checkbox.checked;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{{ path('favorite_toggle') }}", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.status === 'added') {
+                            console.log('Course added to favorites.');
+                        } else if (response.status === 'removed') {
+                            console.log('Course removed from favorites.');
+                        }
+                    } else {
+                        console.error('Failed to toggle favorite.');
+                    }
+                }
+            };
+            xhr.send("courseId=" + courseId + "&isChecked=" + isChecked);
+        }
+
+
+    </script>
+
 {% endblock %}
 
 {% block content %}
@@ -22,6 +112,42 @@
         </select>
         <button onclick="searchCourse()">Search</button>
     </div>
+
+    <div class="favorite-wrapper">
+        <div class="phase-header">
+            <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#efd0ce" viewBox="0 -960 960 960" width="34">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+            </svg>
+            <h2 class="phase-toggle" onclick="togglePhase(this)">FavoriteCourse</h2>
+        </div>
+        <ul class="courses" style="display: none;">
+            {% for favoriteCourse in favoriteData %}
+                <li class="course">
+                    <h3 class="course-toggle" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
+                    <label>
+                        <input type="checkbox" class="favorite-toggle" data-course-id="{{ favoriteCourse.id }}" onchange="toggleFavorite(this)"
+                               {% if favoriteCourse.id in favoriteData|column('id') %}checked  {% endif %}>
+                        choose as favorite
+                    </label>
+                    <!-- Assuming favorite courses have PDF and options as well -->
+                    {% if favoriteCourse.pdf is defined and favoriteCourse.pdf is not null %}
+                        <div class="pdf-viewer">
+                            <embed src="{{ asset(favoriteCourse.pdf) }}" type="application/pdf" width="600" height="400"></embed>
+                        </div>
+                    {% endif %}
+                    <ul class="options" style="display: none;">
+                        <li class="option">
+                            <a href="{{ path('lecture', {'id': favoriteCourse.id, 'type': 'lecture'}) }}">Lecture</a>
+                        </li>
+                        <li class="option">
+                            <a href="{{ path('lecture', {'id': favoriteCourse.id, 'type': 'lab'}) }}">Lab</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 
     <div class="phases-wrapper">
         {% for phase, courses in phaseWiseCourses %}
@@ -36,6 +162,13 @@
                     {% for course in courses %}
                         <li class="course" id="{{ course.name | lower | replace({' ': '_'}) }}">
                             <h3 class="course-toggle" onclick="toggleCourse(this)">{{ course.name }}</h3>
+                            <!-- Add toggle favorite checkbox or button -->
+                            <label>
+                            <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)"
+                            {% if course.id in favoriteData|column('id') %}checked  {% endif %}>
+                                choose as favorite
+                            </label>
+                            <!-- End of toggle favorite -->
                             {% if course.pdf is defined and course.pdf is not null %}
                                 <div class="pdf-viewer">
                                     <embed src="{{ asset(course.pdf) }}" type="application/pdf" width="600" height="400"></embed>

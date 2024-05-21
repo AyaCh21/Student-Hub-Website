@@ -15,8 +15,6 @@
 }
 .prof_form_field, .course_rate_field {
     margin: 10px;
-    display: flex;
-    flex-direction: column;
 }
 .prof_list, .course_list {
     border-radius: 20px;
@@ -122,6 +120,7 @@ input[type="range"]::-moz-range-progress {
     justify-content: center;
     margin-top: 20px;
 }
+
 .prof_card {
     box-shadow: 0 4px 8px 0 #272c2c;
     border-radius: 20px;
@@ -129,9 +128,11 @@ input[type="range"]::-moz-range-progress {
     padding: 15px 20px;
     margin: 10px;
 }
+
 .prof_name {
     color: var(--extra-color);
 }
+
 .prof_classes_wrapper {
     font-size: 11px;
     margin-bottom: 4px;

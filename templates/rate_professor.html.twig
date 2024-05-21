@@ -17,8 +17,8 @@
         </div>
         <div class="prof_form_field">
             {{ form_label(form_rate_prof.rate) }}
-            <p style="font-size: 13px">rate is <output id="rate_value">0</output></p>
             {{ form_widget(form_rate_prof.rate, { 'attr': { 'class': 'rate_range'}}) }}
+            <p style="font-size: 13px">rate is <output id="rate_value">0</output></p>
         </div>
         <div class="prof_form_field">
             {{ form_widget(form_rate_prof.save, { 'attr': { 'class': 'prof_rate_submit'}}) }}

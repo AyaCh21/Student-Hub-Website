@@ -18,7 +18,6 @@ body, html {
     padding: 5px;
     flex-grow: 1; /* Allow it to grow with content */
     flex-shrink: 1; /* Allow it to shrink if necessary */
-    /*background-color: #e0e0e0; !* Light green background for visual debugging *!*/
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 
@@ -94,16 +93,28 @@ body, html {
 }
 .options {
     display: block;
-}
 
+}
+.options li{
+    display: inline-block;
+    color: var(--dark-color);
+    background: var(--extra-color);
+    width: 7em;
+    border-radius: 10px;
+    transition: all 0.7s;
+    margin: 0 0.2em;
+
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--dark-color), inset 6em 0 0 var(--dark-color);
+        color: var(--extra-color);
+    }
+}
 .option a{
     cursor: pointer;
     margin-right: 10px;
-    color: #d3c35b;  /*so that the text for lecture and lab stands out*/
     text-decoration: none;
 }
 .option a:hover {
-    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -195,3 +206,35 @@ body, html {
     background-color: #3498db; /* Hover color */
 }
 
+@media only screen and (max-width: 932px) {
+    .search-form {
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
+    }
+    .search-form input[type="text"],
+    .search-form select {
+        width: 20em;
+        transition: all 0s;
+
+        &:focus  {
+            background: var(--light-color);
+        }
+        &:hover {
+            box-shadow: 0 0;
+        }
+    }
+    .option {
+        background: var(--extra-color);
+        color: var(--dark-color);
+        padding: 5px;
+        margin: 2px;
+        border-radius: 10px;
+        width: 7em;
+    }
+    .option a {
+        color: var(--dark-color);
+
+    }
+
+}

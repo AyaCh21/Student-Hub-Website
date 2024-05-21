@@ -6,20 +6,21 @@
     --light-color: #efd0ce;
 }
 html, body {
+    background: var(--dark-color);
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
 body{
-    background: var(--dark-color);
     color: var(--light-color);
     font-family: "Lato", sans-serif;
     position: relative;
-
 }
 
 .navbar {
+    background: transparent;
+    top: 0;
     padding: 20px;
     border-bottom: 1px solid var(--extra-color);
 }
@@ -61,7 +62,9 @@ body{
 .navbar a:before{
     transform-origin: 100% 20%;
 }
-
+svg {
+    display: none;
+}
 .nav_opt.active {
     background: var(--extra-color);
 }
@@ -76,6 +79,7 @@ main {
     text-align: justify;
     text-justify: inter-word;
     justify-items: center;
+    justify-content: space-between;
 }
 
 section {
@@ -102,8 +106,33 @@ footer {
     z-index: 999; /* Ensure the footer appears above other elements -> lowkey don't like this*/
 }
 
-
 footer a {
     text-decoration: none;
     color: var(--extra-color);
+}
+
+@media only screen and (max-width: 932px) {
+    .navbar {
+        color: var(--light-color);
+        margin-top: 1em;
+        margin-bottom: 0;
+        height: fit-content;
+    }
+    .navbar ul {
+        display: flex;
+        flex-direction: row;
+        height: fit-content;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .navbar li {
+        margin: 20px;
+    }
+    svg {
+        display: flex;
+    }
+    footer {
+        width: auto;
+        font-size: 3vw;
+    }
 }

@@ -93,16 +93,28 @@ body, html {
 }
 .options {
     display: block;
-}
 
+}
+.options li{
+    display: inline-block;
+    color: var(--dark-color);
+    background: var(--extra-color);
+    width: 7em;
+    border-radius: 10px;
+    transition: all 0.7s;
+    margin: 0 0.2em;
+
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--dark-color), inset 6em 0 0 var(--dark-color);
+        color: var(--extra-color);
+    }
+}
 .option a{
     cursor: pointer;
     margin-right: 10px;
-    color: #d3c35b;  /*so that the text for lecture and lab stands out*/
     text-decoration: none;
 }
 .option a:hover {
-    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -211,9 +223,6 @@ body, html {
         &:hover {
             box-shadow: 0 0;
         }
-    }
-    .options li{
-        display: inline-block;
     }
     .option {
         background: var(--extra-color);

@@ -65,9 +65,13 @@ class  RatingController extends AbstractController
             return $this->redirectToRoute('display_course_rate');
         }
 
+        $this->stylesheets[]='rate_form.css';
+
         // Render the form
         return $this->render('rate_course.html.twig', [
             'form' => $form->createView(),
+            'stylesheets'=>$this->stylesheets,
+
         ]);
     }
 
@@ -85,10 +89,13 @@ class  RatingController extends AbstractController
             $courseNames[$courseId] = $courseRepository->find($courseId)->getName();
         }
 
+        $this->stylesheets[]='rate_form.css';
+
         // Render the ratings display page
-        return $this->render('display_ratings.html.twig', [
+        return $this->render('display_rate_course.html.twig', [
             'averageRatings' => $averageRatings,
             'courseNames' => $courseNames,
+            'stylesheets'=>$this->stylesheets,
         ]);
     }
 

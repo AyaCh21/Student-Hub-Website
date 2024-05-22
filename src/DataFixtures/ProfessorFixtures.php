@@ -24,7 +24,8 @@ class ProfessorFixtures extends Fixture implements OrderedFixtureInterface
                 } else {
                     // Reference already exists, so set it
                     $this->setReference('professor_' . $data[1], $professor);
-                }                $manager->persist($professor);
+                }
+                $manager->persist($professor);
 
             }
 

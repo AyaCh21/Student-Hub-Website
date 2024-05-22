@@ -1,6 +1,6 @@
 :root {
     --main-color: #b3bcbb;
-    --minor-color: #7c938e;
+    --minor-color: #a3a6a5;
     --extra-color: #eaafa9;
     --dark-color: #323939;
     --light-color: #efd0ce;
@@ -150,7 +150,7 @@ h1 {
 .comment-wrapper {
     padding: 10px;
     margin-bottom: 15px;
-    background-color: var(--minor-color);
+    background-color: gray;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -182,5 +182,48 @@ h1 {
 }
 
 .reply-button:hover {
+    background-color: #d48800;
+}
+
+.reply-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--dark-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reply-form label {
+    color: var(--light-color);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.reply-form input[type="text"], .reply-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--extra-color);
+    border-radius: 5px;
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.reply-form button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    color: var(--dark-color);
+    background-color: var(--extra-color);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.reply-form button:hover {
     background-color: #d48800;
 }

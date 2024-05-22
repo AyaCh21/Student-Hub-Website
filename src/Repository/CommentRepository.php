@@ -16,8 +16,11 @@ class CommentRepository extends ServiceEntityRepository
     public function findByCourseAndType(int $courseId, string $type)
     {
         return $this->createQueryBuilder('c')
+            ->leftJoin('c.children', 'child')
+            ->addSelect('child')
             ->where('c.course_id = :course_id')
             ->andWhere('c.type = :type')
+            ->andWhere('c.parent IS NULL')
             ->setParameter('course_id', $courseId)
             ->setParameter('type', $type)
             ->getQuery()
@@ -27,7 +30,7 @@ class CommentRepository extends ServiceEntityRepository
     public function findChildren(int $parentId)
     {
         return $this->createQueryBuilder('c')
-            ->where('c.parent_id = :parent_id')
+            ->where('c.parent = :parent_id')
             ->setParameter('parent_id', $parentId)
             ->getQuery()
             ->getResult();

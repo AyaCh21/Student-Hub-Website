@@ -47,18 +47,44 @@
                 {{ form_end(commentForm) }}
             </div>
            {# below this all the comments for this page will be displayed#}
-            <div class ="comment-list">
+            <div class="comment-list">
                 {% for comment in comments %}
-                <div class="comment">
-                    <p>{{ comment.getCommentText() }}</p>
-                    <small>Posted by User {{ comment.getUserId() }} on {{ comment.getCreatedAt()|date('Y-m-d H:i') }}</small>
-                </div>
+                    {% if comment.getParent() is null %}
+                        <div class="comment-wrapper">  <!-- Added wrapper for each top-level comment -->
+                            <div class="comment">
+                                <p>{{ comment.getCommentText() }}</p>
+                                <small>Posted by User {{ comment.getUserId() }} on {{ comment.getCreatedAt()|date('Y-m-d H:i') }}</small>
+                                <button class="reply-button" data-comment-id="{{ comment.getId() }}">Reply</button>
+                            </div>
+                            {% if comment.getChildren() is not empty %}
+                                <div class="replies">
+                                    {% for child in comment.getChildren() %}
+                                        <div class="comment-wrapper">  <!-- Added wrapper for each child comment -->
+                                            <div class="comment">
+                                                <p>{{ child.getCommentText() }}</p>
+                                                <small>Posted by User {{ child.getUserId() }} on {{ child.getCreatedAt()|date('Y-m-d H:i') }}</small>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
     </div>
 {# i put he javascript funcition here bc the file webage was not able to access it before#}
     <script>
+        //you should be able to reply to each top level comment
+        document.querySelectorAll('.reply-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const commentId = this.getAttribute('data-comment-id');
+                document.getElementById('parent_id').value = commentId;
+                document.querySelector('.comment-form').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
         document.getElementById('comment-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const form = event.target;
@@ -73,6 +99,7 @@
             }).then(response => {
                 if (response.ok) {
                     form.reset();
+                    document.getElementById('parent_id').value = '';
                 }
             }).catch(error => {
                 console.error('Error submitting form:', error);

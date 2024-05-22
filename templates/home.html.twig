@@ -6,9 +6,17 @@
 
     <div class="container-title">
         <div class="main-title">StudHub!</div>
-
     </div>
 
+    {% if is_granted('ROLE_USER') %}
+        <div class="home-buttons">
+            <div class="home-button">
+                <a href="{{ path('study') }}">
+                    <input type="button" value="Study Now!">
+                </a>
+            </div>
+        </div>
+    {% else %}
     <div class="home-buttons">
         <div class="home-button">
             <a href="{{ path('login') }}">
@@ -21,5 +29,6 @@
             </a>
         </div>
     </div>
+    {% endif %}
 
 {% endblock %}

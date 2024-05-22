@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <!-- Include any CSS files -->
-</head>
-<body>
+{% extends 'base.html.twig' %}
+
+{% block content %}
 <h1>Register</h1>
 
 {% if error %}
@@ -40,9 +34,13 @@
         <option value="3">Bac 3</option>
     </select><br><br>
 
-    <button type="submit">Register</button>
+    <input type="submit" value="Register">
 </form>
+    <label>
+        Already have an account?
+        <a href="{{ path('login') }}" style="color:  var(--extra-color)">
+           Login!
+        </a>
+    </label>
 
-<!-- Include any JavaScript files -->
-</body>
-</html>
+{% endblock %}

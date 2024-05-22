@@ -22,13 +22,21 @@
 </head>
 <body>
 <header>
-        <nav class="navbar">
+    <div class="nav wrapper" style="flex-direction: row">
+        <nav class="navbar left">
             <ul>
                 <li class="nav-opt" id="home"><a href="{{ path('homepage') }}">Home</a></li>
                 <li class="nav-opt" id="study"><a href="{{ path('study') }}">study</a></li>
                 <li class="nav-opt" id="profile"><a href="{{ path('profile') }}">Profile</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-opt" id="profile" style="float: right;"><a href="{{ path('logout') }}">LOGOUT</a></li>
+                {% endif %}
             </ul>
+
         </nav>
+
+    </div>
+
 </header>
 
 <main>

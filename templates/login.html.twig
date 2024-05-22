@@ -1,45 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- Include any CSS files -->
-</head>
-<body>
-<h1>Login</h1>
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+
 
 {% if error %}
     <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
 {% endif %}
 
-<form method="post" action="{{ path('login_form_submit_route') }}">
-    <label for="username">Email:</label>
-    <input type="text" id="username" name="_username" required><br><br>
+    <div class="blob"></div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" required><br><br>
 
-    <label>
-        <input type="checkbox" name="_remember_me" checked>
-        Keep me logged in
-    </label>
-
-    <button type="submit">Login</button>
-
-    <div class="home-button">
-        <a href="{{ path('register') }}">
-            <input type="button" value="Register Now">
-        </a>
+    <div class="container-title" style="text-align: center;">
+        <h1>Login</h1>
     </div>
 
-    <div class="home-button">
-        <a href="{{ path('resetPassword') }}">
-            <input type="button" value="Oops i forgot my password">
-        </a>
-    </div>
-</form>
+    <div class="spec-box" style="text-align: center;">
+    <form method="post" action="{{ path('login_form_submit_route') }}">
+        <label for="username">Email:</label>
+        <input type="text" id="username" name="_username" required><br><br>
 
-<!-- Include any JavaScript files -->
-</body>
-</html>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" required><br><br>
+
+        <label>
+            <input type="checkbox" name="_remember_me" checked>
+            Keep me logged in
+        </label>
+
+        <div class="home-buttons">
+            <div class="home-button">
+                <a href="{{ path('register') }}">
+                    <input type="button" value="Register Now">
+                </a>
+                <input type="submit" value="Login">
+            </div>
+        </div>
+
+        <div class="home-button">
+
+            <a href="{{ path('resetPassword') }}">
+                <input type="button" value="Oops i forgot my password">
+            </a>
+        </div>
+
+
+    </form>
+    </div>
+
+
+{% endblock %}

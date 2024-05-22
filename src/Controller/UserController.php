@@ -52,8 +52,9 @@ class UserController extends AbstractController
         // Last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
+        $this->stylesheets[]='login.css';
         return $this->render('login.html.twig', [
+            'stylesheets'=>$this->stylesheets,
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -82,7 +83,9 @@ class UserController extends AbstractController
             if($inDbStudent===null)
             {
                 printf("Non existing username or email, please recheck");
+                $this->stylesheets[]='login.css';
                 return $this->render('login.html.twig', [
+                    'stylesheets'=>$this->stylesheets,
                     'username' => $username,
                     'error' => $error,
                 ]);
@@ -120,7 +123,9 @@ class UserController extends AbstractController
         } else {
             // Password is invalid
             printf("WRONG passoord!\n");
+            $this->stylesheets[]='login.css';
             return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets,
                 'username' => $username,
                 'error' => $error,
             ]);
@@ -139,8 +144,9 @@ class UserController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
 
-
+        $this->stylesheets[]='register.css';
         return $this->render('register.html.twig', [
+            'stylesheets'=>$this->stylesheets,
             'controller_name' => 'UserController',
             'error' => $error
         ]);
@@ -166,7 +172,9 @@ class UserController extends AbstractController
         if (!empty($inDbStudent)) {
             printf($inDbStudent[0]->getUsername());
             printf("\nexisting user name, choose another one!\n");
+            $this->stylesheets[]='register.css';
             return $this->render('register.html.twig', [
+                'stylesheets'=>$this->stylesheets,
                 'controller_name' => 'UserController',
                 '_username' => $username,
                 '_password_1' => '',
@@ -178,7 +186,9 @@ class UserController extends AbstractController
             if (!empty($inDbStudent)) {
                 printf($inDbStudent[0]->getUsername());
                 printf("\nexisting user email, choose another one!\n");
+                $this->stylesheets[]='register.css';
                 return $this->render('register.html.twig', [
+                    'stylesheets'=>$this->stylesheets,
                     'controller_name' => 'UserController',
                     '_username' => $username,
                     '_password_1' => '',
@@ -191,7 +201,9 @@ class UserController extends AbstractController
 
         if ($password1 !== $password2) {
             printf("mis matching password!!");
+            $this->stylesheets[]='register.css';
             return $this->render('register.html.twig', [
+                'stylesheets'=>$this->stylesheets,
                 'controller_name' => 'UserController',
                 '_username' => $username,
                 '_password_1' => '',
@@ -237,7 +249,9 @@ class UserController extends AbstractController
 
         // Redirect to the controller action responsible for persisting the user
 //        return $this->redirectToRoute('login');
+        $this->stylesheets[]='login.css';
         return $this->render('login.html.twig', [
+            'stylesheets'=>$this->stylesheets,
             'username' => $username,
             'error' => $error,
         ]);
@@ -288,7 +302,9 @@ class UserController extends AbstractController
     {
         $user = $this->security->getUser();
         if($user===null){
+            $this->stylesheets[]='login.css';
             return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
             ]);
         }
 //        $username=$user->getUsername();
@@ -311,7 +327,9 @@ class UserController extends AbstractController
     {
         $user = $this->security->getUser();
         if($user===null){
+            $this->stylesheets[]='login.css';
             return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
             ]);
         }
         $username = $request->request->get('username');

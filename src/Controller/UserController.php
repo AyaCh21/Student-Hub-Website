@@ -295,7 +295,8 @@ class UserController extends AbstractController
         $this->stylesheets[]='profile.css';
         return $this->render('profile.html.twig',[
             'stylesheets'=>$this->stylesheets,
-            'password_error'=>false
+            'password_error'=>false,
+            'old_password_error'=>false
         ]);
     }
 
@@ -386,4 +387,47 @@ class UserController extends AbstractController
         return $this->redirectToRoute('profile');
     }
 
+    #\Symfony\Component\Routing\Attribute\Route("/change_password", name:"change_password")]
+    public function changePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher,AuthenticationUtils $authenticationUtils): Response
+    {
+        $user = $this->security->getUser();
+        if($user===null){
+            $this->stylesheets[]='login.css';
+            return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
+            ]);
+        }
+
+//
+        $password1 = $request->request->get('edit-password1');
+        $password2 = $request->request->get('edit-password2');
+        $password_old = $request->request->get('edit-password-old');
+        if($password1 !== $password2){
+            $this->stylesheets[]='profile.css';
+            return $this->render('profile.html.twig', [
+                'stylesheets' => $this->stylesheets,
+                'old_password_error' => false
+            ]);
+        }
+        $isValid = $passwordHasher->isPasswordValid($user, $password_old);
+        if($isValid){
+            $hashedPassword = $passwordHasher->hashPassword($user, $password1);
+            $user->setPassword($hashedPassword);
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }else{
+            $this->stylesheets[]='profile.css';
+            return $this->render('profile.html.twig', [
+                'stylesheets' => $this->stylesheets,
+                'old_password_error' => true
+            ]);
+        }
+
+//        $this->stylesheets[]='profile.css';
+//        return $this->render('profile.html.twig',[
+//            'stylesheets'=>$this->stylesheets,
+//            'password_error' => false
+//        ]);
+        return $this->redirectToRoute('profile');
+    }
 }

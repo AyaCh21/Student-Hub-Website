@@ -43,6 +43,10 @@ changeEmail:
   path: /change_email
   controller: App\Controller\UserController::changeEmail
 
+changePassword:
+  path: /change_password
+  controller: App\Controller\UserController::changePassword
+
 _symfony_logout:
   resource: security.route_loader.logout
   type: service

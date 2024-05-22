@@ -93,16 +93,41 @@
             </div>
         </div>
 
-
-
-            <div class="spec-box">
-                <div class="label-box">password: </div>
-                <dd class="input-box">*********</dd>
+        <div class="spec-box">
+            <div class="label-box">Password: </div>
+            <div id="password-info-display" style="display: inline">
+                <dd class="input-box">
+                    ******
+                    <input id="password-edit-init" type="button" value="Edit">
+                    {% if old_password_error is defined and old_password_error %}
+                        <label>Old password incorrect! Reset password failed.</label>
+                        <br>
+                    {% endif %}
+                </dd>
             </div>
-
-            <div class="option-edit">
-                <input id="init-edit" type="button" value="Edit">
+            <div id="password-edit-display" style="display: none">
+                <dd class="input-box">
+                    <form id="password-edit-form" action="{{ path('changePassword') }}" method="post">
+                        <label for="edit-password1">Enter your new password:</label>
+                        <input type="password" id="edit-password1" name="edit-password1" required>
+                        <br>
+                        <label for="edit-password2">Re-enter your new password:</label>
+                        <input type="password" id="edit-password2" name="edit-password2" required>
+                        <br>
+                        <label id="password-mismatch" style="display: none">New password doesn't match!<br></label>
+                        <label for="edit-password-old">Verify your old password:</label>
+                        <input type="password" id="edit-password-old" name="edit-password-old" required>
+                        <br>
+                        <input id="password-edit-confirm" type="submit" value="Confirm">
+                        <input id="password-edit-cancel" type="button" value="Cancel">
+                    </form>
+                </dd>
             </div>
+        </div>
+
+
+
+
 
 
         {% block javascripts %}
@@ -115,7 +140,6 @@
                     document.getElementById('academic-info-form').submit();
                 });
             </script>
-
             {#    username info dynamic display    #}
             <script>
                 usernameDisplay = document.getElementById('username-info-display');
@@ -148,6 +172,31 @@
                     document.getElementById('email-info-display').style.display = 'inline';
                     document.getElementById('email-edit-display').style.display = 'none';
                     document.getElementById('email-edit-form').submit();
+                });
+            </script>
+            {#      password edit      #}
+            <script>
+                document.getElementById('password-edit-init').addEventListener('click', function() {
+                    document.getElementById('password-info-display').style.display = 'none';
+                    document.getElementById('password-edit-display').style.display = 'inline';
+                });
+                document.getElementById('password-edit-cancel').addEventListener('click', function() {
+                    document.getElementById('password-info-display').style.display = 'inline';
+                    document.getElementById('password-edit-display').style.display = 'none';
+                });
+                document.getElementById('password-edit-confirm').addEventListener('click', function(event) {
+                    var password1 = document.getElementById('edit-password1').value;
+                    var password2 = document.getElementById('edit-password2').value;
+                    // Check if passwords match
+                    if (password1 !== password2) {
+                        document.getElementById('password-mismatch').style.display = 'inline';
+                        event.preventDefault();
+                    } else {
+                        document.getElementById('password-mismatch').style.display = 'none';
+                        document.getElementById('password-info-display').style.display = 'inline';
+                        document.getElementById('password-edit-display').style.display = 'none';
+                        document.getElementById('password-edit-form').submit();
+                    }
                 });
             </script>
         {% endblock %}

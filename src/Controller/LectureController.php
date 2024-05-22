@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Entity\StudyMaterial;
 use App\Entity\Comment;
 use App\Form\CommentForm;
+use App\Form\ReplyForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,30 +34,18 @@ class LectureController extends AbstractController
         ]);
 
         $this->stylesheets[]='lecture.css';
+        $this->javascripts[] = 'lecture.js';
 
         $comment = new Comment();
-        $form = $this->createForm(CommentForm::class, $comment);
-        $form->handleRequest($request);
+        $commentForm = $this->createForm(CommentForm::class, $comment);
+        $commentForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $comment->setCourseId($id);
             $comment->setUserId($this->getUser()->getId());
             $comment->setType($type);
             $comment->setCreatedAt(new \DateTime());
             $comment->setUpdatedAt(new \DateTime());
-
-            //this art is if the comment is a reply to another comment:
-            // Check if the comment is a reply to a top-level comment
-            $parentId = $request->request->get('parent_id');
-            if ($parentId) {
-                $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
-                if ($parentComment && $parentComment->getParent() === null) {
-                    $comment->setParent($parentComment);
-                } else {
-                    // Handle the case where the parent comment is not top-level
-                    throw new \Exception('You can only reply to top-level comments.');
-                }
-            }
 
             $entityManager->persist($comment);
             $entityManager->flush();
@@ -64,13 +53,43 @@ class LectureController extends AbstractController
             return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
         }
 
+        $replyComment = new Comment();
+        $replyForm = $this->createForm(ReplyForm::class, $comment);
+        $replyForm->handleRequest($request);
+
+        // Handle the reply form submission
+        if ($replyForm->isSubmitted() && $replyForm->isValid()) {
+            $replyComment->setCourseId($id);
+            $replyComment->setUserId($this->getUser()->getId());
+            $replyComment->setType($type);
+            $replyComment->setCreatedAt(new \DateTime());
+            $replyComment->setUpdatedAt(new \DateTime());
+
+            // Set parent for reply
+            $parentId = $request->request->get('parent_id');
+            if ($parentId) {
+                $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
+                if ($parentComment) {
+                    $replyComment->setParent($parentComment);
+                }
+            }
+
+            $entityManager->persist($replyComment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
+        }
+
+
         return $this->render('lecture.html.twig', [
             'studyMaterials' => $studyMaterials,
             'type' => ucfirst($type),  // Capitalize the first letter of the type for display
             'courseName' => $courseName,  // Pass the course name to the template
             'comments' => $comments,
-            'commentForm' => $form->createView(),
-            'stylesheets' => $this->stylesheets
+            'commentForm' => $commentForm->createView(),
+            'replyForm' => $replyForm->createView(),
+            'stylesheets' => $this->stylesheets,
+            'javascripts' => $this->javascripts
         ]);
     }
 }

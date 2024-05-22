@@ -40,6 +40,11 @@ class Comment
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     private Collection $children;
 
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
+    private ?self $parent = null;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -143,14 +148,40 @@ class Comment
         return $this;
     }
 
+    //more stuff for getting the subcomments
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+
     public function getChildren(): array
     {
-        return $this->children;
+        return $this->children->toArray();
     }
 
     public function addChild(Comment $child): self
     {
         $this->children[] = $child;
+        return $this;
+    }
+
+    public function removeChild(Comment $child): self
+    {
+        if ($this->children->removeElement($child)) {
+            // set the owning side to null (unless already changed)
+            if ($child->getParent() === $this) {
+                $child->setParent(null);
+            }
+        }
+
         return $this;
     }
 }

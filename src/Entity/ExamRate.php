@@ -16,34 +16,36 @@ class ExamRate
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\Column(name: 'course_id', type: 'integer', nullable: true)]
-    private ?int $courseId = null;
+    #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'rate')]
+    #[ORM\JoinColumn(name: 'course_id', referencedColumnName: 'id')]
+    private ?Course $course = null;
 
-    #[ORM\Column(name: 'student_id', type: 'integer', nullable: true)]
-    private ?int $studentId = null;
+    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'rate')]
+    #[ORM\JoinColumn(name: 'student_id',referencedColumnName: 'id')]
+    private ?Student $student = null;
 
     #[ORM\Column(name: 'rate_value', type: 'integer', nullable: true)]
     private ?int $rateValue = null;
 
     // Getters and setters for courseId, studentId, and rateValue properties
-    public function getCourseId(): ?int
+    public function getCourse(): ?Course
     {
-        return $this->courseId;
+        return $this->course;
     }
 
-    public function setCourseId(?int $courseId): void
+    public function setCourse(?Course $course): void
     {
-        $this->courseId = $courseId;
+        $this->course = $course;
     }
 
-    public function getStudentId(): ?int
+    public function getStudent(): ?Student
     {
-        return $this->studentId;
+        return $this->student;
     }
 
-    public function setStudentId(?int $studentId): void
+    public function setStudent(?Student $student): void
     {
-        $this->studentId = $studentId;
+        $this->student = $student;
     }
 
     public function getRateValue(): ?int

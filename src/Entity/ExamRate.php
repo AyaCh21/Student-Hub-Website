@@ -3,15 +3,17 @@ namespace App\Entity;
 
 use App\Repository\CourseRateRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Type;
+
 
 #[ORM\Entity(repositoryClass: CourseRateRepository::class)]
 #[ORM\Table('ratingExam')]
-class rating_exam
+class ExamRate
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "integer")]
+    private int $id;
 
     #[ORM\Column(name: 'course_id', type: 'integer', nullable: true)]
     private ?int $courseId = null;

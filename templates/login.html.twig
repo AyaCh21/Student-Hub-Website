@@ -3,11 +3,6 @@
 {% block content %}
 
 
-
-{% if error %}
-    <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
-{% endif %}
-
     <div class="blob"></div>
 
 
@@ -22,6 +17,10 @@
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="_password" required><br><br>
+
+        {% if error %}
+            <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        {% endif %}
 
         <label>
             <input type="checkbox" name="_remember_me" checked>

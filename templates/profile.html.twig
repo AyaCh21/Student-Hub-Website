@@ -57,29 +57,38 @@
                 <div id="username-edit-display" style="display: none">
                     <dd class="input-box">
                         <form id="username-edit-form" action="{{ path('changeUsername') }}" method="post">
-                            <input type="text" id="edit-username" name="username" value="{{ app.user.username }}">
-                            <input id="username-edit-confirm" type="button" value="Confirm">
-                            <input id="username-edit-cancel" type="button" value="Cancel">
+                            <input type="text" id="edit-username" name="edit-username" value="{{ app.user.username }}">
+                            <br>
+                                <input id="username-edit-confirm" type="button" value="Confirm">
+                                <input id="username-edit-cancel" type="button" value="Cancel">
                         </form>
                     </dd>
                 </div>
             </div>
 
         <div class="spec-box">
-            <div class="label-box">username: </div>
+            <div class="label-box">email: </div>
             <div id="email-info-display" style="display: inline">
                 <dd class="input-box">
                     {{ app.user.email }}
                     <input id="email-edit-init" type="button" value="Edit">
+                    {% if password_error is defined and password_error %}
+                        <label>Password error, reset failed!</label>
+                    {% endif %}
                 </dd>
             </div>
             <div id="email-edit-display" style="display: none">
                 <dd class="input-box">
-{#                    <form id="email-edit-form" action="{{ path('changeEmail') }}" method="post">#}
-                        <input type="text" id="edit-username" name="username" value="{{ app.user.email }}">
-                        <input id="email-edit-confirm" type="button" value="Confirm">
+                    <form id="email-edit-form" action="{{ path('changeEmail') }}" method="post">
+                        <label for="edit-email">Enter your new email address:</label>
+                        <input type="text" id="edit-email" name="edit-email" value="{{ app.user.email }}" required>
+                        <br>
+                        <label for="edit-email-password">Verify your password:</label>
+                        <input type="password" id="edit-email-password" name="edit-email-password" required>
+                        <br>
+                        <input id="email-edit-confirm" type="submit" value="Confirm">
                         <input id="email-edit-cancel" type="button" value="Cancel">
-{#                    </form>#}
+                    </form>
                 </dd>
             </div>
         </div>
@@ -96,26 +105,6 @@
             </div>
 
 
-        <div id="user-info-edit" style="display: none">
-            <dl class="line-breaker"></dl>
-            <div class="spec-box">
-                <div class="label-box">username: </div>
-                <dd class="input-box">
-                    <input type="text" id="username-edit" value="{{ app.user.username }}">
-                </dd>
-            </div>
-
-            <div class="spec-box">
-                <dt class="label-box">email: </dt>
-                <dd class="input-box">
-                    <input type="text" id="email-edit" value="{{ app.user.email }}">
-                </dd>
-            </div>
-            <div class="option-edit">
-                <input id="confirm-edit" type="button" value="Confirm">
-            </div>
-        </div>
-
         {% block javascripts %}
             {#      changing academic info      #}
             <script>
@@ -129,20 +118,36 @@
 
             {#    username info dynamic display    #}
             <script>
-                display = document.getElementById('username-info-display');
-                edit = document.getElementById('username-edit-display');
+                usernameDisplay = document.getElementById('username-info-display');
+                usernameEdit = document.getElementById('username-edit-display');
                 document.getElementById('username-edit-init').addEventListener('click', function() {
-                        display.style.display = 'none';
-                        edit.style.display = 'inline';
+                    usernameDisplay.style.display = 'none';
+                    usernameEdit.style.display = 'inline';
                 });
                 document.getElementById('username-edit-cancel').addEventListener('click', function() {
-                    display.style.display = 'inline';
-                    edit.style.display = 'none';
+                    usernameDisplay.style.display = 'inline';
+                    usernameEdit.style.display = 'none';
                 });
                 document.getElementById('username-edit-confirm').addEventListener('click', function() {
-                    display.style.display = 'inline';
-                    edit.style.display = 'none';
+                    usernameDisplay.style.display = 'inline';
+                    usernameEdit.style.display = 'none';
                     document.getElementById('username-edit-form').submit();
+                });
+            </script>
+            {#      email edit      #}
+            <script>
+                document.getElementById('email-edit-init').addEventListener('click', function() {
+                    document.getElementById('email-info-display').style.display = 'none';
+                    document.getElementById('email-edit-display').style.display = 'inline';
+                });
+                document.getElementById('email-edit-cancel').addEventListener('click', function() {
+                    document.getElementById('email-info-display').style.display = 'inline';
+                    document.getElementById('email-edit-display').style.display = 'none';
+                });
+                document.getElementById('email-edit-confirm').addEventListener('click', function() {
+                    document.getElementById('email-info-display').style.display = 'inline';
+                    document.getElementById('email-edit-display').style.display = 'none';
+                    document.getElementById('email-edit-form').submit();
                 });
             </script>
         {% endblock %}

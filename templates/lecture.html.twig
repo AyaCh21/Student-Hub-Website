@@ -24,17 +24,23 @@
         <div class="section materials-section">
             <h2 class="section-title">Materials</h2>
             {% for material in studyMaterials %}
-                <div class="pdf-container">
-                    <p>{{ material.getText() }}</p>
-                    {% if material.getFilePath() %}
-                        <div class="pdf-viewer">
-                            <embed src="{{ material.getFilePath() }}" type="application/pdf">
-                        </div>
-                        <a href="{{ material.getFilePath() }}" class="download-button" download>Download PDF</a>
-                    {% endif %}
-                </div>
+                {% if material.getFilePath() %}
+                    <div class="pdf-link">
+                        {% set pdf_parts = material.getFilePath() | split('/') %}
+                        <a href="{{ material.getFilePath() }}" target="_blank" rel="noopener noreferrer">
+                            {{ pdf_parts | last }}
+                        </a>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
+
+        <div class="section upload-section">
+            <h2 class="section-title">Upload your file here</h2>
+            <p>The user will upload a pdf file here</p>
+        </div>
+
+
 
         <div class="section comments-section">
             <h2 class="section-title">Comments</h2>

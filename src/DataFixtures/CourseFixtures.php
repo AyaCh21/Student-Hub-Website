@@ -19,13 +19,7 @@ class CourseFixtures extends Fixture implements OrderedFixtureInterface
 
             while (($data = fgetcsv($handle,1000,',')) == true) {
                 $course = new Course();
-
                 $course->setName($data[1]);
-                if (!$this->hasReference('course_' . $data[1])) {
-                    $this->setReference('course_' . $data[1], $course);
-                } else {
-                    $this->setReference('course_' . $data[1], $course);
-                }
 
                 $professorReference = 'professor_' . $data[2];
                 if ($this->hasReference($professorReference)) {

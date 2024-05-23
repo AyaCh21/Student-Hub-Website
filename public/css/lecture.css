@@ -83,6 +83,7 @@ h1 {
     background: var(--dark-color);  /* Changed to match materials container */
     color: var(--light-color);
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .materials-section {

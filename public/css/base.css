@@ -116,20 +116,23 @@ section {
 
 footer {
     padding: 50px;
-    margin: 20px;
-    position: fixed;
+    margin-bottom: 5px;
+    /*position: fixed;*/
     bottom: 0;
     left: 0;
     text-align: center;
     width: 100%;
-    background-color: transparent;
+    background-color: #323939;
     color: var(--light-color);
-    z-index: 999; /* Ensure the footer appears above other elements -> lowkey don't like this*/
+    z-index: 1;
 }
 
 footer a {
     text-decoration: none;
     color: var(--extra-color);
+}
+.content {
+    margin-bottom: 1px;
 }
 
 @media only screen and (max-width: 932px) {

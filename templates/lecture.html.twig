@@ -198,38 +198,23 @@
         <script src="{{ asset('js/' ~ js) }}"></script>
     {% endfor %}
     </div>
-{# i put he javascript funcition here bc the file webage was not able to access it before#}
-    <script>
-        //you should be able to reply to each top level comment
-        document.querySelectorAll('.reply-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-comment-id');
-                document.getElementById('parent_id').value = commentId;
-                document.querySelector('.comment-form').scrollIntoView({ behavior: 'smooth' });
-            });
-        });
 
-        document.getElementById('comment-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
+{#    template for a reply form that is intially hidden#}
+    <div id="reply-form-template" style="display: none;">
+        {{ form_start(replyForm) }}
+        {{ form_widget(replyForm.comment_text) }}
+        {{ form_widget(replyForm._token) }} {# Render the CSRF token #}
+        <input type="hidden" name="parent_id" class="parent_id">
+        <button type="submit" class="btn btn-primary">Reply</button>
+        {{ form_end(replyForm) }}
+    </div>
 
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    form.reset();
-                    document.getElementById('parent_id').value = '';
-                }
-            }).catch(error => {
-                console.error('Error submitting form:', error);
-            });
-        });
-    </script>
+{% endblock %}
 
 
+{% block javascripts %}
+    {{ parent() }}
+    {% for js in javascripts %}
+        <script src="{{ asset('js/' ~ js) }}"></script>
+    {% endfor %}
 {% endblock %}

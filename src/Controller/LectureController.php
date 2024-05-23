@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\StudyMaterialType;
 
 class LectureController extends AbstractController
 {
@@ -94,6 +95,37 @@ class LectureController extends AbstractController
 
             return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
         }
+        $studyMaterials = $entityManager->getRepository(StudyMaterial::class)->findBy([
+            'course' => $id,
+            'type' => $type
+        ]);
+
+        $studyMaterial = new StudyMaterial();
+        $studyMaterial->setCourse($entityManager->getRepository(Course::class)->find($id));
+        $studyMaterial->setType($type);
+
+        $form = $this->createForm(StudyMaterialType::class, $studyMaterial);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('test_pdf')->getData();
+
+            if ($file) {
+                $pdfData = file_get_contents($file->getPathname());
+                $studyMaterial->setTestPdf($pdfData);
+            }
+
+            $studyMaterial->setText($form->get('text')->getData());
+
+            $entityManager->persist($studyMaterial);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('lecture', [
+                'id' => $id,
+                'type' => $type
+            ]);
+        }
+
 
 
         // Fetch average course rating (this is actual an exam rating)
@@ -114,7 +146,22 @@ class LectureController extends AbstractController
             'javascripts' => $this->javascripts,
             'averageCourseRating' => $averageCourseRating,
             'averageProfessorRating' => $averageProfessorRating,
-            'professorName' => $professorName
+            'professorName' => $professorName,
+            'form' => $form->createView()
         ]);
     }
+    #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]
+    public function viewPdf(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $studyMaterial = $entityManager->getRepository(StudyMaterial::class)->find($id);
+
+        if (!$studyMaterial || !$studyMaterial->getTestPdf()) {
+            throw $this->createNotFoundException('The PDF does not exist');
+        }
+
+        $response = new Response(stream_get_contents($studyMaterial->getTestPdf()));
+        $response->headers->set('Content-Type', 'application/pdf');
+        return $response;
+    }
+
 }

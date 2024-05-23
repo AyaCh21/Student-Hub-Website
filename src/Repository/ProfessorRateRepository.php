@@ -17,7 +17,7 @@ class ProfessorRateRepository extends ServiceEntityRepository
     public function getAverage(int $professorId): float|string
     {
         $qb = $this->createQueryBuilder('pr');
-        $qb->select($qb->expr()->avg('pr.rate_value'))
+        $qb->select($qb->expr()->avg('pr.rateValue'))
             ->from(ProfessorRate::class, 'professor_rate')
             ->where('professor_rate.professor = :professorId')
             ->setParameter('professorId', $professorId);
@@ -51,4 +51,42 @@ class ProfessorRateRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    /*public function getAverageRatingForProfessor(int $professorId): ?array
+    {
+        $qb = $this->createQueryBuilder('pr');
+        $qb->select('AVG(pr.rate) AS average', 'COUNT(pr.id) AS count')
+            ->where('pr.professor = :professorId')
+            ->setParameter('professorId', $professorId);
+
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result ? ['average' => $result['average'], 'count' => $result['count']] : null;
+    }*/
+
+    /*public function getAverageRatingForProfessor(int $professorId): float|string
+    {
+        $qb = $this->createQueryBuilder('pr');
+        $qb->select('AVG(pr.rateValue) AS average, COUNT(pr.id) AS count')
+            ->where('pr.professor = :professorId')
+            ->setParameter('professorId', $professorId);
+
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result ? ['average' => $result['average'], 'count' => $result['count']] : 'be the first to rate!';
+    }*/
+
+    public function getAverageRatingForProfessor(int $professorId): array
+    {
+        $qb = $this->createQueryBuilder('pr');
+        $qb->select('AVG(pr.rateValue) AS average, COUNT(pr.id) AS count')
+            ->where('pr.professor = :professorId')
+            ->setParameter('professorId', $professorId);
+
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result ? ['average' => $result['average'], 'count' => $result['count']] : ['average' => null, 'count' => 0];
+    }
+
+
+
 }

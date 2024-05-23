@@ -36,4 +36,17 @@ class RatingExamRepository extends ServiceEntityRepository
 
         return $averageRatings;
     }
+
+    public function getAverageRatingForCourse(int $courseId): ?array
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->select('AVG(r.rateValue) AS average', 'COUNT(r.id) AS count')
+            ->where('r.courseId = :courseId')
+            ->setParameter('courseId', $courseId);
+
+        $query = $qb->getQuery();
+        $result = $query->getOneOrNullResult();
+
+        return $result ? ['average' => $result['average'], 'count' => $result['count']] : null;
+    }
 }

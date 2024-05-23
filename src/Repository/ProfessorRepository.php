@@ -45,4 +45,13 @@ class ProfessorRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findProfessorByCourseId(int $courseId): ?Professor
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.courses', 'c')
+            ->where('c.id = :courseId')
+            ->setParameter('courseId', $courseId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -1,40 +1,260 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ type }} Materials{% endblock %}
+{% block title %}{{ courseName }}: {{ type }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/lecture.css') }}">
-    <style>
-        .pdf-container {
-            margin-bottom: 30px;
-        }
-
-        .pdf-viewer {
-            width: 100%;
-            height: 400px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 {% endblock %}
 
 {% block content %}
-    <h1>{{ type }} Materials</h1>
+    <div class="container">
+        <h1>{{ courseName }}: {{ type }}</h1>
 
-    <div>
-        {% for material in studyMaterials %}
-            <div class="pdf-container">
-                <p>{{ material.getText() }}</p>
-                {% if material.getFilePath() %}
-                    <div class="pdf-viewer">
-                        <embed src="{{ material.getFilePath() }}" type="application/pdf">
-                    </div>
-                    <a href="{{ material.getFilePath() }}" class="download-button" download>Download PDF</a>
-                {% endif %}
+        <div class="section ratings-section">
+            <h2 class="section-title">Difficulty Rating of Past Exam</h2>
+            <div class="card">
+                <div class="card-body">
+                    {% if averageCourseRating %}
+                        <p class="card-text">Exam Difficulty: {{ averageCourseRating.average|number_format(2) }}</p>
+                        <p class="card-text">Number of People who voted: {{ averageCourseRating.count }}</p>
+                    {% else %}
+                        <p class="card-text">No ratings available.</p>
+                    {% endif %}
+                    <a href="{{ path('display_course_rate') }}" class="btn btn-primary">Rate this Exam</a>
+                </div>
             </div>
-        {% endfor %}
+        </div>
+    <div class="container">
+        <h1>{{ courseName }}: {{ type }}</h1>
+
+        <div class="section ratings-section">
+            <h2 class="section-title">Difficulty Rating of Past Exam</h2>
+            <div class="card">
+                <div class="card-body">
+                    {% if averageCourseRating %}
+                        <p class="card-text">Exam Difficulty: {{ averageCourseRating.average|number_format(2) }}</p>
+                        <p class="card-text">Number of People who voted: {{ averageCourseRating.count }}</p>
+                    {% else %}
+                        <p class="card-text">No ratings available.</p>
+                    {% endif %}
+                    <a href="{{ path('display_course_rate') }}" class="btn btn-primary">Rate this Exam</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section ratings-section">
+            <h2 class="section-title">Rating for Professor</h2>
+            <div class="card">
+                <div class="card-body">
+                    {% if averageProfessorRating %}
+                        <h5 class="card-title">Professor Name: {{ professorName }}</h5>
+                        <p class="card-text">Professor Rating: {{ averageProfessorRating.average|number_format(2) }}</p>
+                        <p class="card-text">Number of people who voted: {{ averageProfessorRating.count }}</p>
+                    {% else %}
+                        <p class="card-text">No ratings available.</p>
+                    {% endif %}
+                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">Rate this Professor</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section materials-section">
+            <h2 class="section-title">Materials</h2>
+            {% for material in studyMaterials %}
+                {% if material.getFilePath() %}
+                    <div class="pdf-link">
+                        {% set pdf_parts = material.getFilePath() | split('/') %}
+                        <a href="{{ material.getFilePath() }}" target="_blank" rel="noopener noreferrer">
+                            {{ pdf_parts | last }}
+                        </a>
+                    </div>
+                {% elseif material.getTestPdf() %}
+                    <div class="pdf-link">
+                        <a href="{{ path('view_pdf', {id: material.getId()}) }}" target="_blank" rel="noopener noreferrer">
+                            {{ material.getText() }}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+        <div class="section upload-section">
+            <h2 class="section-title">Upload your file here</h2>
+            <p>The user will upload a pdf file here</p>
+            {{ form_start(form) }}
+            {{ form_row(form.course) }}
+            {{ form_row(form.type) }}
+            {{ form_row(form.text) }}
+            {{ form_row(form.test_pdf) }}
+            <button class="btn">Upload</button>
+            {{ form_end(form) }}
+
+        </div>
+
+        <div class="section comments-section">
+            <h2 class="section-title">Comments</h2>
+            <p>Tell us your thought about the course!.</p>
+            {#this is where the user will post their own comment#}
+            <div class="comment-form">
+                {{ form_start(commentForm) }}
+                {{ form_widget(commentForm) }}
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+                {{ form_end(commentForm) }}
+            </div>
+           {# below this all the comments for this page will be displayed#}
+            <div class="comment-list">
+                {% for comment in comments %}
+                    {% if comment.getParent() is null %}
+                        <div class="comment-wrapper">  <!-- Added wrapper for each top-level comment -->
+                            <div class="comment">
+                                <p>{{ comment.getCommentText() }}</p>
+                                <small>Posted by User {{ comment.getUserId() }} on {{ comment.getCreatedAt()|date('Y-m-d H:i') }}</small>
+                                <button class="reply-button" data-comment-id="{{ comment.getId() }}">Reply</button>
+                            </div>
+                            {% if comment.getChildren() is not empty %}
+                                <div class="replies">
+                                    {% for child in comment.getChildren() %}
+                                        <div class="comment-wrapper">  <!-- Added wrapper for each child comment -->
+                                            <div class="comment">
+                                                <p>{{ child.getCommentText() }}</p>
+                                                <small>Posted by User {{ child.getUserId() }} on {{ child.getCreatedAt()|date('Y-m-d H:i') }}</small>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="section ratings-section">
+            <h2 class="section-title">Rating for Professor</h2>
+            <div class="card">
+                <div class="card-body">
+                    {% if averageProfessorRating %}
+                        <h5 class="card-title">Professor Name: {{ professorName }}</h5>
+                        <p class="card-text">Professor Rating: {{ averageProfessorRating.average|number_format(2) }}</p>
+                        <p class="card-text">Number of people who voted: {{ averageProfessorRating.count }}</p>
+                    {% else %}
+                        <p class="card-text">No ratings available.</p>
+                    {% endif %}
+                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">Rate this Professor</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section materials-section">
+            <h2 class="section-title">Materials</h2>
+            {% for material in studyMaterials %}
+                {% if material.getFilePath() %}
+                    <div class="pdf-link">
+                        {% set pdf_parts = material.getFilePath() | split('/') %}
+                        <a href="{{ material.getFilePath() }}" target="_blank" rel="noopener noreferrer">
+                            {{ pdf_parts | last }}
+                        </a>
+                    </div>
+                {% elseif material.getTestPdf() %}
+                    <div class="pdf-link">
+                        <a href="{{ path('view_pdf', {id: material.getId()}) }}" target="_blank" rel="noopener noreferrer">
+                            {{ material.getText() }}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+        <div class="section upload-section">
+            <h2 class="section-title">Upload your file here</h2>
+            <p>The user will upload a pdf file here</p>
+            {{ form_start(form) }}
+            {{ form_row(form.course) }}
+            {{ form_row(form.type) }}
+            {{ form_row(form.text) }}
+            {{ form_row(form.test_pdf) }}
+            <button class="btn">Upload</button>
+            {{ form_end(form) }}
+
+        </div>
+
+        <div class="section comments-section">
+            <h2 class="section-title">Comments</h2>
+            <p>Tell us your thought about the course!.</p>
+            {#this is where the user will post their own comment#}
+            <div class="comment-form">
+                {{ form_start(commentForm) }}
+                {{ form_widget(commentForm) }}
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+                {{ form_end(commentForm) }}
+            </div>
+           {# below this all the comments for this page will be displayed#}
+            <div class="comment-list">
+                {% for comment in comments %}
+                    {% if comment.getParent() is null %}
+                        <div class="comment-wrapper">  <!-- Added wrapper for each top-level comment -->
+                            <div class="comment">
+                                <p>{{ comment.getCommentText() }}</p>
+                                <small>Posted by User {{ comment.getUserId() }} on {{ comment.getCreatedAt()|date('Y-m-d H:i') }}</small>
+                                <button class="reply-button" data-comment-id="{{ comment.getId() }}">Reply</button>
+                            </div>
+                            {% if comment.getChildren() is not empty %}
+                                <div class="replies">
+                                    {% for child in comment.getChildren() %}
+                                        <div class="comment-wrapper">  <!-- Added wrapper for each child comment -->
+                                            <div class="comment">
+                                                <p>{{ child.getCommentText() }}</p>
+                                                <small>Posted by User {{ child.getUserId() }} on {{ child.getCreatedAt()|date('Y-m-d H:i') }}</small>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
+{#    template for a reply form that is intially hidden#}
+    <div id="reply-form-template" style="display: none;">
+        {{ form_start(replyForm) }}
+        {{ form_widget(replyForm.comment_text) }}
+        {{ form_widget(replyForm._token) }} {# Render the CSRF token #}
+        <input type="hidden" name="parent_id" class="parent_id">
+        <button type="submit" class="btn btn-primary">Reply</button>
+        {{ form_end(replyForm) }}
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {% for js in javascripts %}
+        <script src="{{ asset('js/' ~ js) }}"></script>
+    {% endfor %}
+    </div>
+
+{#    template for a reply form that is intially hidden#}
+    <div id="reply-form-template" style="display: none;">
+        {{ form_start(replyForm) }}
+        {{ form_widget(replyForm.comment_text) }}
+        {{ form_widget(replyForm._token) }} {# Render the CSRF token #}
+        <input type="hidden" name="parent_id" class="parent_id">
+        <button type="submit" class="btn btn-primary">Reply</button>
+        {{ form_end(replyForm) }}
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {% for js in javascripts %}
+        <script src="{{ asset('js/' ~ js) }}"></script>
+    {% endfor %}
 {% endblock %}

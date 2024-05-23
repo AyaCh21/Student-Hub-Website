@@ -16,17 +16,110 @@
         {% endfor %}
     {% endif %}
 
-    {% block javascripts %}
-        {#<script src="{{ asset('js/keep_navbar.js') }}"></script>#}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.js"></script>
+    {% block stylesheets %}
+        <style>
+            /* Popup container - can be anything you want */
+            .popup {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 9; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
 
+            /* Popup content */
+            .popup-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%; /* Could be more or less, depending on screen size */
+            }
+
+            /* Close button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                // Create a popup
+                const popup = document.createElement('div');
+                popup.id = 'myPopup';
+                popup.classList.add('popup');
+
+                // Popup content
+                const popupContent = document.createElement('div');
+                popupContent.classList.add('popup-content');
+
+                // Close button
+                const closeButton = document.createElement('span');
+                closeButton.classList.add('close');
+                closeButton.innerHTML = '&times;';
+                closeButton.onclick = () => {
+                    popup.style.display = 'none';
+                };
+
+                // Popup message
+                const popupMessage = document.createElement('div');
+                popupMessage.id = 'popupMessage';
+                popupMessage.innerHTML = `
+                    <ol>
+                        <li>Create an account with a suitable username and password.</li>
+                        <li>Click "Remember Me" if you do not want to log in the next time you visit.</li>
+                        <li>Once logged in, you will be directed to your dashboard.</li>
+                        <li>On the study page, browse through all the courses available within different phases.</li>
+                        <li>You can add favorite courses on the study page, which will appear at the top of the page.</li>
+                        <li>Within each course page, you have options to view professor ratings, course ratings, upload PDFs, make comments, and view materials uploaded by your peers.</li>
+                        <li>Always click "Logout" if you are using a public computer to ensure your account's security.</li>
+                    </ol>
+                `;
+
+                // Append elements to the popup content
+                popupContent.appendChild(closeButton);
+                popupContent.appendChild(popupMessage);
+
+                // Append content to the popup
+                popup.appendChild(popupContent);
+
+                // Append popup to the body
+                document.body.appendChild(popup);
+
+                // Event listener for Ctrl+H
+                document.addEventListener('keydown', function(event) {
+                    if (event.ctrlKey && event.key === 'h') {
+                        event.preventDefault();
+                        popup.style.display = 'block';
+                    }
+                });
+            });
+        </script>
     {% endblock %}
 </head>
 <body>
 <header>
-        <nav class="navbar ">
-            <ul>
-                <li class="navbar-item" id="home">
+    <nav class="navbar ">
+        <ul>
+            <li class="navbar-item" id="home">
                     <span class="icon-container">
                         <a href="{{ path('homepage') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" height="44px" viewBox="0 -960 960 960" width="44px" fill="#efd0ce">
@@ -35,8 +128,8 @@
                             <span class="nav-text is-hidden-touch">Home</span>
                         </a>
                     </span>
-                </li>
-                <li class="navbar-item" id="study">
+            </li>
+            <li class="navbar-item" id="study">
                     <span class="icon-container">
                         <a href="{{ path('study') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" height="44px" viewBox="0 -960 960 960" width="44px" fill="#efd0ce">
@@ -45,9 +138,9 @@
                             <span class="nav-text is-hidden-touch">Study</span>
                         </a>
                     </span>
-                </li>
+            </li>
 
-                <li class="navbar-item" id="profile">
+            <li class="navbar-item" id="profile">
                     <span class="icon-container">
                         <a href="{{ path('profile') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" height="44px" viewBox="0 -960 960 960" width="44px" fill="#efd0ce">
@@ -56,13 +149,13 @@
                             <span class="nav-text is-hidden-touch">Profile</span>
                         </a>
                     </span>
-                </li>
-                {% if is_granted('ROLE_USER') %}
-                    <li class="nav-opt" id="profile" style="float: right;"><a href="{{ path('logout') }}">LOGOUT</a></li>
-                {% endif %}
-            </ul>
+            </li>
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-opt" id="profile" style="float: right;"><a href="{{ path('logout') }}">LOGOUT</a></li>
+            {% endif %}
+        </ul>
 
-        </nav>
+    </nav>
 
     </div>
 
@@ -71,9 +164,28 @@
 <main>
     {% block content %}{% endblock %}
 </main>
-</body>
+
+<!-- Popup container -->
+<div id="myPopup" class="popup">
+    <div class="popup-content">
+        <span class="close">&times;</span>
+        <div id="popupMessage">
+            <ol>
+                <li>Create an account with a suitable username and password.</li>
+                <li>Click "Remember Me" if you do not want to log in the next time you visit.</li>
+                <li>Once logged in, you will be directed to your dashboard.</li>
+                <li>On the study page, browse through all the courses available within different phases.</li>
+                <li>You can add favorite courses on the study page, which will appear at the top of the page.</li>
+                <li>Within each course page, you have options to view professor ratings, course ratings, upload PDFs, make comments, and view materials uploaded by your peers.</li>
+                <li>Always click "Logout" if you are using a public computer to ensure your account's security.</li>
+            </ol>
+        </div>
+    </div>
+</div>
 
 <footer>
     Copyright 2022 WebTech. StudHub All Rights Reserved. <a href="https://admin.kuleuven.be/privacy/en/">Privacy Policy</a> | <a href="https://admin.kuleuven.be/icts/english/cookiepolicy/">Terms of Use</a>
 </footer>
+
+</body>
 </html>

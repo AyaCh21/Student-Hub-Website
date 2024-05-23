@@ -38,6 +38,9 @@ class StudyMaterial
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $text = null;
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $test_pdf = null;
+
 
     public function getId(): ?int
     {
@@ -130,6 +133,16 @@ class StudyMaterial
     public function setText(?string $text): self
     {
         $this->text = $text;
+        return $this;
+    }
+    public function getTestPdf()
+    {
+        return $this->test_pdf;
+    }
+
+    public function setTestPdf($test_pdf): self
+    {
+        $this->test_pdf = $test_pdf;
         return $this;
     }
 }

@@ -57,8 +57,15 @@
                         </a>
                     </span>
                 </li>
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-opt" id="profile" style="float: right;"><a href="{{ path('logout') }}">LOGOUT</a></li>
+                {% endif %}
             </ul>
+
         </nav>
+
+    </div>
+
 </header>
 
 <main>

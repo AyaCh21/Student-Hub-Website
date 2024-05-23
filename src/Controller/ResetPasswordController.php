@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Student;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -89,7 +89,7 @@ class ResetPasswordController extends AbstractController
         }
 
         try {
-            /** @var User $user */
+            /** @var Student $user */
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
@@ -122,6 +122,8 @@ class ResetPasswordController extends AbstractController
             $this->cleanSessionAfterReset();
 
             return $this->redirectToRoute('login');
+//            return $this->render('login.html.twig', [
+//            ]);
         }
 
         return $this->render('reset_password/reset.html.twig', [
@@ -131,7 +133,7 @@ class ResetPasswordController extends AbstractController
 
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+        $user = $this->entityManager->getRepository(Student::class)->findOneBy([
             'email' => $emailFormData,
         ]);
 
@@ -157,7 +159,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('1054842930@qq.com', 'debug mail webtech bot'))
+            ->from(new Address('studhubbot@gmail.com', 'studhub password resetting bot'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('reset_password/email.html.twig')

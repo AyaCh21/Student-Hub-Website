@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -33,7 +34,10 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 class UserController extends AbstractController
 {
     private array $stylesheets;
-
+    public function __construct(
+    private Security $security,
+){
+}
 
 //====================================================================================================================//
 //              LOGIN FUNCTIONS
@@ -48,8 +52,9 @@ class UserController extends AbstractController
         // Last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
+        $this->stylesheets[]='login.css';
         return $this->render('login.html.twig', [
+            'stylesheets'=>$this->stylesheets,
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -78,7 +83,9 @@ class UserController extends AbstractController
             if($inDbStudent===null)
             {
                 printf("Non existing username or email, please recheck");
+                $this->stylesheets[]='login.css';
                 return $this->render('login.html.twig', [
+                    'stylesheets'=>$this->stylesheets,
                     'username' => $username,
                     'error' => $error,
                 ]);
@@ -116,7 +123,9 @@ class UserController extends AbstractController
         } else {
             // Password is invalid
             printf("WRONG passoord!\n");
+            $this->stylesheets[]='login.css';
             return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets,
                 'username' => $username,
                 'error' => $error,
             ]);
@@ -135,8 +144,9 @@ class UserController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
 
-
+        $this->stylesheets[]='register.css';
         return $this->render('register.html.twig', [
+            'stylesheets'=>$this->stylesheets,
             'controller_name' => 'UserController',
             'error' => $error
         ]);
@@ -162,7 +172,9 @@ class UserController extends AbstractController
         if (!empty($inDbStudent)) {
             printf($inDbStudent[0]->getUsername());
             printf("\nexisting user name, choose another one!\n");
+            $this->stylesheets[]='register.css';
             return $this->render('register.html.twig', [
+                'stylesheets'=>$this->stylesheets,
                 'controller_name' => 'UserController',
                 '_username' => $username,
                 '_password_1' => '',
@@ -174,7 +186,9 @@ class UserController extends AbstractController
             if (!empty($inDbStudent)) {
                 printf($inDbStudent[0]->getUsername());
                 printf("\nexisting user email, choose another one!\n");
+                $this->stylesheets[]='register.css';
                 return $this->render('register.html.twig', [
+                    'stylesheets'=>$this->stylesheets,
                     'controller_name' => 'UserController',
                     '_username' => $username,
                     '_password_1' => '',
@@ -187,7 +201,9 @@ class UserController extends AbstractController
 
         if ($password1 !== $password2) {
             printf("mis matching password!!");
+            $this->stylesheets[]='register.css';
             return $this->render('register.html.twig', [
+                'stylesheets'=>$this->stylesheets,
                 'controller_name' => 'UserController',
                 '_username' => $username,
                 '_password_1' => '',
@@ -233,7 +249,9 @@ class UserController extends AbstractController
 
         // Redirect to the controller action responsible for persisting the user
 //        return $this->redirectToRoute('login');
+        $this->stylesheets[]='login.css';
         return $this->render('login.html.twig', [
+            'stylesheets'=>$this->stylesheets,
             'username' => $username,
             'error' => $error,
         ]);
@@ -248,6 +266,7 @@ class UserController extends AbstractController
             throw new AccessDeniedHttpException();
         }
     }
+
 
 //====================================================================================================================//
 //              LOGOUT FUNCTIONS
@@ -264,4 +283,151 @@ class UserController extends AbstractController
     }
 
 
+//====================================================================================================================//
+//              PROFILE FUNCTIONS
+//====================================================================================================================//
+
+    #[\Symfony\Component\Routing\Attribute\Route("/profile", name:"profile")]
+    public function profilePage(): Response
+    {
+        $user = $this->security->getUser();
+        
+        $this->stylesheets[]='profile.css';
+        return $this->render('profile.html.twig',[
+            'stylesheets'=>$this->stylesheets,
+            'password_error'=>false,
+            'old_password_error'=>false
+        ]);
+    }
+
+    #\Symfony\Component\Routing\Attribute\Route("/change_profile", name:"change_profile")]
+    public function changeProfile(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->security->getUser();
+        if($user===null){
+            $this->stylesheets[]='login.css';
+            return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
+            ]);
+        }
+//        $username=$user->getUsername();
+        $specialisation = $request->request->get('specialisation');
+        $phase = $request->request->get('phase');
+        $user->setPhase($phase);
+        $user->setSpecialisation($specialisation);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+//        $this->stylesheets[]='profile.css';
+//        return $this->render('profile.html.twig',[
+//            'stylesheets'=>$this->stylesheets
+//        ]);
+        return $this->redirectToRoute('profile');
+    }
+
+    #\Symfony\Component\Routing\Attribute\Route("/change_username", name:"change_username")]
+    public function changeUsername(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->security->getUser();
+        if($user===null){
+            $this->stylesheets[]='login.css';
+            return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
+            ]);
+        }
+        $username = $request->request->get('edit-username');
+        $user->setUsername($username);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+//        $this->stylesheets[]='profile.css';
+//        return $this->render('profile.html.twig',[
+//            'stylesheets'=>$this->stylesheets
+//        ]);
+        return $this->redirectToRoute('profile');
+
+    }
+
+    #\Symfony\Component\Routing\Attribute\Route("/change_email", name:"change_email")]
+    public function changeEmail(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher,AuthenticationUtils $authenticationUtils): Response
+    {
+        $user = $this->security->getUser();
+        if($user===null){
+            $this->stylesheets[]='login.css';
+            return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
+            ]);
+        }
+
+//
+        $email = $request->request->get('edit-email');
+        $password = $request->request->get('edit-email-password');
+        $isValid = $passwordHasher->isPasswordValid($user, $password);
+        if($isValid){
+        $user->setEmail($email);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+        }else{
+            $this->stylesheets[]='profile.css';
+            $this->stylesheets[] = 'profile.css';
+            return $this->render('profile.html.twig', [
+                'stylesheets' => $this->stylesheets,
+                'password_error' => true
+            ]);
+        }
+
+//        $this->stylesheets[]='profile.css';
+//        return $this->render('profile.html.twig',[
+//            'stylesheets'=>$this->stylesheets,
+//            'password_error' => false
+//        ]);
+        return $this->redirectToRoute('profile');
+    }
+
+    #\Symfony\Component\Routing\Attribute\Route("/change_password", name:"change_password")]
+    public function changePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher,AuthenticationUtils $authenticationUtils): Response
+    {
+        $user = $this->security->getUser();
+        if($user===null){
+            $this->stylesheets[]='login.css';
+            return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
+            ]);
+        }
+
+//
+        $password1 = $request->request->get('edit-password1');
+        $password2 = $request->request->get('edit-password2');
+        $password_old = $request->request->get('edit-password-old');
+        if($password1 !== $password2){
+            $this->stylesheets[]='profile.css';
+            return $this->render('profile.html.twig', [
+                'stylesheets' => $this->stylesheets,
+                'old_password_error' => false
+            ]);
+        }
+        $isValid = $passwordHasher->isPasswordValid($user, $password_old);
+        if($isValid){
+            $hashedPassword = $passwordHasher->hashPassword($user, $password1);
+            $user->setPassword($hashedPassword);
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }else{
+            $this->stylesheets[]='profile.css';
+            return $this->render('profile.html.twig', [
+                'stylesheets' => $this->stylesheets,
+                'old_password_error' => true
+            ]);
+        }
+
+//        $this->stylesheets[]='profile.css';
+//        return $this->render('profile.html.twig',[
+//            'stylesheets'=>$this->stylesheets,
+//            'password_error' => false
+//        ]);
+        return $this->redirectToRoute('profile');
+    }
 }

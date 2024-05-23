@@ -18,14 +18,14 @@ class HomePageController extends AbstractController
         ]);
     }
 
-    #[Route("/profile", name:"profile")]
-    public function profilePage(): Response
-    {
-        $this->stylesheets[]='profile.css';
-        return $this->render('profile.html.twig',[
-            'stylesheets'=>$this->stylesheets
-        ]);
-    }
+//    #[Route("/profile", name:"profile")]
+//    public function profilePage(): Response
+//    {
+//        $this->stylesheets[]='profile.css';
+//        return $this->render('profile.html.twig',[
+//            'stylesheets'=>$this->stylesheets
+//        ]);
+//    }
     //#[Route("/study", name:"study")]
     //public function study(): Response
     //{

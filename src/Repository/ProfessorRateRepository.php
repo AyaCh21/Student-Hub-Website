@@ -4,10 +4,13 @@ namespace App\Repository;
 
 use App\Entity\professorRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ProfessorRateRepository extends ServiceEntityRepository
 {
+    private Connection $connection;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -27,6 +30,7 @@ class ProfessorRateRepository extends ServiceEntityRepository
         $show = is_null($result) ? "be the first to rate!" : $result;
         return $show;
     }
+
     //    /**
 //     * @return ProfessorRate[] Returns an array of Course objects
 //     */

@@ -6,17 +6,26 @@
     overflow: hidden;
 }
 
+body {
+    overflow: hidden;
+}
+
+.home_page_text {
+    height: calc(90vh - 50px);
+}
 .main-title {
     width: 100%;
     height: 80%;
-    margin: 30px 0;
     padding: 26px 40px;
     display: flex;
-    font-size: 302px;
+    font-size: 20vw;
     font-weight: 600;
     flex-flow: row wrap;
     align-content: center;
     justify-content: center;
+}
+.home-description {
+    display: none;
 }
 
 .blob {
@@ -26,6 +35,7 @@
     width: 400px;
     height: 300px;
     border-radius: 16px;
+    overflow: hidden;
     filter: blur(35px);
     opacity: 0.4;
     -webkit-backdrop-filter: blur(35px);
@@ -63,11 +73,6 @@
     justify-content: space-evenly;
 }
 
-.home-buttons a {
-}
-
-.home-button {
-}
 
 input[type=button] {
     background: transparent;
@@ -97,36 +102,47 @@ input[type=button] {
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 933px) {
     body {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
-    main {
-        padding: 4px;
-    }
-    .main-title {
+    .container-title {
+        display: flex;
+        padding: 10px;
         width: 100%;
-        height: 80%;
-        margin: 0;
-        padding: 0;
-        font-size: 47px;
+        height: 30%;
+        margin: auto;
+        align-items: center;
     }
-
-    .home-button {
-        background: #3b82f6;
+    .home_page_text {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 90%;
     }
-
+    .home-description {
+        display: block;
+        width: 80%;
+        margin: auto;
+        padding: 5px;
+    }
+    .home-buttons {
+        display: flex;
+        flex-direction: column;
+    }
     input[type=button] {
-        padding: 5px 20px;
+        padding: 20px 30px;
         font-size: 16px;
         overflow: hidden;
-        margin: 15px;
+        margin: 5px;
         align-content: space-between;
     }
     .blob {
+        overflow: hidden;
         width: 30%;
         height: 40%;
     }

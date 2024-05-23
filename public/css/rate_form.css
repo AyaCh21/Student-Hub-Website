@@ -1,0 +1,177 @@
+/* THIS IS RATING FORM STYLES */
+.main {
+    justify-items: center;
+}
+.rate_header {
+    margin: 20px;
+}
+.prof_rate_form, .course_rate_form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    font-size: 23px;
+    margin: 20px 20px;
+    padding: 10px;
+}
+.prof_form_field, .course_rate_field {
+    margin: 10px;
+}
+.prof_list, .course_list {
+    border-radius: 20px;
+    border: 1px solid var(--minor-color);
+    background: var(--minor-color);
+    color: var(--dark-color);
+    padding: 7px;
+    margin: 10px;
+}
+/* general definitions for the slider */
+input[type="range"] {
+    appearance: none;
+    width: 15%;
+    background-color: transparent;
+    --thumb-height: 2.125em;
+    --thumb-width: 1em;
+    --track-height: 0.5em;
+    --clip-edges: 0.125em;
+}
+input[type="range"],
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    transition: all ease 100ms;
+    height: var(--thumb-height);
+}
+input[type="range"]::-webkit-slider-thumb {
+    background: var(--light-color);
+    border: 0;
+    width: var(--thumb-width, var(--thumb-height));
+    border-radius: var(--thumb-width, var(--thumb-height));
+    cursor: grab;
+}
+input[type="range"]:hover::-webkit-slider-thumb {
+    filter: brightness(90%);
+    cursor: grab;
+}
+input[type="range"]:active::-webkit-slider-thumb  {
+    cursor: grabbing;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    position: relative;
+    background-color: var(--minor-color);
+    border-radius: var(--track-height);
+}
+/* this styles the thumb in the firefox browsers */
+input[type="range"],
+input[type="range"]::-moz-range-track,
+input[type="range"]::-moz-range-thumb {
+    appearance: none;
+    transition: all ease 100ms;
+    height: var(--thumb-height);
+}
+input[type="range"]::-moz-range-thumb {
+    background: var(--light-color);
+    border: 0;
+    width: var(--thumb-width, var(--thumb-height));
+    border-radius: var(--thumb-width, var(--thumb-height));
+    cursor: grab;
+}
+input[type="range"]:active::-moz-range-thumb {
+    cursor: grabbing;
+}
+input[type="range"]::-moz-range-track {
+    width: 100%;
+    background: var(--minor-color);
+}
+input[type="range"]::-moz-range-progress {
+    appearance: none;
+    background: var(--light-color);
+}
+input[type="range"]::-moz-range-track,
+input[type="range"]::-moz-range-progress {
+    height: calc(var(--track-height) + 1px);
+    border-radius: var(--track-height);
+}
+.prof_rate_submit, .btn-primary {
+    background: var(--extra-color);
+    padding: 7px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 1px solid var(--extra-color);
+    color: var(--dark-color);
+    transition: all 0.5s;
+    width: 10%;
+
+    &:hover {
+        box-shadow: inset -8em 0 0 var(--light-color), inset 8em 0 0 var(--light-color);
+        cursor: pointer;
+    }
+
+}
+
+
+
+
+
+/* THIS IS SPACE FOR DISPLAY RATE */
+.prof_cards_wrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.prof_card {
+    box-shadow: 0 4px 8px 0 #272c2c;
+    border-radius: 20px;
+    width: 20%;
+    padding: 15px 20px;
+    margin: 10px;
+}
+
+.prof_name {
+    color: var(--extra-color);
+}
+
+.prof_classes_wrapper {
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+input[type=button] {
+    padding: 7px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 1px solid var(--dark-color);
+    color: var(--dark-color);
+    transition: all 0.7s;
+
+    &:before, &:after {
+        width: 0;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.rate_button {
+    background: var(--extra-color);
+
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--light-color), inset 6em 0 0 var(--light-color);
+    }
+}
+
+.feedback_button {
+    background: var(--minor-color);
+
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--main-color), inset 6em 0 0 var(--main-color);
+    }
+}

@@ -2,25 +2,25 @@
     --main-color: #b3bcbb;
     --minor-color: #7c938e;
     --extra-color: #eaafa9;
-    --dark-color: #3c4443;
+    --dark-color: #323939;
     --light-color: #efd0ce;
 }
 html, body {
+    background: var(--dark-color);
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
 body{
-    background: var(--dark-color);
     color: var(--light-color);
-    margin: 0;
     font-family: "Lato", sans-serif;
     position: relative;
-
 }
 
 .navbar {
+    background: transparent;
+    top: 0;
     padding: 20px;
     border-bottom: 1px solid var(--extra-color);
 }
@@ -62,7 +62,9 @@ body{
 .navbar a:before{
     transform-origin: 100% 20%;
 }
-
+svg {
+    display: none;
+}
 .nav_opt.active {
     background: var(--extra-color);
 }
@@ -72,12 +74,12 @@ body{
 }
 
 main {
-    width: 70%;
+    width: 100%;
     margin: auto;
-    padding-bottom: 100px;
-    display: block;
-    align-items: center;
-    top: 50%;
+    text-align: justify;
+    text-justify: inter-word;
+    justify-items: center;
+    justify-content: space-between;
 }
 
 section {
@@ -93,6 +95,7 @@ section {
 
 footer {
     padding: 50px;
+    margin: 20px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -100,11 +103,36 @@ footer {
     width: 100%;
     background-color: transparent;
     color: var(--light-color);
-    z-index: 999; /* Ensure the footer appears above other elements */
+    z-index: 999; /* Ensure the footer appears above other elements -> lowkey don't like this*/
 }
-
 
 footer a {
     text-decoration: none;
     color: var(--extra-color);
+}
+
+@media only screen and (max-width: 932px) {
+    .navbar {
+        color: var(--light-color);
+        margin-top: 1em;
+        margin-bottom: 0;
+        height: fit-content;
+    }
+    .navbar ul {
+        display: flex;
+        flex-direction: row;
+        height: fit-content;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .navbar li {
+        margin: 20px;
+    }
+    svg {
+        display: flex;
+    }
+    footer {
+        width: auto;
+        font-size: 3vw;
+    }
 }

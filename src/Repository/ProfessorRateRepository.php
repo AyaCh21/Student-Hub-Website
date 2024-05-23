@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class ProfessorRateRepository extends ServiceEntityRepository
 {
+    private ManagerRegistry $registry;
+    private QueryBuilder $qb;
 
     private ManagerRegistry $registry;
     private QueryBuilder $qb;

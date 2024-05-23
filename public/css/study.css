@@ -162,7 +162,7 @@ body, html {
 
 
     &:hover {
-        box-shadow: inset -8em 0 0 var(--extra-color), inset 8em 0 0 var(--extra-color);
+        box-shadow: inset -10em 0 0 var(--extra-color), inset 10em 0 0 var(--extra-color);
     }
 
     &:focus {

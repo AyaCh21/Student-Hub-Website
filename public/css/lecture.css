@@ -30,9 +30,7 @@ h1 {
     border-bottom: 2px solid var(--extra-color);
     padding-bottom: 5px;
     color: var(--extra-color);
-    color: var(--extra-color);
 }
-/* Card container */
 /* Card container */
 .card {
     border: 1px solid var(--extra-color);
@@ -232,7 +230,7 @@ h1 {
 }
 
 .reply-button:hover {
-    background-color: #d48800;
+    background-color: var(--minor-color);
 }
 
 .reply-form {

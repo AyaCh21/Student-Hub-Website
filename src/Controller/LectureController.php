@@ -53,8 +53,8 @@ class LectureController extends AbstractController
         $this->javascripts[] = 'lecture.js';
 
         $comment = new Comment();
-        $form = $this->createForm(CommentForm::class, $comment);
-        $form->handleRequest($request);
+        $commentForm = $this->createForm(CommentForm::class, $comment);
+        $commentForm->handleRequest($request);
 
         $comment = new Comment();
         $commentForm = $this->createForm(CommentForm::class, $comment);

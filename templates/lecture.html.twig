@@ -21,7 +21,7 @@
                     {% else %}
                         <p class="card-text">No ratings available.</p>
                     {% endif %}
-                    <a href="{{ path('display_course_rate') }}" class="btn btn-primary">View All Course Ratings</a>
+                    <a href="{{ path('display_course_rate') }}" class="btn btn-primary">Rate this Exam</a>
                 </div>
             </div>
         </div>
@@ -32,12 +32,12 @@
                 <div class="card-body">
                     {% if averageProfessorRating %}
                         <h5 class="card-title">Professor Name: {{ professorName }}</h5>
-                        <p class="card-text">Average Rating: {{ averageProfessorRating.average|number_format(2) }}</p>
-                        <p class="card-text">Number of Ratings: {{ averageProfessorRating.count }}</p>
+                        <p class="card-text">Professor Rating: {{ averageProfessorRating.average|number_format(2) }}</p>
+                        <p class="card-text">Number of people who voted: {{ averageProfessorRating.count }}</p>
                     {% else %}
                         <p class="card-text">No ratings available.</p>
                     {% endif %}
-                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">View All Professor Ratings</a>
+                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">Rate this Professor</a>
                 </div>
             </div>
         </div>
@@ -61,11 +61,9 @@
             <p>The user will upload a pdf file here</p>
         </div>
 
-
-
         <div class="section comments-section">
             <h2 class="section-title">Comments</h2>
-            <p>This is where the comments will go.</p>
+            <p>Tell us your thought about the course!.</p>
             {#this is where the user will post their own comment#}
             <div class="comment-form">
                 {{ form_start(commentForm) }}

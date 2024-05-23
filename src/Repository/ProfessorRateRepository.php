@@ -6,15 +6,18 @@ use App\Entity\professorRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ProfessorRateRepository extends ServiceEntityRepository
 {
-    private Connection $connection;
+    private ManagerRegistry $registry;
+    private QueryBuilder $qb;
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ProfessorRate::class);
+        $this->registry = $registry;
+        //parent::__construct($this->registry, ProfessorRate::class);
     }
 
     public function getAverage(int $professorId): float|string

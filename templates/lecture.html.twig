@@ -13,7 +13,17 @@
 
         <div class="section ratings-section">
             <h2 class="section-title">Difficulty Rating of Past Exam</h2>
-            <p>This is where the difficulty rating of past exams will go.</p>
+            <div class="card">
+                <div class="card-body">
+                    {% if averageCourseRating %}
+                        <p class="card-text">Exam Difficulty: {{ averageCourseRating.average|number_format(2) }}</p>
+                        <p class="card-text">Number of People who voted: {{ averageCourseRating.count }}</p>
+                    {% else %}
+                        <p class="card-text">No ratings available.</p>
+                    {% endif %}
+                    <a href="{{ path('display_course_rate') }}" class="btn btn-primary">View All Course Ratings</a>
+                </div>
+            </div>
         </div>
     <div class="container">
         <h1>{{ courseName }}: {{ type }}</h1>
@@ -35,7 +45,18 @@
 
         <div class="section ratings-section">
             <h2 class="section-title">Rating for Professor</h2>
-            <p>This is where the rating for the professor will go.</p>
+            <div class="card">
+                <div class="card-body">
+                    {% if averageProfessorRating %}
+                        <h5 class="card-title">Professor Name: {{ professorName }}</h5>
+                        <p class="card-text">Average Rating: {{ averageProfessorRating.average|number_format(2) }}</p>
+                        <p class="card-text">Number of Ratings: {{ averageProfessorRating.count }}</p>
+                    {% else %}
+                        <p class="card-text">No ratings available.</p>
+                    {% endif %}
+                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">View All Professor Ratings</a>
+                </div>
+            </div>
         </div>
 
         <div class="section materials-section">

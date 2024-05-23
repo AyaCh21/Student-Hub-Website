@@ -27,12 +27,14 @@ class LectureController extends AbstractController
             'type' => $type
         ]);
 
-//        here the correct comments are gotten, it includes the replies to those comments
+//        here the correct comments are gotten, it includes the replies to those comments (their children)
         $comments = $entityManager->getRepository(Comment::class)->findBy([
             'course_id' => $id,
             'type' => $type,
             'parent_id' => null,
         ]);
+
+        $this->stylesheets[]='lecture.css';
 
         $comment = new Comment();
         $form = $this->createForm(CommentForm::class, $comment);
@@ -45,6 +47,21 @@ class LectureController extends AbstractController
             $comment->setCreatedAt(new \DateTime());
             $comment->setUpdatedAt(new \DateTime());
 
+            //this art is if the comment is a reply to another comment:
+            // Check if the comment is a reply to a top-level comment
+            $parentId = $request->request->get('parent_id');
+            if ($parentId) {
+                $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
+                if ($parentComment && $parentComment->getParent() === null) {
+                    $comment->setParent($parentComment);
+                } else {
+                    // Handle the case where the parent comment is not top-level
+                    throw new \Exception('You can only reply to top-level comments.');
+                }
+            }
+
+
+
             $entityManager->persist($comment);
             $entityManager->flush();
 
@@ -56,7 +73,8 @@ class LectureController extends AbstractController
             'type' => ucfirst($type),  // Capitalize the first letter of the type for display
             'courseName' => $courseName,  // Pass the course name to the template
             'comments' => $comments,
-            'commentForm' => $form->createView()
+            'commentForm' => $form->createView(),
+            'stylesheets' => $this->stylesheets
         ]);
     }
 }

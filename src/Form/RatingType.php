@@ -8,7 +8,7 @@
 namespace App\Form;
 
 use App\Entity\Course;
-use App\Entity\rating_exam;
+use App\Entity\examRate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -63,7 +63,7 @@ class RatingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => rating_exam::class,
+            'data_class' => examRate::class,
         ]);
     }
 }

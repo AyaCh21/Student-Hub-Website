@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
@@ -13,10 +14,10 @@ class Course
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "integer")]
+    private int $id;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(name: 'name', type: Types::TEXT, length: 50)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
@@ -26,19 +27,19 @@ class Course
     #[ORM\OneToMany(targetEntity: StudyMaterial::class, mappedBy: 'course')]
     private Collection $studyMaterials;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(name: 'phase', type: "integer", nullable: true)]
     private ?int $phase = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'semester', type: "integer", nullable: false)]
     private ?int $semester = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(name: 'specialisation', type: Types::TEXT, length: 150)]
     private ?string $specialisation = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'ects', type: 'integer', nullable: false)]
     private ?int $ects = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'hasLab', type: 'boolean', nullable: true)]
     private ?bool $hasLab = null;
 
     public function getId(): ?int

@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
-use App\Entity\rating_exam;
+use App\Entity\examRate;
 use App\Entity\Student;
 use App\Form\ProfessorRateForm;
 use App\Form\RatingType;
@@ -36,7 +36,7 @@ class  RatingController extends AbstractController
      */
     public function addCourseRate(Request $request): Response
     {
-        $rating = new rating_exam(); // Instantiate rating_exam without constructor parameters
+        $rating = new examRate(); // Instantiate examRate without constructor parameters
 
         $form = $this->createForm(RatingType::class, $rating);
 

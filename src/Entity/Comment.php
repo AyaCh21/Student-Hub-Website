@@ -37,6 +37,14 @@ class Comment
     #[ORM\Column(type: 'datetime')]
     private \DateTime $updated_at;
 
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    private Collection $children;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
+
     // Getters and setters...
     public function getId(): ?int
     {
@@ -86,6 +94,7 @@ class Comment
         return $this;
     }
 
+
     public function getCommentText(): string
     {
         return $this->comment_text;
@@ -131,6 +140,17 @@ class Comment
     {
         $this->updated_at = $updated_at;
 
+        return $this;
+    }
+
+    public function getChildren(): array
+    {
+        return $this->children;
+    }
+
+    public function addChild(Comment $child): self
+    {
+        $this->children[] = $child;
         return $this;
     }
 }

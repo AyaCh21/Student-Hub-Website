@@ -13,8 +13,8 @@ class StudyMaterial
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id = null;
+    #[ORM\Column(type: "integer")]
+    private int $id;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $type = null;
@@ -30,10 +30,10 @@ class StudyMaterial
     #[ORM\JoinColumn(nullable: false)]
     private ?Course $course = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: Types::TEXT, length: 50)]
     private ?string $file_type = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, length: 255)]
     private ?string $file_path = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

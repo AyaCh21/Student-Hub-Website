@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProfessorRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProfessorRepository::class)]
@@ -12,10 +13,10 @@ class Professor
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    #[ORM\Column(length: 70)]
+    #[ORM\Column(name: 'name', type: Types::TEXT, length: 70)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'professor', targetEntity: Course::class)]

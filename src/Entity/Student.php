@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,17 +14,17 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-    #[ORM\Column(length: 120)]
-    private ?string $username = null;
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(type:'integer')]
+    private int $id;
+    #[ORM\Column(name: 'username', type: Types::TEXT, length: 120)]
+    private string $username;
+    #[ORM\Column(name: 'email', type: Types::TEXT, length: 60)]
     private ?string $email = null;
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(name: 'password', type: Types::TEXT, length: 20)]
     private ?string $password = null;
-    #[ORM\Column]
+    #[ORM\Column(name: 'phase', type: "integer")]
     private ?int $phase = null;
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(name: 'specialisation', type: Types::TEXT, length: 20)]
     private ?string $specialisation=null;
     private array $roles = [];
 

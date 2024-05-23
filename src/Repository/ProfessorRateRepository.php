@@ -6,11 +6,11 @@ use App\Entity\professorRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ProfessorRateRepository extends ServiceEntityRepository
 {
+    private Connection $connection;
     private ManagerRegistry $registry;
     private QueryBuilder $qb;
 

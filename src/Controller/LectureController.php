@@ -80,8 +80,6 @@ class LectureController extends AbstractController
                 }
             }
 
-
-
             $entityManager->persist($comment);
             $entityManager->flush();
 

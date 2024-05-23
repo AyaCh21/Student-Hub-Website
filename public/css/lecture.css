@@ -122,14 +122,20 @@ h1 {
     background-color: #d48800;
 }
 
-
 .comment-list {
     margin-top: 20px;
 }
 
-.comment {
+.comment-wrapper {
     padding: 10px;
     margin-bottom: 15px;
+    background-color: var(--minor-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment {
+    padding: 10px;
     background-color: var(--dark-color);  /* Changed to match materials container */
     border-radius: 10px;
 }
@@ -139,6 +145,21 @@ h1 {
     padding-left: 20px;
     border-left: 2px solid var(--extra-color);
 }
-.reply-form button:hover {
+
+.reply-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    color: var(--dark-color);
+    background-color: var(--extra-color);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.reply-button:hover {
     background-color: #d48800;
 }

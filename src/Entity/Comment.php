@@ -99,7 +99,6 @@ class Comment
         return $this;
     }
 
-
     public function getCommentText(): string
     {
         return $this->comment_text;

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\StudyMaterial;
 use App\Entity\Comment;
+<<<<<<< HEAD
 use App\Entity\Professor;
 use App\Entity\rating_exam;
 use App\Form\CommentForm;
@@ -13,6 +14,9 @@ use App\Form\RatingType;
 use App\Repository\RatingExamRepository;
 use App\Repository\ProfessorRateRepository;
 use App\Repository\ProfessorRepository;
+=======
+use App\Form\CommentForm;
+>>>>>>> 20a7b45 (adding necessary files for the comment section)
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,13 +28,18 @@ use App\Form\StudyMaterialType;
 class LectureController extends AbstractController
 {
     #[Route("/lecture/{id}/{type}", name: "lecture")]
+<<<<<<< HEAD
     public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request, RatingExamRepository $ratingExamRepository, ProfessorRateRepository $professorRateRepository,
                             ProfessorRepository $professorRepository): Response
+=======
+    public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request): Response
+>>>>>>> 20a7b45 (adding necessary files for the comment section)
     {
         // Fetch the course name
         $course = $entityManager->getRepository(Course::class)->find($id);
         $courseName = $course ? $course->getName() : 'Unknown Course';
 
+<<<<<<< HEAD
         // Fetch professor based on course ID
         $professor = $professorRepository->findProfessorByCourseId($id);
         $professorName = $professor ? $professor->getName() : 'Unknown Professor';
@@ -39,11 +48,14 @@ class LectureController extends AbstractController
 
 
 
+=======
+>>>>>>> 20a7b45 (adding necessary files for the comment section)
         $studyMaterials = $entityManager->getRepository(StudyMaterial::class)->findBy([
             'course' => $id,
             'type' => $type
         ]);
 
+<<<<<<< HEAD
 //        here the correct comments are gotten, it includes the replies to those comments (their children)
         $comments = $entityManager->getRepository(Comment::class)->findBy([
             'course_id' => $id,
@@ -58,6 +70,19 @@ class LectureController extends AbstractController
         $commentForm->handleRequest($request);
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+=======
+        $comments = $entityManager->getRepository(Comment::class)->findBy([
+            'course_id' => $id,
+            'type' => $type,
+            'parent_id' => null,
+        ]);
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentForm::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+>>>>>>> 20a7b45 (adding necessary files for the comment section)
             $comment->setCourseId($id);
             $comment->setUserId($this->getUser()->getId());
             $comment->setType($type);
@@ -70,6 +95,7 @@ class LectureController extends AbstractController
             return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
         }
 
+<<<<<<< HEAD
         $replyComment = new Comment();
         $replyForm = $this->createForm(ReplyForm::class, $comment);
         $replyForm->handleRequest($request);
@@ -136,11 +162,14 @@ class LectureController extends AbstractController
         //$averageProfessorRating = $professor ? $professorRateRepository->getAverageRatingForProfessor($professor->getId()) : null;
 
 
+=======
+>>>>>>> 20a7b45 (adding necessary files for the comment section)
         return $this->render('lecture.html.twig', [
             'studyMaterials' => $studyMaterials,
             'type' => ucfirst($type),  // Capitalize the first letter of the type for display
             'courseName' => $courseName,  // Pass the course name to the template
             'comments' => $comments,
+<<<<<<< HEAD
             'commentForm' => $commentForm->createView(),
             'replyForm' => $replyForm->createView(),
             'stylesheets' => $this->stylesheets,
@@ -149,6 +178,9 @@ class LectureController extends AbstractController
             'averageProfessorRating' => $averageProfessorRating,
             'professorName' => $professorName,
             'form' => $form->createView()
+=======
+            'commentForm' => $form->createView()
+>>>>>>> 20a7b45 (adding necessary files for the comment section)
         ]);
     }
     #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]

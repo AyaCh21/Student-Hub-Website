@@ -54,34 +54,6 @@ h1 {
     transform: scale(1.02);
 }
 
-.ratings-section, .comments-section {
-    background: var(--dark-color); /* Changed to match materials container */
-    color: var(--light-color);
-}
-.card-text {
-    font-size: 1rem;
-    color: var(--light-color);  /* Match the text color */
-}
-
-/* Button */
-.btn-primary {
-    background-color: var(--extra-color); /* Adjust to your theme color */
-    border: none;
-    color: #323939;  /* Dark text color to contrast with the button background */
-    padding: 10px 20px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-/* Button hover effect */
-.btn-primary:hover {
-    background-color: #d48800; /* Adjust to your desired hover color */
-    transform: scale(1.05);
-}
-
 .ratings-section, .comments-section, .upload-section {
     background: var(--dark-color);  /* Changed to match materials container */
     color: var(--light-color);
@@ -111,7 +83,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-.download-button {
+.download-button, .comment-form button, .reply-button, .reply-form button  {
     display: inline-block;
     padding: 10px 20px;
     margin-top: 10px;
@@ -122,28 +94,10 @@ h1 {
     text-decoration: none;
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-.download-button:hover {
-    background-color: #d48800;
-}
-
-.pdf-link {
-    margin-bottom: 10px;
-}
-
-.pdf-link a {
-    color: #ffcc00;  /* Bright yellow for high contrast */
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2em;  /* Increase font size */
-    display: inline-block;
-    padding: 5px 0;  /* Add some padding for better spacing */
-}
-
-.pdf-link a:hover {
-    text-decoration: underline;
-    color: #ff9900;  /* Slightly darker shade on hover */
+    &:hover {
+        background: var(--minor-color);
+    }
 }
 
 .comment-form {
@@ -172,20 +126,6 @@ h1 {
     font-size: 1em;
 }
 
-.comment-form button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    color: var(--dark-color);
-    background-color: var(--extra-color);
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
 .comment-form button:hover {
     background-color: #d48800;
 }
@@ -197,7 +137,7 @@ h1 {
 .comment-wrapper {
     padding: 10px;
     margin-bottom: 15px;
-    background-color: var(--minor-color);
+    background-color: gray;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -206,7 +146,6 @@ h1 {
     padding: 10px;
     background-color: var(--dark-color);  /* Changed to match materials container */
     border-radius: 10px;
-    margin-bottom: 15px;
 }
 
 .comment .replies {
@@ -215,22 +154,8 @@ h1 {
     border-left: 2px solid var(--extra-color);
 }
 
-.reply-button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    color: var(--dark-color);
-    background-color: var(--extra-color);
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
 .reply-button:hover {
-    background-color: var(--minor-color);
+    background-color: #d48800;
 }
 
 .reply-form {
@@ -257,21 +182,6 @@ h1 {
     margin-bottom: 10px;
     font-size: 1em;
 }
-
-.reply-form button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    color: var(--dark-color);
-    background-color: var(--extra-color);
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
 .reply-form button:hover {
-    background-color: var(--extra-color);
+    background-color: #d48800;
 }

@@ -14,9 +14,6 @@ class ProfessorRateRepository extends ServiceEntityRepository
     private ManagerRegistry $registry;
     private QueryBuilder $qb;
 
-    private ManagerRegistry $registry;
-    private QueryBuilder $qb;
-
     public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;

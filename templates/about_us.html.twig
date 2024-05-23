@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="us_wrapper">
+        <div class="img_wrapper">
+            <img src="{{ asset('img/team_img1.jpeg') }}" alt="team photo construction">
+            <div class="hover-text-container">
+                <span class="hover-text" data-area="area1">Aya</span>
+                <span class="hover-text" data-area="area2">Area 2 Text</span>
+            </div>
+        </div>
+
+        <img src="{{ asset('img/team_img2.jpeg') }}" alt="team photo late">
+        <img src="{{ asset('img/team_img3.jpeg') }}" alt="team photo bridge">
+    </div>
+
+{% endblock %}

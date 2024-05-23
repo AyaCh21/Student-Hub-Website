@@ -30,6 +30,7 @@ h1 {
     border-bottom: 2px solid var(--extra-color);
     padding-bottom: 5px;
     color: var(--extra-color);
+    color: var(--extra-color);
 }
 /* Card container */
 /* Card container */
@@ -55,6 +56,10 @@ h1 {
     transform: scale(1.02);
 }
 
+.ratings-section, .comments-section {
+    background: var(--dark-color); /* Changed to match materials container */
+    color: var(--light-color);
+}
 .card-text {
     font-size: 1rem;
     color: var(--light-color);  /* Match the text color */
@@ -108,7 +113,6 @@ h1 {
     margin-bottom: 10px;
 }
 
-/*we probably dont need the download buttons anymore*/
 .download-button {
     display: inline-block;
     padding: 10px 20px;
@@ -204,6 +208,7 @@ h1 {
     padding: 10px;
     background-color: var(--dark-color);  /* Changed to match materials container */
     border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 .comment .replies {
@@ -270,5 +275,5 @@ h1 {
 }
 
 .reply-form button:hover {
-    background-color: #d48800;
+    background-color: var(--extra-color);
 }

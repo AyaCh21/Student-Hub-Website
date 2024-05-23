@@ -53,6 +53,10 @@ class LectureController extends AbstractController
         $this->javascripts[] = 'lecture.js';
 
         $comment = new Comment();
+        $form = $this->createForm(CommentForm::class, $comment);
+        $form->handleRequest($request);
+
+        $comment = new Comment();
         $commentForm = $this->createForm(CommentForm::class, $comment);
         $commentForm->handleRequest($request);
 
@@ -62,6 +66,21 @@ class LectureController extends AbstractController
             $comment->setType($type);
             $comment->setCreatedAt(new \DateTime());
             $comment->setUpdatedAt(new \DateTime());
+
+            //this art is if the comment is a reply to another comment:
+            // Check if the comment is a reply to a top-level comment
+            $parentId = $request->request->get('parent_id');
+            if ($parentId) {
+                $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
+                if ($parentComment && $parentComment->getParent() === null) {
+                    $comment->setParent($parentComment);
+                } else {
+                    // Handle the case where the parent comment is not top-level
+                    throw new \Exception('You can only reply to top-level comments.');
+                }
+            }
+
+
 
             $entityManager->persist($comment);
             $entityManager->flush();
@@ -147,7 +166,7 @@ class LectureController extends AbstractController
             'averageCourseRating' => $averageCourseRating,
             'averageProfessorRating' => $averageProfessorRating,
             'professorName' => $professorName,
-            'form' => $form->createView()
+            'form' => $form->createView
         ]);
     }
     #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]

@@ -2,10 +2,12 @@
 namespace App\Entity;
 
 use App\Repository\CourseRateRepository;
+use App\Repository\RatingExamRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CourseRateRepository::class)]
-#[ORM\Table('ratingExam')]
+#[ORM\Entity(repositoryClass: RatingExamRepository::class)]
+#[ORM\Table(name: 'ratingExam')]
+
 class rating_exam
 {
     #[ORM\Id]

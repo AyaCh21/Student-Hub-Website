@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 
 class ProfRateCalculatorTest extends TestCase
@@ -17,6 +18,7 @@ class ProfRateCalculatorTest extends TestCase
     private ManagerRegistry $managerRegistry;
     private QueryBuilder $queryBuilder;
     private Query $query;
+    private $classMetadata;
 
     /**
      * @throws Exception

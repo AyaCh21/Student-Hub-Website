@@ -5,22 +5,39 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\StudyMaterial;
 use App\Entity\Comment;
+use App\Entity\Professor;
+use App\Entity\rating_exam;
 use App\Form\CommentForm;
 use App\Form\ReplyForm;
+use App\Form\RatingType;
+use App\Repository\RatingExamRepository;
+use App\Repository\ProfessorRateRepository;
+use App\Repository\ProfessorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
 class LectureController extends AbstractController
 {
     #[Route("/lecture/{id}/{type}", name: "lecture")]
-    public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request): Response
+    public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request, RatingExamRepository $ratingExamRepository, ProfessorRateRepository $professorRateRepository,
+                            ProfessorRepository $professorRepository): Response
     {
         // Fetch the course name
         $course = $entityManager->getRepository(Course::class)->find($id);
         $courseName = $course ? $course->getName() : 'Unknown Course';
+
+        // Fetch professor based on course ID
+        $professor = $professorRepository->findProfessorByCourseId($id);
+        $professorName = $professor ? $professor->getName() : 'Unknown Professor';
+        // Fetch average professor rating
+        $averageProfessorRating = $professor ? $professorRateRepository->getAverageRatingForProfessor($professor->getId()) : null;
+
+
 
         $studyMaterials = $entityManager->getRepository(StudyMaterial::class)->findBy([
             'course' => $id,
@@ -81,6 +98,13 @@ class LectureController extends AbstractController
         }
 
 
+        // Fetch average course rating (this is actual an exam rating)
+        $averageCourseRating = $ratingExamRepository->getAverageRatingForCourse($id);
+
+        // Fetch average professor rating
+        //$averageProfessorRating = $professor ? $professorRateRepository->getAverageRatingForProfessor($professor->getId()) : null;
+
+
         return $this->render('lecture.html.twig', [
             'studyMaterials' => $studyMaterials,
             'type' => ucfirst($type),  // Capitalize the first letter of the type for display
@@ -89,7 +113,10 @@ class LectureController extends AbstractController
             'commentForm' => $commentForm->createView(),
             'replyForm' => $replyForm->createView(),
             'stylesheets' => $this->stylesheets,
-            'javascripts' => $this->javascripts
+            'javascripts' => $this->javascripts,
+            'averageCourseRating' => $averageCourseRating,
+            'averageProfessorRating' => $averageProfessorRating,
+            'professorName' => $professorName
         ]);
     }
 }

@@ -52,6 +52,53 @@ h1 {
     padding-bottom: 5px;
     color: var(--extra-color);
 }
+/* Card container */
+/* Card container */
+.card {
+    border: 1px solid var(--extra-color);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: var(--dark-color);  /* Match the section background color */
+    color: var(--light-color);  /* Match the text color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    transform: scale(1.02);
+}
+
+.card-text {
+    font-size: 1rem;
+    color: var(--light-color);  /* Match the text color */
+}
+
+/* Button */
+.btn-primary {
+    background-color: var(--extra-color); /* Adjust to your theme color */
+    border: none;
+    color: #323939;  /* Dark text color to contrast with the button background */
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Button hover effect */
+.btn-primary:hover {
+    background-color: #d48800; /* Adjust to your desired hover color */
+    transform: scale(1.05);
+}
 
 .ratings-section, .comments-section, .upload-section {
     background: var(--dark-color);  /* Changed to match materials container */

@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+
+
 {% block content %}
     {% if is_granted('ROLE_USER') %}
 
@@ -7,25 +9,11 @@
         <h3 class="profile-h3 is-size-2-mobile is-size-1-desktop">Your Profile</h3>
         <p class="profile-p is-size-4-desktop">You can change your data here.</p>
     </div>
-    <div class="user-info-all">
-        <dl class="line-breaker"></dl>
-        <div class="spec-box">
-            <div class="label-box is-size-4-mobile is-size-3-desktop">username: </div>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">r683362</dd>
-        </div>
-        <div class="spec-box">
-            <div class="label-box is-size-4-mobile is-size-3-desktop">password: </div>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">*********</dd>
-        </div>
-        <div class="spec-box">
-            <dt class="label-box is-size-4-mobile is-size-3-desktop">email: </dt>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">bolin.great@is</dd>
-        </div>
 
-        <div class="spec-box">
-            <dt class="label-box is-size-4-mobile is-size-3-desktop">specialisation: </dt>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">Electronics and ICT</dd>
-        </div>
+
+    <div class="user-info-all">
+
+
 
         <form id="academic-info-form" action="{{ path('changeProfile') }}" method="post">
             <div class="spec-box">
@@ -58,9 +46,6 @@
     <p class="profile-p">You can change your personal information here.</p>
     </div>
     <div class="user-info-all">
-
-
-            <dl class="line-breaker"></dl>
 
             <div class="spec-box">
                 <div class="label-box">username: </div>
@@ -140,9 +125,6 @@
                 </dd>
             </div>
         </div>
-
-
-
 
 
 

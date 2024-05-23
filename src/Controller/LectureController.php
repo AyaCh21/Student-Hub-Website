@@ -79,7 +79,6 @@ class LectureController extends AbstractController
                     throw new \Exception('You can only reply to top-level comments.');
                 }
             }
-
             $entityManager->persist($comment);
             $entityManager->flush();
 
@@ -164,7 +163,7 @@ class LectureController extends AbstractController
             'averageCourseRating' => $averageCourseRating,
             'averageProfessorRating' => $averageProfessorRating,
             'professorName' => $professorName,
-            'form' => $form->createView
+            'form' => $form->createView()
         ]);
     }
     #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]

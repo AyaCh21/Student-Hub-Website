@@ -17,15 +17,6 @@ class StudentFixtures extends Fixture implements OrderedFixtureInterface
             while (($data = fgetcsv($handle, 1000, ',')) == true) {
                 $student = new Student();
                 $student->setUsername($data[0]);
-
-                if (!$this->hasReference('student_' . $data[0])) {
-                    // reference doesn't exist, so add it
-                    $this->addReference('student_' . $data[0], $student);
-                } else {
-                    // reference already exists, so set it
-                    $this->setReference('student_' . $data[0], $student);
-                }
-
                 $student->setEmail($data[1]);
                 $student->setPassword($data[2]);
                 $student->setPhase($data[3]);

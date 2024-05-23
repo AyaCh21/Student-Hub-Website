@@ -90,3 +90,24 @@ input[type=submit] {
         align-items: baseline;
     }
 }
+.profile-header {
+    text-align: center;
+}
+
+.user-info-all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spec-box {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.option-edit {
+    margin-top: 20px;
+}

@@ -23,18 +23,24 @@ body{
     top: 0;
     padding: 20px;
     border-bottom: 1px solid var(--extra-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .navbar ul {
     list-style: none;
-    text-align: left;
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center;
 }
+
 .navbar li {
-    display: inline-block;
     margin: 0 15px;
 }
-.navbar a {
+
+.navbar-item a {
     color: var(--extra-color);
     font-size: 22px;
     text-transform: uppercase;
@@ -43,7 +49,8 @@ body{
     position: relative;
     padding: 2px 0;
 }
-.navbar a:before{
+
+.navbar-item a:before {
     content: "";
     width: 100%;
     height: 2px;
@@ -52,16 +59,30 @@ body{
     bottom: 0;
     transition: 0.5s transform ease;
     transform: scale3d(0,1,1);
-    transform-origin: 0 50%;
     background: var(--light-color);
 }
-.navbar a:hover:before{
+
+.navbar-item a:hover:before {
     transform: scale3d(1,1,1);
-    transform-origin: 0 50%;
 }
-.navbar a:before{
+
+.navbar-item a:before {
     transform-origin: 100% 20%;
 }
+
+.nav-opt {
+    margin-left: auto;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.nav-text {
+    margin-left: 10px;
+}
+
 svg {
     display: none;
 }

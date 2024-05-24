@@ -1,14 +1,14 @@
 main {
     align-content: center;
 }
-.us_wrapper {
+.photo_wrapper {
     display: flex;
     justify-content: space-evenly;
     margin-top: 20px;
     position: relative;
 }
 
-.us_wrapper img {
+.photo_wrapper img {
     height: 20vw;
     width: auto;
     border-radius: 2%;
@@ -19,7 +19,6 @@ main {
         scale: 1.2;
     }
 }
-
 .team-description {
     color: var(--light-color);
     margin: 5vw;
@@ -27,3 +26,44 @@ main {
     font-size: 2vw;
     width: auto;
 }
+
+.team-wrapper {
+    display: flex;
+    margin: 2vw;
+}
+
+.member-card {
+    display: flex;
+    flex-direction: row;
+    width: 25vw;
+    height: fit-content;
+    box-shadow: 0 4px 8px 0 red /*#272c2c*/;
+    border-radius: 20px;
+    padding: 15px 20px;
+    margin: 10px;
+}
+
+figure {
+    display: grid;
+    border-radius: 1rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+figure img {
+    border: solid 2px blue;
+    height: 10em;
+    width: auto;
+}
+
+.member-description {
+    width: fit-content;
+
+}
+
+/*
+RELATIVE SIZES IN CSS:
+    em - relative to font size of the element
+    vw - relative to 1% of the width of window
+    vh - relative to 1% of the height of window
+ */

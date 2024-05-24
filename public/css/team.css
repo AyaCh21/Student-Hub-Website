@@ -156,7 +156,7 @@ RELATIVE SIZES IN CSS:
         height: fit-content;
     }
     .team-wrapper {
-        padding-bottom: -3vh;
+        padding-bottom: 4rem;
     }
     .member-card {
         width: fit-content;
@@ -164,6 +164,10 @@ RELATIVE SIZES IN CSS:
     section:nth-child(2) {
         height: fit-content;
         scroll-snap-align: start;
+    }
+
+    footer {
+        margin-top: -4.5rem;
     }
 
 

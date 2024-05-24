@@ -153,6 +153,7 @@ footer a {
         display: flex;
     }
     footer {
+        position: relative;
         width: auto;
         font-size: 3vw;
     }

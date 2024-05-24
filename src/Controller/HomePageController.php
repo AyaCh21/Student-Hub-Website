@@ -19,7 +19,7 @@ class HomePageController extends AbstractController
         ]);
     }
 
-    #[Route("/about-us", name:"about-us")]
+    #[Route("/team", name:"team")]
     public function aboutPage(): Response
     {
         $this->stylesheets[]='team.css';

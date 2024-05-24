@@ -19,6 +19,8 @@ body{
 }
 
 .navbar {
+    position: fixed;
+    z-index: 99;
     background: transparent;
     top: 0;
     padding: 20px;

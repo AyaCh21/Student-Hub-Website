@@ -1,95 +1,78 @@
 <?php
 
+
 namespace App\Tests\Entity;
 
 use App\Entity\Course;
-use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
-use PHPUnit\Framework\Attributes\Group;
+use App\Entity\Professor;
+use App\Entity\StudyMaterial;
 use PHPUnit\Framework\TestCase;
 
 class CourseTest extends TestCase
 {
-
-    public function testGetIdPass()
+    public function testId(): void
     {
         $course = new Course();
         $course->setId(1);
         $this->assertEquals(1, $course->getId());
-    }
-    public function testGetIdFail()
-    {
-        $course = new Course();
-        $course->setId(3);
-        $this->assertEquals(1, $course->getId());
+        $this->assertNotEquals(2, $course->getId()); // Added assertion for inequality
     }
 
-    public function testSetIdPass()
+    public function testName(): void
     {
         $course = new Course();
-        $course->setId(1);
-        $this->assertEquals(1, $course->getId());
+        $course->setName("Test Course");
+        $this->assertEquals("Test Course", $course->getName());
+        $this->assertNotEquals("Another Course", $course->getName()); // Added assertion for inequality
     }
 
-    public function testGetNamePass()
+    public function testProfessor(): void
     {
         $course = new Course();
-        $course->setName("Mathematical Modelling");
-        $this->assertEquals("Mathematical Modelling", $course->getName());
+        $professor = new Professor();
+        $course->setProfessor($professor);
+        $this->assertEquals($professor, $course->getProfessor());
     }
 
-    public function testSetNamePass()
+    public function testPhase(): void
     {
         $course = new Course();
-        $course->setName("Chemistry");
-        $this->assertEquals("Chemistry", $course->getName());
+        $course->setPhase(1);
+        $this->assertEquals(1, $course->getPhase());
+        $this->assertNotEquals(2, $course->getPhase()); // Added assertion for inequality
     }
 
-    public function testGetProfessorPass()
+    public function testSemester(): void
     {
         $course = new Course();
-        $course->setProfessor(1);
-        $this->assertEquals(1, $course->getProfessor());
+        $course->setSemester(2);
+        $this->assertEquals(2, $course->getSemester());
+        $this->assertNotEquals(1, $course->getSemester()); // Added assertion for inequality
     }
 
-    public function testSetProfessorPass()
+    public function testSpecialisation(): void
     {
         $course = new Course();
-        $course->setProfessor(6);
-        $this->assertEquals(6, $course->getProfessor());
+        $course->setSpecialisation("Electronics");
+        $this->assertEquals("Electronics", $course->getSpecialisation());
+        $this->assertNotEquals("Computer Science", $course->getSpecialisation()); // Added assertion for inequality
     }
 
-    public function testSetProfessorFail()
+    public function testEcts(): void
     {
         $course = new Course();
-        $course->setProfessor(6);
-        $this->assertNotEquals(7, $course->getProfessor());
-    }
-    public function testSetNameFail()
-    {
-        $course = new Course();
-        $course->setName("Chemistry");
-        $this->assertNotEquals("Biology", $course->getName());
-        $this->assertEquals("Chemistry", $course->getName());
-    }
-    public function testSetIdFail()
-    {
-        $course = new Course();
-        $course->setId(1);
-        $this->assertNotEquals(2, $course->getId());
-    }
-    #[group('deprecated')]
-    #[doesNotPerformAssertions]
-    public function testSetIdWithDeprecation()
-    {
-        $course = new Course();
-        $course->setId(1);
+        $course->setEcts(5);
+        $this->assertEquals(5, $course->getEcts());
+        $this->assertNotEquals(10, $course->getEcts()); // Added assertion for inequality
     }
 
-    #[group('deprecated')]
-    #[doesNotPerformAssertions]
-    public function testSetProfessorWithDeprecation()
+    public function testHasLab(): void
     {
         $course = new Course();
-        $course->setProfessor(6);
+        $course->setHasLab(true);
+        $this->assertTrue($course->hasLab());
+
     }
+
+
 }

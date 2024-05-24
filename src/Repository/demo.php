@@ -1,6 +1,6 @@
 <?php
 
-require_once '../Entity/Student.php'; // Assuming Student.php is in the same directory
+require_once 'src/Entity/Student.php'; // Assuming Student.php is in the same directory
 
 $student = Student::getFirstStudent();
 

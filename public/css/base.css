@@ -94,16 +94,12 @@ section {
 }
 
 footer {
-    padding: 50px;
-    margin: 20px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    text-align: center;
+    background: transparent;
     width: 100%;
-    background-color: transparent;
+    bottom: 0;
+    padding: 20px;
+    text-align: center;
     color: var(--light-color);
-    z-index: 999; /* Ensure the footer appears above other elements -> lowkey don't like this*/
 }
 
 footer a {

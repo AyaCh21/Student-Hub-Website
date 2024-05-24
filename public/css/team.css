@@ -5,12 +5,21 @@ main {
     align-content: center;
 }
 section {
-    height: 90vh;
-    background: rebeccapurple;
-    scroll-snap-align: end;
     position: relative;
-    border-bottom: 1px solid white;
+    margin: auto;
+    align-content: center;
 }
+
+section:nth-child(1) {
+    height: 85vh;
+    scroll-snap-align: end;
+}
+
+section:nth-child(2) {
+    height: 90vh;
+    scroll-snap-align: start;
+}
+
 .photo_wrapper {
     display: flex;
     justify-content: space-evenly;
@@ -39,6 +48,8 @@ section {
 .team-wrapper {
     display: flex;
     flex-wrap: wrap;
+    align-content: space-evenly;
+    height: 50rem;
 }
 
 .member-card {

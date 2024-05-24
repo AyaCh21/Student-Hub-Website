@@ -4,19 +4,22 @@ html {
 main {
     align-content: center;
 }
-section {
+.navbar {
     position: relative;
-    margin: auto;
+    margin-bottom: -10vw;
+}
+section {
+    height: 100vh;
+    position: relative;
+    margin: 1px;
     align-content: center;
 }
 
 section:nth-child(1) {
-    height: 85vh;
     scroll-snap-align: end;
 }
 
 section:nth-child(2) {
-    height: 90vh;
     scroll-snap-align: start;
 }
 
@@ -34,11 +37,10 @@ section:nth-child(2) {
     transition: all 0.7s;
 
     &:hover {
-        scale: 1.2;
+        scale: 1.4;
     }
 }
 .team-description {
-    color: var(--light-color);
     margin: 5vw;
     padding: 1em;
     font-size: 2vw;
@@ -46,10 +48,11 @@ section:nth-child(2) {
 }
 
 .team-wrapper {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-content: space-evenly;
     height: 50rem;
+    gap: 1rem;
 }
 
 .member-card {
@@ -60,8 +63,8 @@ section:nth-child(2) {
     box-shadow: 0 4px 8px 0 #272c2c;
     border-radius: 20px;
     padding: 2em;
-    margin: 10px;
     align-items: center;
+    position: sticky;
 }
 
 figure {
@@ -110,6 +113,11 @@ figure:hover img {
     text-align: start;
 }
 
+footer {
+    position: relative;
+    margin-top: -7vw;
+}
+
 /*
 RELATIVE SIZES IN CSS:
     em - relative to font size of the element
@@ -117,3 +125,46 @@ RELATIVE SIZES IN CSS:
     vh - relative to 1% of the height of window
     rem - relative to root size
  */
+
+@media only screen and (max-width: 1500px) {
+    .navbar {
+        margin-bottom: -7rem;
+    }
+    .team-wrapper {
+        position: relative;
+        grid-template-columns: repeat(2,1fr);
+        align-content: center;
+        height: fit-content;
+        padding-bottom: 4vh;
+    }
+    .member-card {
+        width: fit-content;
+        height: 30vh;
+    }
+    footer {
+        position: relative;
+        margin-top: -5vh;
+    }
+}
+
+@media only screen and (max-width: 932px) {
+    .team-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        align-items: center;
+        height: fit-content;
+    }
+    .team-wrapper {
+        padding-bottom: -3vh;
+    }
+    .member-card {
+        width: fit-content;
+    }
+    section:nth-child(2) {
+        height: fit-content;
+        scroll-snap-align: start;
+    }
+
+
+}

@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,22 +28,24 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 
-class  RatingController extends AbstractController
+#[AllowDynamicProperties] class RatingController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
-    private array $stylesheets;
 
-    public function __construct(EntityManagerInterface $entityManager, private Security $security,)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
-
+    public function setFormFactory(FormFactoryInterface $formFactory): void
+    {
+        $this->formFactory = $formFactory;
+    }
     /**
      * @Route("/rate_course", name="course_rate")
      */
-    public function addCourseRate(Request $request, AuthenticationUtils $authenticationUtils,UserPasswordHasherInterface $passwordHasher): Response
+    public function rateCourse(Request $request): Response
     {
-        $rating = new examRate(); // Instantiate examRate without constructor parameters
+        $rating = new rating_exam(); // Instantiate rating_exam without constructor parameters
 
         $form = $this->createForm(RatingType::class, $rating);
 
@@ -53,15 +56,8 @@ class  RatingController extends AbstractController
             $rating->setRateValue($form->get('rate_value')->getData());
 
             // Assuming you have access to course and student IDs
-            $courseId = $form->get('course_id')->getData(); // Replace with the actual course ID
-            $user = $this->security->getUser();
-            if($user===null){
-            $this->stylesheets[]='login.css';
-            return $this->render('login.html.twig', [
-                'stylesheets'=>$this->stylesheets
-            ]);
-        }
-            $studentId = $user->getID(); // Replace with the actual student ID
+            $courseId = $form->get('course_id')->getData();; // Replace with the actual course ID
+            $studentId = 1; // Replace with the actual student ID
 
             // Set the course and student IDs
             $rating->setCourseId($courseId);

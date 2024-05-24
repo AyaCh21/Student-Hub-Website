@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StudentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use PDO;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -109,6 +110,21 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+    //same methode but allow unit testing per function
+    static function getAllStudents(PDO $db): array {
+        $stm = $db->prepare('SELECT id, email, password, username, phase FROM Student');
+        $stm->execute();
+        $result = array();
+        while ($item = $stm->fetch()) {
+            $Student = new Student($item['email']);
+            $Student->setId($item['id']);
+
+            $result[] = $Student;
+        };
+        return $result;
+    }
+
+
     /**
      * The public representation of the user (e.g. a username, an email address, etc.)
      *

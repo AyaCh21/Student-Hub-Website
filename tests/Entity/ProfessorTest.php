@@ -2,100 +2,58 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Course;
 use App\Entity\Professor;
 use PHPUnit\Framework\TestCase;
 
-use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
-use PHPUnit\Framework\Attributes\Group;
 class ProfessorTest extends TestCase
 {
-    public function testGetId()
+    public function testId(): void
     {
         $professor = new Professor();
         $professor->setId(1);
         $this->assertEquals(1, $professor->getId());
     }
 
-    public function testGetName()
+    public function testName(): void
     {
         $professor = new Professor();
-        $professor->setName("Arn Mignon");
-        $this->assertEquals("Arn Mignon", $professor->getName());
+        $professor->setName("Koen Eneman");
+        $this->assertEquals("Koen Eneman", $professor->getName());
     }
 
-    public function testSetName()
+    public function testAddCourse(): void
     {
         $professor = new Professor();
-        $professor->setName("Joost Vennekens");
-        $this->assertEquals("Joost Vennekens", $professor->getName());
+
+        // Create a course
+        $course = new Course();
+        $course->setName("Electronics");
+
+        // Add the course to the professor's courses
+        $professor->addCourse($course);
+
+        // Check if the course was added
+        $this->assertCount(1, $professor->getCourses());
+        $this->assertTrue($professor->getCourses()->contains($course));
     }
 
-    public function testGetCourseId()
+    public function testRemoveCourse(): void
     {
         $professor = new Professor();
-        $professor->setCourseId(1);
-        $this->assertEquals(1, $professor->getCourseId());
-    }
 
-    public function testSetCourseId()
-    {
-        $professor = new Professor();
-        $professor->setCourseId(5);
-        $this->assertEquals(5, $professor->getCourseId());
-    }
-    public function testSetInvalidCourseId()
-    {
-        $professor = new Professor();
-        $invalidCourseId = -1; // Assuming -1 is an invalid course ID
-        $professor->setCourseId(2);
+        // Create a course
+        $course = new Course();
+        $course->setName("Electronics");
 
-        // Now, verify that the course ID has not been set to the invalid value
-        $this->assertEquals(2, $professor->getCourseId());
-        $this->assertNotEquals($invalidCourseId, $professor->getCourseId());
-    }
+        // Add the course to the professor's courses
+        $professor->addCourse($course);
 
-    public function testGetNameFail()
-    {
-        $professor = new Professor();
-        $professor->setName("Arn Mignon");
-        $this->assertEquals("Arn Mignon", $professor->getName());
-        $this->assertNotEquals("John Doe", $professor->getName());
-    }
+        // Remove the course
+        $professor->removeCourse($course);
 
-    public function testSetNameFail()
-    {
-        $professor = new Professor();
-        $professor->setName("Joost Vennekens");
-        $this->assertNotEquals("Jane Smith", $professor->getName());
-    }
-
-    public function testGetCourseIdFail()
-    {
-        $professor = new Professor();
-        $professor->setCourseId(1);
-        $this->assertNotEquals(2, $professor->getCourseId());
-    }
-
-    public function testSetCourseIdFail()
-    {
-        $professor = new Professor();
-        $professor->setCourseId(5);
-        $this->assertNotEquals(6, $professor->getCourseId());
-    }
-
-    #[group('deprecated')]
-    #[doesNotPerformAssertions]
-    public function testSetIdWithDeprecation()
-    {
-        $professor = new Professor();
-        $professor->setId(1);
-    }
-
-    #[group('deprecated')]
-    #[doesNotPerformAssertions]
-    public function testSetCourseIdWithDeprecation()
-    {
-        $professor = new Professor();
-        $professor->setCourseId(5);
+        // Check if the course was removed
+        $this->assertCount(0, $professor->getCourses());
+        $this->assertFalse($professor->getCourses()->contains($course));
     }
 }

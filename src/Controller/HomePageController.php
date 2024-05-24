@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomePageController extends AbstractController
 {
     private array $stylesheets;
+
     #[Route("/home", name:"homepage")]
     public function homePage(): Response
     {
@@ -23,7 +24,7 @@ class HomePageController extends AbstractController
     {
         $this->stylesheets[]='about_us.css';
         return $this->render('about_us.html.twig',[
-            'stylesheets'=>$this->stylesheets
+            'stylesheets'=>$this->stylesheets,
         ]);
     }
 

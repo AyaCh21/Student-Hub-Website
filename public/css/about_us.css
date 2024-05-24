@@ -1,5 +1,14 @@
+html {
+    scroll-snap-type: y mandatory;
+}
 main {
     align-content: center;
+}
+section {
+    border-bottom: 1px solid white;
+    height: 100vh;
+    scroll-snap-align: start;
+    position: relative;
 }
 .photo_wrapper {
     display: flex;
@@ -7,7 +16,6 @@ main {
     margin-top: 20px;
     position: relative;
 }
-
 .photo_wrapper img {
     height: 20vw;
     width: auto;
@@ -35,30 +43,57 @@ main {
 .member-card {
     display: flex;
     flex-direction: row;
-    width: 25vw;
+    width: 30vw;
     height: fit-content;
-    box-shadow: 0 4px 8px 0 red /*#272c2c*/;
+    box-shadow: 0 4px 8px 0 #272c2c;
     border-radius: 20px;
-    padding: 15px 20px;
+    padding: 2em;
     margin: 10px;
 }
 
 figure {
     display: grid;
-    border-radius: 1rem;
     overflow: hidden;
     cursor: pointer;
 }
-
+figure > * {
+    grid-area: 1/1;
+    transition: 0.7s;
+}
 figure img {
-    border: solid 2px blue;
-    height: 10em;
+    border: solid 2px var(--light-color);
+    height: inherit;
     width: auto;
+    border-radius: 70%;
+}
+
+figure figcaption {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    padding: .75rem;
+    background: var(--minor-color);
+    clip-path: circle(70px at 85px 85px);
+    -webkit-mask-composite: xor;
+    -webkit-mask-clip: text;
+    opacity: 0;
+}
+figure:hover figcaption{
+    --_i: 100%;
+    opacity: 1;
+}
+figure:hover img {
+    transform: scale(0.8);
 }
 
 .member-description {
-    width: fit-content;
-
+    width: inherit;
+    height: auto;
+    margin-left: 1rem;
+    text-align: start;
 }
 
 /*
@@ -66,4 +101,5 @@ RELATIVE SIZES IN CSS:
     em - relative to font size of the element
     vw - relative to 1% of the width of window
     vh - relative to 1% of the height of window
+    rem - relative to root size
  */

@@ -46,7 +46,12 @@ class StudyMaterial
     {
         return $this->id;
     }
+    public function setId(int $id): static
+    {
+        $this->id = $id;
 
+        return $this;
+    }
     public function getType(): ?string
     {
         return $this->type;

@@ -5,10 +5,10 @@ main {
     align-content: center;
 }
 section {
-    border-bottom: 1px solid white;
     height: 100vh;
     scroll-snap-align: start;
     position: relative;
+    margin: auto;
 }
 .photo_wrapper {
     display: flex;
@@ -17,8 +17,8 @@ section {
     position: relative;
 }
 .photo_wrapper img {
-    height: 20vw;
-    width: auto;
+    width: 20vw;
+    height: auto;
     border-radius: 2%;
     box-shadow: 0 4px 8px 0 #272c2c;
     transition: all 0.7s;
@@ -37,7 +37,7 @@ section {
 
 .team-wrapper {
     display: flex;
-    margin: 2vw;
+    flex-wrap: wrap;
 }
 
 .member-card {
@@ -49,6 +49,7 @@ section {
     border-radius: 20px;
     padding: 2em;
     margin: 10px;
+    align-items: center;
 }
 
 figure {

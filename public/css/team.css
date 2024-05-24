@@ -85,10 +85,10 @@ figure figcaption {
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 1.5vw;
+    font-size: 1.4vw;
     font-weight: bold;
     color: #fff;
-    padding: .75rem;
+    padding: 1rem;
     background: var(--minor-color);
     clip-path: circle(40% at 50% 50%);
     -webkit-mask-composite: xor;

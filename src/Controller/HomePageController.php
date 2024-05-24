@@ -9,12 +9,22 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomePageController extends AbstractController
 {
     private array $stylesheets;
+
     #[Route("/home", name:"homepage")]
     public function homePage(): Response
     {
         $this->stylesheets[]='home_header.css';
         return $this->render('home.html.twig',[
             'stylesheets'=>$this->stylesheets
+        ]);
+    }
+
+    #[Route("/team", name:"team")]
+    public function aboutPage(): Response
+    {
+        $this->stylesheets[]='team.css';
+        return $this->render('team.html.twig',[
+            'stylesheets'=>$this->stylesheets,
         ]);
     }
 

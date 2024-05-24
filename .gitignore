@@ -11,14 +11,12 @@
 ###< symfony/framework-bundle ###
 
 .php-version
-
-###> phpunit/phpunit ###
-/phpunit.xml.dist
-.phpunit.result.cache
-###< phpunit/phpunit ###
-/.idea/*
+/.idea/
 
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+###< phpunit/phpunit ###

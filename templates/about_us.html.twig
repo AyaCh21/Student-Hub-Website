@@ -2,16 +2,14 @@
 
 {% block content %}
     <div class="us_wrapper">
-        <div class="img_wrapper">
-            <img src="{{ asset('img/team_img1.jpeg') }}" alt="team photo construction">
-            <div class="hover-text-container">
-                <span class="hover-text" data-area="area1">Aya</span>
-                <span class="hover-text" data-area="area2">Area 2 Text</span>
-            </div>
-        </div>
-
+        <img src="{{ asset('img/team_img1.jpeg') }}" alt="team photo construction">
         <img src="{{ asset('img/team_img2.jpeg') }}" alt="team photo late">
         <img src="{{ asset('img/team_img3.jpeg') }}" alt="team photo bridge">
     </div>
+
+    <div class="team-description">
+        We're a passionate group of engineering students at KU Leuven on a mission to transform the way you learn. We know the struggle of finding reliable study resources, so we're revamping the forum to be a more supportive and engaging space for all students. Buckle up - the future of learning at KU Leuven is here!
+    </div>
+
 
 {% endblock %}

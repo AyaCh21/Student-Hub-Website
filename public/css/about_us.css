@@ -8,34 +8,22 @@ main {
     position: relative;
 }
 
-img {
+.us_wrapper img {
     height: 20vw;
     width: auto;
     border-radius: 2%;
     box-shadow: 0 4px 8px 0 #272c2c;
     transition: all 0.7s;
+
+    &:hover {
+        scale: 1.2;
+    }
 }
 
-img:hover {
-    scale: 1.3;
-}
-
-.hover-text-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* Match the image dimensions */
-    pointer-events: none; /* Prevent accidental clicks on text */
-}
-
-
-.hover-text {
-    position: absolute;
-    opacity: 0; /* Hide text initially */
-    transition: opacity 0.2s ease-in-out; /* Smooth fade-in effect */
-}
-
-.image-container:hover .hover-text {
-    opacity: 1; /* Show text on hover */
+.team-description {
+    color: var(--light-color);
+    margin: 5vw;
+    padding: 1em;
+    font-size: 2vw;
+    width: auto;
 }

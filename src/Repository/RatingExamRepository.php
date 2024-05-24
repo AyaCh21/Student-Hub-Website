@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 
-use App\Entity\examRate;
+use App\Entity\ExamRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -9,7 +9,7 @@ class RatingExamRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, examRate::class);
+        parent::__construct($registry, ExamRate::class);
     }
 
     /**
@@ -20,15 +20,15 @@ class RatingExamRepository extends ServiceEntityRepository
     public function getAverageRatings(): array
     {
         $qb = $this->createQueryBuilder('r');
-        $qb->select('r.courseId', 'AVG(r.rateValue) AS average', 'COUNT(r.id) AS count')
-            ->groupBy('r.courseId');
+        $qb->select('IDENTITY(r.course) AS course_id', 'AVG(r.rateValue) AS average', 'COUNT(r.id) AS count')
+            ->groupBy('r.course');
 
         $query = $qb->getQuery();
         $results = $query->getResult();
 
         $averageRatings = [];
         foreach ($results as $result) {
-            $averageRatings[$result['courseId']] = [
+            $averageRatings[$result['course_id']] = [
                 'average' => $result['average'],
                 'count' => $result['count']
             ];
@@ -41,8 +41,8 @@ class RatingExamRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('r');
         $qb->select('AVG(r.rateValue) AS average', 'COUNT(r.id) AS count')
-            ->where('r.courseId = :courseId')
-            ->setParameter('courseId', $courseId);
+            ->where('r.course = :course')
+            ->setParameter('course', $courseId);
 
         $query = $qb->getQuery();
         $result = $query->getOneOrNullResult();

@@ -22,8 +22,8 @@ class HomePageController extends AbstractController
     #[Route("/about-us", name:"about-us")]
     public function aboutPage(): Response
     {
-        $this->stylesheets[]='about_us.css';
-        return $this->render('about_us.html.twig',[
+        $this->stylesheets[]='team.css';
+        return $this->render('team.html.twig',[
             'stylesheets'=>$this->stylesheets,
         ]);
     }

@@ -16,14 +16,15 @@ class ProfessorRateRepository extends ServiceEntityRepository
 
     public function __construct(ManagerRegistry $registry)
     {
-        $this->registry = $registry;
-        //parent::__construct($this->registry, ProfessorRate::class);
+//        $this->registry = $registry;
+//        parent::__construct($this->registry, ProfessorRate::class);
+        parent::__construct($registry, ProfessorRate::class);
     }
 
     public function getAverage(int $professorId): float|string
     {
         $qb = $this->createQueryBuilder('pr');
-        $qb->select($qb->expr()->avg('pr.rateValue'))
+        $qb->select($qb->expr()->avg('pr.rate_value'))
             ->from(ProfessorRate::class, 'professor_rate')
             ->where('professor_rate.professor = :professorId')
             ->setParameter('professorId', $professorId);
@@ -85,7 +86,7 @@ class ProfessorRateRepository extends ServiceEntityRepository
     public function getAverageRatingForProfessor(int $professorId): array
     {
         $qb = $this->createQueryBuilder('pr');
-        $qb->select('AVG(pr.rateValue) AS average, COUNT(pr.id) AS count')
+        $qb->select('AVG(pr.rate_value) AS average, COUNT(pr.id) AS count')
             ->where('pr.professor = :professorId')
             ->setParameter('professorId', $professorId);
 

@@ -83,6 +83,7 @@ h1 {
     background: var(--dark-color);  /* Changed to match materials container */
     color: var(--light-color);
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .materials-section {
@@ -271,4 +272,10 @@ h1 {
 
 .reply-form button:hover {
     background-color: #d48800;
+}
+.toast {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    min-width: 200px;
 }

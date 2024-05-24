@@ -20,13 +20,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 
 class  RatingController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private array $stylesheets;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, private Security $security,)
     {
         $this->entityManager = $entityManager;
     }
@@ -34,7 +40,7 @@ class  RatingController extends AbstractController
     /**
      * @Route("/rate_course", name="course_rate")
      */
-    public function addCourseRate(Request $request): Response
+    public function addCourseRate(Request $request, AuthenticationUtils $authenticationUtils,UserPasswordHasherInterface $passwordHasher): Response
     {
         $rating = new examRate(); // Instantiate examRate without constructor parameters
 
@@ -48,7 +54,14 @@ class  RatingController extends AbstractController
 
             // Assuming you have access to course and student IDs
             $courseId = $form->get('course_id')->getData(); // Replace with the actual course ID
-            $studentId = 1; // Replace with the actual student ID
+            $user = $this->security->getUser();
+            if($user===null){
+            $this->stylesheets[]='login.css';
+            return $this->render('login.html.twig', [
+                'stylesheets'=>$this->stylesheets
+            ]);
+        }
+            $studentId = $user->getID(); // Replace with the actual student ID
 
             // Set the course and student IDs
             $rating->setCourseId($courseId);
@@ -100,7 +113,7 @@ class  RatingController extends AbstractController
     }
 
     #[Route("/rate_prof/{professorId}", name:"professor_rate")]
-    public function addProfRate(int $professorId,Request $request, EntityManagerInterface $entityManager): Response
+    public function addProfRate(int $professorId,Request $request, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils,UserPasswordHasherInterface $passwordHasher): Response
     {
         $professor_rate = new ProfessorRate();
         $professors = $entityManager->getRepository(Professor::class)->find($professorId);
@@ -125,7 +138,7 @@ class  RatingController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('display_professor_rate');
         }
-        $student = $this->getUser();
+        $student = $this->security->getUser();
         $this->stylesheets[]='rate_form.css';
         $this->scripts[]='rate_range_prof.js';
 
@@ -139,7 +152,7 @@ class  RatingController extends AbstractController
     }
 
     #[Route("/display_rate_prof", name: "display_professor_rate")]
-    public function viewProfRate(EntityManagerInterface $entityManager): Response
+    public function viewProfRate(EntityManagerInterface $entityManager,AuthenticationUtils $authenticationUtils): Response
     {
         $courses = $entityManager->getRepository(Course::class)->findAll();
         $professorWiseCourses = [];
@@ -170,7 +183,7 @@ class  RatingController extends AbstractController
             $professorVotes[$professor->getId()] = count($rates);
         }
 
-        $student = $this->getUser();
+        $student = $this->security->getUser();
         $stylesheets = ['rate_form.css'];
         $scripts = [];
 

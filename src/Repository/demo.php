@@ -1,8 +1,8 @@
 <?php
-/*
+
 use App\Entity\Student;
 
-require_once 'App/Entity/Student.php'; // Assuming Student.php is in the same directory
+require_once 'src/Entity/Student.php'; // Assuming Student.php is in the same directory
 
 $student = Student::getFirstStudent();
 
@@ -19,4 +19,4 @@ if ($student) {
     echo "</ul>";
 } else {
     echo "No student found!";
-}*/
+}

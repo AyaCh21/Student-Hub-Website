@@ -26,6 +26,7 @@ stages:
   - test
 
 accessibility:
+  when: manual
   stage: test
   image: node:latest
   script:

@@ -1,31 +1,43 @@
-.container-title h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-}
-.spec-box {
+.reset-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-flow: column wrap;
+    padding: 3rem;
     text-align: center;
-    margin-top: 20px;
+}
+
+.reset-form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 1rem;
+    width: fit-content;
 }
 .form-group {
+    padding: 1rem;
+    margin: 3px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+    flex-direction: row;
+    width: fit-content;
+    /*margin-bottom: 20px;*/
 }
 .form-group label {
-    width: 150px;
-    margin-right: 10px;
+    color: var(--extra-color);
+    padding: 1rem;
+    margin: 3px;
 }
 .form-group input {
-    width:  60px !important;
+    margin: 3px;
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 20px;
+    border: none;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     font-size: 1em;
+    background: var(--light-color);
 }
-.spec-box button.btn {
+
+/*.password-reset-form button.btn {
     padding: 10px 20px;
     margin: 10px 0;
     border: none;
@@ -35,9 +47,9 @@
     font-size: 1em;
     cursor: pointer;
 }
-.spec-box button.btn:hover {
+.password-reset-form button.btn:hover {
     background-color: #0056b3;
-}
+}*/
 .alert {
     margin-bottom: 20px;
     padding: 10px;

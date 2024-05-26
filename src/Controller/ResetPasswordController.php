@@ -49,6 +49,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $this->stylesheets[]='reset.css';
+        $this->stylesheets[]='rate_form.css';
 
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form,

@@ -11,7 +11,7 @@
         <div class="user-info-all">
             <form id="academic-info-form" action="{{ path('changeProfile') }}" method="post">
                 <div class="form-row">
-                    <div class="spec-box">
+                    <div class="reset-form">
                         <label for="specialisation">Specialisation:&nbsp;&nbsp;&nbsp;</label>
                         <select name="specialisation" id="specialisation">
                             <option value="Chemical" {% if app.user.specialisation == 'Chemical' %}selected{% endif %}>Chemical Engineering</option>
@@ -20,7 +20,7 @@
                         </select>
                     </div>
 
-                    <div class="spec-box">
+                    <div class="reset-form">
                         <label for="phase">Phase:&nbsp;&nbsp;&nbsp;</label>
                         <select name="phase" id="phase">
                             <option value="1" {% if app.user.phase == '1' %}selected{% endif %}>Bac 1</option>

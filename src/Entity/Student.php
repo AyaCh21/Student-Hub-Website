@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use PDO;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -13,17 +15,17 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-    #[ORM\Column(length: 120)]
-    private ?string $username = null;
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(type:'integer')]
+    private int $id;
+    #[ORM\Column(name: 'username', type: Types::TEXT, length: 120)]
+    private string $username;
+    #[ORM\Column(name: 'email', type: Types::TEXT, length: 60)]
     private ?string $email = null;
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(name: 'password', type: Types::TEXT, length: 20)]
     private ?string $password = null;
-    #[ORM\Column]
+    #[ORM\Column(name: 'phase', type: "integer")]
     private ?int $phase = null;
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(name: 'specialisation', type: Types::TEXT, length: 20)]
     private ?string $specialisation=null;
     private array $roles = [];
 
@@ -108,6 +110,21 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+    //same methode but allow unit testing per function
+    static function getAllStudents(PDO $db): array {
+        $stm = $db->prepare('SELECT id, email, password, username, phase FROM Student');
+        $stm->execute();
+        $result = array();
+        while ($item = $stm->fetch()) {
+            $Student = new Student($item['email']);
+            $Student->setId($item['id']);
+
+            $result[] = $Student;
+        };
+        return $result;
+    }
+
+
     /**
      * The public representation of the user (e.g. a username, an email address, etc.)
      *

@@ -13,8 +13,8 @@ class StudyMaterial
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id = null;
+    #[ORM\Column(type: "integer")]
+    private int $id;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $type = null;
@@ -30,20 +30,28 @@ class StudyMaterial
     #[ORM\JoinColumn(nullable: false)]
     private ?Course $course = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: Types::TEXT, length: 50)]
     private ?string $file_type = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, length: 255)]
     private ?string $file_path = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $text = null;
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $test_pdf = null;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
+    public function setId(int $id): static
+    {
+        $this->id = $id;
 
+        return $this;
+    }
     public function getType(): ?string
     {
         return $this->type;
@@ -130,6 +138,16 @@ class StudyMaterial
     public function setText(?string $text): self
     {
         $this->text = $text;
+        return $this;
+    }
+    public function getTestPdf()
+    {
+        return $this->test_pdf;
+    }
+
+    public function setTestPdf($test_pdf): self
+    {
+        $this->test_pdf = $test_pdf;
         return $this;
     }
 }

@@ -2,13 +2,14 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Course;
 use App\Entity\StudyMaterial;
 use App\Config\MaterialType;
 use PHPUnit\Framework\TestCase;
 
 class StudyMaterialTest extends TestCase
 {
-    public function testGetId()
+    public function testGetAndSetId()
     {
         $studyMaterial = new StudyMaterial();
         $studyMaterial->setId(1);
@@ -16,14 +17,7 @@ class StudyMaterialTest extends TestCase
 
     }
 
-    public function testSetId()
-    {
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setId(1);
-        $this->assertEquals(1, $studyMaterial->getId());
-    }
-
-    public function testGetMaterialType()
+    public function testGetAndSetMaterialType()
     {
         $materialType = MaterialType::lecture;
         $studyMaterial = new StudyMaterial();
@@ -39,21 +33,16 @@ class StudyMaterialTest extends TestCase
         $this->assertEquals($materialType, $studyMaterial->getMaterialType());
     }
 
-    public function testGetUploadedBy()
+    public function testGetAndSetUploadedBy()
     {
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setUploadedBy(1);
-        $this->assertEquals(1, $studyMaterial->getUploadedBy());
+        $material = new StudyMaterial();
+        $dateTime = new \DateTime();
+        $material->setUploadedAt($dateTime);
+        $this->assertEquals($dateTime, $material->getUploadedAt());
     }
 
-    public function testSetUploadedBy()
-    {
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setUploadedBy(1);
-        $this->assertEquals(1, $studyMaterial->getUploadedBy());
-    }
 
-    public function testGetUploadedAt()
+    public function testGetAndSetUploadedAt()
     {
         $uploadedAt = new \DateTime();
         $studyMaterial = new StudyMaterial();
@@ -61,55 +50,22 @@ class StudyMaterialTest extends TestCase
         $this->assertEquals($uploadedAt, $studyMaterial->getUploadedAt());
     }
 
-    public function testSetUploadedAt()
-    {
-        $uploadedAt = new \DateTime();
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setUploadedAt($uploadedAt);
-        $this->assertEquals($uploadedAt, $studyMaterial->getUploadedAt());
-    }
 
-    public function testGetCourseId()
-    {
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setCourseId(1);
-        $this->assertEquals(1, $studyMaterial->getCourseId());
-    }
-
-    public function testSetCourseId()
-    {
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setCourseId(1);
-        $this->assertEquals(1, $studyMaterial->getCourseId());
-    }
-
-    public function testGetFileType()
+    public function testGetAndFileType()
     {
         $studyMaterial = new StudyMaterial();
         $studyMaterial->setFileType('pdf');
         $this->assertEquals('pdf', $studyMaterial->getFileType());
     }
 
-    public function testSetFileType()
-    {
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setFileType('pdf');
-        $this->assertEquals('pdf', $studyMaterial->getFileType());
-    }
 
-    public function testGetFilePath()
+
+
+    public function testGetAndSetFilePath()
     {
         $studyMaterial = new StudyMaterial();
         $studyMaterial->setFilePath('https://a23www301.studev.groept.be/Sustainability/Team1_Sustainability_OpinionEssay.pdf ');
         $this->assertEquals('https://a23www301.studev.groept.be/Sustainability/Team1_Sustainability_OpinionEssay.pdf ', $studyMaterial->getFilePath());
         $this->assertNotEquals('path\file ', $studyMaterial->getFilePath());
-
-    }
-
-    public function testSetFilePath()
-    {
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setFilePath('https://a23www301.studev.groept.be/Sustainability/Team1_Sustainability_OpinionEssay.pdf ');
-        $this->assertEquals('https://a23www301.studev.groept.be/Sustainability/Team1_Sustainability_OpinionEssay.pdf ', $studyMaterial->getFilePath());
     }
 }

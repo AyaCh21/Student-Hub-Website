@@ -1,0 +1,28 @@
+id,name,professor,phase,semester,specialisation,ects,haslab
+1,Introduction to Computer Science,Dr. Smith,1,1,Computer Science,0,false
+2,Calculus II,Prof. Johnson,2,2,Mathematics,0,false
+3,English Composition,Dr. Brown,1,1,English,0,false
+4,European History,Dr. White,1,2,History,0,false
+5,Cell Biology,Prof. Green,2,1,Biology,1,true
+6,Principles of Microeconomics,Dr. Black,1,2,Economics,0,false
+7,Introduction to Psychology,Prof. Adams,1,1,Psychology,0,false
+8,Introduction to Philosophy,Dr. Harris,1,1,Philosophy,0,false
+9,Introduction to Art History,Prof. Thompson,1,2,Art History,0,false
+10,Music Theory II,Dr. Martinez,2,2,Music,0,false
+11,Acting,Prof. Garcia,1,1,Performing Arts,0,false
+12,Spanish Ab Initio,Dr. Robinson,1,2,Languages,0,false
+13,Intermediate French II,Prof. Clark,2,1,Languages,0,false
+14,Advanced German,Dr. Rodriguez,2,2,Languages,0,false
+15,General Chemistry I,Prof. Lewis,1,1,Chemistry,1,true
+16,Probability and Statistics,Dr. Walker,2,2,Mathematics,0,false
+17,Data Structures and Algorithms,Prof. Hall,2,1,Computer Science,0,false
+18,Linear Algebra,Dr. Allen,2,2,Mathematics,0,false
+19,Advanced Creative Writing,Prof. Young,2,1,English,0,false
+20,Human Anatomy,Dr. King,2,2,Biology,1,true
+21,History of Modern Art,Prof. Wright,1,2,Art History,0,false
+22,Ethics,Dr. Lopez,1,1,Philosophy,0,false
+23,Music Composition,Prof. Hill,2,1,Music,0,false
+24,Directing Fundamentals,Dr. Scott,1,2,Performing Arts,0,false
+25,Developmental Psychology,Prof. Green,2,2,Psychology,0,false
+26,Macroeconomics,Dr. Adams,1,1,Economics,0,false
+27,Advanced Circuit Design,Prof. Baker,2,2,Engineering,1,true

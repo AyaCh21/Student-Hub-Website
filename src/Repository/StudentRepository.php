@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use AllowDynamicProperties;
 use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Student[]    findAll()
  * @method Student[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StudentRepository extends ServiceEntityRepository
+#[AllowDynamicProperties] class StudentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -53,6 +54,7 @@ class StudentRepository extends ServiceEntityRepository
 //    $student->setPhase($phase);
 //    $student->setSpecialization($specialization);
 //}
+
 
 //    /**
 //     * @return Student[] Returns an array of Student objects

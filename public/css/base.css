@@ -1,6 +1,6 @@
 :root{
     --main-color: #b3bcbb;
-    --minor-color: #7c938e;
+    --minor-color: #858888;
     --extra-color: #eaafa9;
     --dark-color: #323939;
     --light-color: #efd0ce;
@@ -8,7 +8,7 @@
 html, body {
     background: var(--dark-color);
     height: 100%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
 }
 
@@ -19,9 +19,10 @@ body{
 }
 
 .navbar {
+    width: 100%;
     background: transparent;
     top: 0;
-    padding: 20px;
+    padding: 10px;
     border-bottom: 1px solid var(--extra-color);
     display: flex;
     justify-content: space-between;
@@ -57,7 +58,7 @@ body{
     position: absolute;
     left: 0;
     bottom: 0;
-    transition: 0.5s transform ease;
+    transition: 0.7s transform ease;
     transform: scale3d(0,1,1);
     background: var(--light-color);
 }
@@ -96,7 +97,6 @@ svg {
 
 main {
     width: 100%;
-    margin: auto;
     text-align: justify;
     text-justify: inter-word;
     justify-items: center;
@@ -142,6 +142,12 @@ footer a {
         margin-bottom: 0;
         height: fit-content;
     }
+
+    .navbar:before, .navbar a:hover, .navbar a:hover:before {
+        transform: none;
+
+    }
+
     .navbar ul {
         display: flex;
         flex-direction: row;
@@ -149,13 +155,11 @@ footer a {
         align-items: center;
         justify-content: space-between;
     }
-    .navbar li {
-        margin: 20px;
-    }
     svg {
         display: flex;
     }
     footer {
+        position: relative;
         width: auto;
         font-size: 3vw;
     }

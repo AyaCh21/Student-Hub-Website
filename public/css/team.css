@@ -1,0 +1,175 @@
+html {
+    scroll-snap-type: y mandatory;
+}
+main {
+    align-content: center;
+}
+.navbar {
+    position: relative;
+    margin-bottom: -10vw;
+}
+section {
+    height: 100vh;
+    position: relative;
+    margin: 1px;
+    align-content: center;
+}
+
+section:nth-child(1) {
+    scroll-snap-align: end;
+}
+
+section:nth-child(2) {
+    scroll-snap-align: start;
+}
+
+.photo_wrapper {
+    padding-top: 7rem;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    position: relative;
+}
+.photo_wrapper img {
+    width: 20vw;
+    height: auto;
+    border-radius: 2%;
+    box-shadow: 0 4px 8px 0 #272c2c;
+    transition: all 0.7s;
+
+    &:hover {
+        scale: 1.4;
+    }
+}
+.team-description {
+    margin: 5vw;
+    padding: 1em;
+    font-size: 2vw;
+    width: auto;
+}
+
+.team-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-content: space-evenly;
+    height: 50rem;
+    gap: 1rem;
+}
+
+.member-card {
+    display: flex;
+    flex-direction: row;
+    width: 30vw;
+    height: fit-content;
+    box-shadow: 0 4px 8px 0 #272c2c;
+    border-radius: 20px;
+    padding: 2em;
+    align-items: center;
+    position: sticky;
+}
+
+figure {
+    display: grid;
+    overflow: hidden;
+    cursor: pointer;
+}
+figure > * {
+    grid-area: 1/1;
+    transition: 0.7s;
+}
+figure img {
+    border: solid 2px var(--light-color);
+    height: inherit;
+    width: auto;
+    border-radius: 70%;
+}
+
+figure figcaption {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.4vw;
+    font-weight: bold;
+    color: #fff;
+    padding: 1rem;
+    background: var(--minor-color);
+    clip-path: circle(40% at 50% 50%);
+    -webkit-mask-composite: xor;
+    -webkit-mask-clip: text;
+    opacity: 0;
+}
+figure:hover figcaption{
+    --_i: 100%;
+    opacity: 1;
+}
+figure:hover img {
+    transform: scale(0.8);
+}
+
+.member-description {
+    width: inherit;
+    height: auto;
+    margin-left: 1rem;
+    text-align: start;
+}
+
+footer {
+    position: relative;
+    margin-top: -7vw;
+}
+
+/*
+RELATIVE SIZES IN CSS:
+    em - relative to font size of the element
+    vw - relative to 1% of the width of window
+    vh - relative to 1% of the height of window
+    rem - relative to root size
+ */
+
+@media only screen and (max-width: 1500px) {
+    .navbar {
+        margin-bottom: -7rem;
+    }
+    .team-wrapper {
+        position: relative;
+        grid-template-columns: repeat(2,1fr);
+        align-content: center;
+        height: fit-content;
+        padding-bottom: 4vh;
+    }
+    .member-card {
+        width: fit-content;
+        height: 30vh;
+    }
+    footer {
+        position: relative;
+        margin-top: -5vh;
+    }
+}
+
+@media only screen and (max-width: 932px) {
+    .team-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        align-items: center;
+        height: fit-content;
+    }
+    .team-wrapper {
+        padding-bottom: 4rem;
+    }
+    .member-card {
+        width: fit-content;
+    }
+    section:nth-child(2) {
+        height: fit-content;
+        scroll-snap-align: start;
+    }
+
+    footer {
+        margin-top: -4.5rem;
+    }
+
+
+}

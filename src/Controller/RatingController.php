@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
-use App\Entity\rating_exam;
+use App\Entity\examRate;
 use App\Entity\Student;
 use App\Form\ProfessorRateForm;
 use App\Form\RatingType;
@@ -16,25 +16,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 
-class  RatingController extends AbstractController
+#[AllowDynamicProperties] class RatingController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
-    private array $stylesheets;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
-
+    public function setFormFactory(FormFactoryInterface $formFactory): void
+    {
+        $this->formFactory = $formFactory;
+    }
     /**
      * @Route("/rate_course", name="course_rate")
      */
-    public function addCourseRate(Request $request): Response
+    public function rateCourse(Request $request): Response
     {
         $rating = new rating_exam(); // Instantiate rating_exam without constructor parameters
 
@@ -47,7 +56,7 @@ class  RatingController extends AbstractController
             $rating->setRateValue($form->get('rate_value')->getData());
 
             // Assuming you have access to course and student IDs
-            $courseId = $form->get('course_id')->getData(); // Replace with the actual course ID
+            $courseId = $form->get('course_id')->getData();; // Replace with the actual course ID
             $studentId = 1; // Replace with the actual student ID
 
             // Set the course and student IDs
@@ -100,7 +109,7 @@ class  RatingController extends AbstractController
     }
 
     #[Route("/rate_prof/{professorId}", name:"professor_rate")]
-    public function addProfRate(int $professorId,Request $request, EntityManagerInterface $entityManager): Response
+    public function addProfRate(int $professorId,Request $request, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils,UserPasswordHasherInterface $passwordHasher): Response
     {
         $professor_rate = new ProfessorRate();
         $professors = $entityManager->getRepository(Professor::class)->find($professorId);
@@ -125,7 +134,7 @@ class  RatingController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('display_professor_rate');
         }
-        $student = $this->getUser();
+        $student = $this->security->getUser();
         $this->stylesheets[]='rate_form.css';
         $this->scripts[]='rate_range_prof.js';
 
@@ -139,7 +148,7 @@ class  RatingController extends AbstractController
     }
 
     #[Route("/display_rate_prof", name: "display_professor_rate")]
-    public function viewProfRate(EntityManagerInterface $entityManager): Response
+    public function viewProfRate(EntityManagerInterface $entityManager,AuthenticationUtils $authenticationUtils): Response
     {
         $courses = $entityManager->getRepository(Course::class)->findAll();
         $professorWiseCourses = [];
@@ -170,7 +179,7 @@ class  RatingController extends AbstractController
             $professorVotes[$professor->getId()] = count($rates);
         }
 
-        $student = $this->getUser();
+        $student = $this->security->getUser();
         $stylesheets = ['rate_form.css'];
         $scripts = [];
 

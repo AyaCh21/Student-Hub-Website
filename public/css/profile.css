@@ -125,14 +125,14 @@ input[type=button]:hover, input[type=submit]:hover {
 #username-edit-cancel {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #4CAF50;
+    background-color: #1f4be5;
     color: white;
     cursor: pointer;
 }
 
 #username-edit-confirm:hover,
 #username-edit-cancel:hover {
-    background-color: #45a049;
+    background-color: #1f4be5;
 }
 
 
@@ -158,14 +158,14 @@ input[type=button]:hover, input[type=submit]:hover {
 #email-edit-cancel {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #4CAF50;
+    background-color: #1f4be5;
     color: white;
     cursor: pointer;
 }
 
 #email-edit-confirm:hover,
 #email-edit-cancel:hover {
-    background-color: #45a049;
+    background-color: #1f4be5;
 }
 
 #password-edit-display {
@@ -195,14 +195,14 @@ input[type=button]:hover, input[type=submit]:hover {
 #password-edit-cancel {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #4CAF50;
+    background-color: #1f4be5;
     color: white;
     cursor: pointer;
 }
 
 #password-edit-confirm:hover,
 #password-edit-cancel:hover {
-    background-color: #45a049;
+    background-color: #1f4be5;
 }
 .info-row {
     display: flex;

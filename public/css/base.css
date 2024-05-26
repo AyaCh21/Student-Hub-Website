@@ -129,7 +129,7 @@ footer {
 
 footer a {
     text-decoration: none;
-    color: var(--extra-color);
+    color: blueviolet;
 }
 .content {
     margin-bottom: 1px;

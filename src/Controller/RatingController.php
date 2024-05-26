@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
-use App\Entity\examRate;
+use App\Entity\rating_exam;
 use App\Entity\Student;
 use App\Form\ProfessorRateForm;
 use App\Form\RatingType;

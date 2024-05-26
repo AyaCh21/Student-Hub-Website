@@ -39,7 +39,7 @@ class Course
     #[ORM\Column(name: 'ects', type: 'integer', nullable: false)]
     private ?int $ects = null;
 
-    #[ORM\Column(name: 'has_lab', type: 'boolean', nullable: true)]
+    #[ORM\Column(name: 'hasLab', type: 'boolean', nullable: true)]
     private ?bool $hasLab = null;
 
     public function getId(): ?int

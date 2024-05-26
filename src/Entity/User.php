@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table('user')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -26,13 +25,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private string $password;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'int')]
     private int $phase;
 
     #[ORM\Column(type: 'string')]
     private string $specialization;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'int')]
     private int $newUser;
 
     #[ORM\Column(type: 'json')]

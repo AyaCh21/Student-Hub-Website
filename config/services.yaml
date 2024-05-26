@@ -26,10 +26,6 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\DataFixtures\:
-        resource: '../src/DataFixtures'
-        tags: ['doctrine.fixture.orm']
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
         # Define the RatingExamRepository service and make it public

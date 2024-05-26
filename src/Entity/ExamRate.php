@@ -2,12 +2,12 @@
 namespace App\Entity;
 
 
-use App\Repository\CourseRateRepository;
+use App\Repository\RatingExamRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Type;
 
 
-#[ORM\Entity(repositoryClass: CourseRateRepository::class)]
+#[ORM\Entity(repositoryClass: RatingExamRepository::class)]
 #[ORM\Table('ratingExam')]
 class ExamRate
 {

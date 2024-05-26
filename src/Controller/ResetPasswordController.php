@@ -22,6 +22,8 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 #[Route('/reset-password')]
 class ResetPasswordController extends AbstractController
 {
+    private array $stylesheets;
+
     use ResetPasswordControllerTrait;
 
     public function __construct(
@@ -46,8 +48,11 @@ class ResetPasswordController extends AbstractController
             );
         }
 
+        $this->stylesheets[]='reset.css';
+
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form,
+            'stylesheets'=>$this->stylesheets,
         ]);
     }
 

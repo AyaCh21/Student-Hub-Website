@@ -1,0 +1,58 @@
+.reset-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-flow: column wrap;
+    padding: 3rem;
+    text-align: center;
+}
+
+.reset-form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 1rem;
+    width: fit-content;
+}
+.form-group {
+    padding: 1rem;
+    margin: 3px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    /*margin-bottom: 20px;*/
+}
+.form-group label {
+    color: var(--extra-color);
+    padding: 1rem;
+    margin: 3px;
+}
+.form-group input {
+    margin: 3px;
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    background: var(--light-color);
+}
+
+/*.password-reset-form button.btn {
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+.password-reset-form button.btn:hover {
+    background-color: #0056b3;
+}*/
+.alert {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+}

@@ -123,7 +123,7 @@
         <ul class="courses" style="display: none;">
             {% for favoriteCourse in favoriteData %}
                 <li class="course">
-                    <h3 class="course-toggle is-size-5-mobile" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
+                    <h3 class="course-toggle is-size-5-mobile is-size-3-desktop" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
                     <label>
                         <input type="checkbox" class="favorite-toggle" data-course-id="{{ favoriteCourse.id }}" onchange="toggleFavorite(this)"
                                {% if favoriteCourse.id in favoriteData|column('id') %}checked  {% endif %}>

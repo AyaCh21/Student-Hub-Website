@@ -3,151 +3,109 @@
 {% block content %}
     {% if is_granted('ROLE_USER') %}
 
-    <div class="profile-header">
-        <h3 class="profile-h3 is-size-2-mobile is-size-1-desktop">Your Profile</h3>
-        <p class="profile-p is-size-4-desktop">You can change your data here.</p>
-    </div>
-    <div class="user-info-all">
-        <dl class="line-breaker"></dl>
-        <div class="spec-box">
-            <div class="label-box is-size-4-mobile is-size-3-desktop">username: </div>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">r683362</dd>
-        </div>
-        <div class="spec-box">
-            <div class="label-box is-size-4-mobile is-size-3-desktop">password: </div>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">*********</dd>
-        </div>
-        <div class="spec-box">
-            <dt class="label-box is-size-4-mobile is-size-3-desktop">email: </dt>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">bolin.great@is</dd>
+        <div class="profile-header">
+            <h3 class="profile-h3 is-size-2-mobile is-size-1-desktop">Your Profile</h3>
+            <p class="profile-p is-size-4-desktop">You can change your data here.</p>
         </div>
 
-        <div class="spec-box">
-            <dt class="label-box is-size-4-mobile is-size-3-desktop">specialisation: </dt>
-            <dd class="input-box is-size-5-mobile is-size-4-desktop">Electronics and ICT</dd>
-        </div>
+        <div class="user-info-all">
+            <form id="academic-info-form" action="{{ path('changeProfile') }}" method="post">
+                <div class="form-row">
+                    <div class="reset-form">
+                        <label for="specialisation">Specialisation:&nbsp;&nbsp;&nbsp;</label>
+                        <select name="specialisation" id="specialisation">
+                            <option value="Chemical" {% if app.user.specialisation == 'Chemical' %}selected{% endif %}>Chemical Engineering</option>
+                            <option value="Electromechanics" {% if app.user.specialisation == 'Electromechanics' %}selected{% endif %}>Electromechanics</option>
+                            <option value="Electronics" {% if app.user.specialisation == 'Electronics' %}selected{% endif %}>Electronics and ICT</option>
+                        </select>
+                    </div>
 
-        <form id="academic-info-form" action="{{ path('changeProfile') }}" method="post">
-            <div class="spec-box">
-                <dd class="input-box">
-                    <label for="specialisation">specialisation:&nbsp;&nbsp;&nbsp;</label><select name="specialisation" id="specialisation">
-                        <option value="Chemical" {% if app.user.specialisation == 'Chemical' %}selected{% endif %}>Chemical Engineering</option>
-                        <option value="Electromechanics" {% if app.user.specialisation == 'Electromechanics' %}selected{% endif %}>Electromechanics</option>
-                        <option value="Electronics" {% if app.user.specialisation == 'Electronics' %}selected{% endif %}>Electronics and ICT</option>
-                    </select>
-                </dd>
-            </div>
-
-            <div class="spec-box">
-                <dd class="input-box">
-                    <label for="phase">Phase:&nbsp;&nbsp;&nbsp;</label><select name="phase" id="phase">
-                        <option value="1" {% if app.user.phase == '1' %}selected{% endif %}>Bac 1</option>
-                        <option value="2" {% if app.user.phase == '2' %}selected{% endif %}>Bac 2</option>
-                        <option value="3" {% if app.user.phase == '3' %}selected{% endif %}>Bac 3</option>
-                        <option value="4" {% if app.user.phase == '4' %}selected{% endif %}>Master</option>
-                    </select>
-                </dd>
-            </div>
-        </form>
-    </div>
-
-
-
-    <div class="profile-header">
-    <h3 class="profile-h3">Your Basic Profile</h3>
-    <p class="profile-p">You can change your personal information here.</p>
-    </div>
-    <div class="user-info-all">
-
-
-            <dl class="line-breaker"></dl>
-
-            <div class="spec-box">
-                <div class="label-box">username: </div>
-                <div id="username-info-display" style="display: inline">
-                    <dd class="input-box">
-                        {{ app.user.username }}
-                            <input id="username-edit-init" type="button" value="Edit">
-                    </dd>
+                    <div class="reset-form">
+                        <label for="phase">Phase:&nbsp;&nbsp;&nbsp;</label>
+                        <select name="phase" id="phase">
+                            <option value="1" {% if app.user.phase == '1' %}selected{% endif %}>Bac 1</option>
+                            <option value="2" {% if app.user.phase == '2' %}selected{% endif %}>Bac 2</option>
+                            <option value="3" {% if app.user.phase == '3' %}selected{% endif %}>Bac 3</option>
+                            <option value="4" {% if app.user.phase == '4' %}selected{% endif %}>Master</option>
+                        </select>
+                    </div>
                 </div>
-                <div id="username-edit-display" style="display: none">
-                    <dd class="input-box">
+            </form>
+
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="label-box">Username:</div>
+                    <div id="username-info-display" class="input-box">
+                        {{ app.user.username }}
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="actions">
+                        <input id="username-edit-init" type="button" value="Edit">
+                    </div>
+                    <div id="username-edit-display" class="input-box" style="display: none">
                         <form id="username-edit-form" action="{{ path('changeUsername') }}" method="post">
                             <input type="text" id="edit-username" name="edit-username" value="{{ app.user.username }}">
-                            <br>
-                                <input id="username-edit-confirm" type="button" value="Confirm">
-                                <input id="username-edit-cancel" type="button" value="Cancel">
+                            <input id="username-edit-confirm" type="button" value="Confirm">
+                            <input id="username-edit-cancel" type="button" value="Cancel">
                         </form>
-                    </dd>
+                    </div>
                 </div>
             </div>
 
-        <div class="spec-box">
-            <div class="label-box">email: </div>
-            <div id="email-info-display" style="display: inline">
-                <dd class="input-box">
-                    {{ app.user.email }}
-                    <input id="email-edit-init" type="button" value="Edit">
-                    {% if password_error is defined and password_error %}
-                        <label>Password error, reset failed!</label>
-                    {% endif %}
-                </dd>
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="label-box">Email:</div>
+                    <div id="email-info-display" class="input-box">
+                        {{ app.user.email }}
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="actions">
+                        <input id="email-edit-init" type="button" value="Edit">
+                    </div>
+                    <div id="email-edit-display" class="input-box" style="display: none">
+                        <form id="email-edit-form" action="{{ path('changeEmail') }}" method="post">
+                            <label for="edit-email">Enter your new email address:</label>
+                            <input type="text" id="edit-email" name="edit-email" value="{{ app.user.email }}" required>
+                            <label for="edit-email-password">Verify your password:</label>
+                            <input type="password" id="edit-email-password" name="edit-email-password" required>
+                            <input id="email-edit-confirm" type="submit" value="Confirm">
+                            <input id="email-edit-cancel" type="button" value="Cancel">
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div id="email-edit-display" style="display: none">
-                <dd class="input-box">
-                    <form id="email-edit-form" action="{{ path('changeEmail') }}" method="post">
-                        <label for="edit-email">Enter your new email address:</label>
-                        <input type="text" id="edit-email" name="edit-email" value="{{ app.user.email }}" required>
-                        <br>
-                        <label for="edit-email-password">Verify your password:</label>
-                        <input type="password" id="edit-email-password" name="edit-email-password" required>
-                        <br>
-                        <input id="email-edit-confirm" type="submit" value="Confirm">
-                        <input id="email-edit-cancel" type="button" value="Cancel">
-                    </form>
-                </dd>
+
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="label-box">Password:</div>
+                    <div id="password-info-display" class="input-box">
+                        ******
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="actions">
+                        <input id="password-edit-init" type="button" value="Edit">
+                    </div>
+                    <div id="password-edit-display" class="input-box" style="display: none">
+                        <form id="password-edit-form" action="{{ path('changePassword') }}" method="post">
+                            <label for="edit-password1">Enter your new password:</label>
+                            <input type="password" id="edit-password1" name="edit-password1" required>
+                            <label for="edit-password2">Re-enter your new password:</label>
+                            <input type="password" id="edit-password2" name="edit-password2" required>
+                            <label id="password-mismatch" style="display: none">New password doesn't match!<br></label>
+                            <label for="edit-password-old">Verify your old password:</label>
+                            <input type="password" id="edit-password-old" name="edit-password-old" required>
+                            <input id="password-edit-confirm" type="submit" value="Confirm">
+                            <input id="password-edit-cancel" type="button" value="Cancel">
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="spec-box">
-            <div class="label-box">Password: </div>
-            <div id="password-info-display" style="display: inline">
-                <dd class="input-box">
-                    ******
-                    <input id="password-edit-init" type="button" value="Edit">
-                    {% if old_password_error is defined and old_password_error %}
-                        <label>Old password incorrect! Reset password failed.</label>
-                        <br>
-                    {% endif %}
-                </dd>
-            </div>
-            <div id="password-edit-display" style="display: none">
-                <dd class="input-box">
-                    <form id="password-edit-form" action="{{ path('changePassword') }}" method="post">
-                        <label for="edit-password1">Enter your new password:</label>
-                        <input type="password" id="edit-password1" name="edit-password1" required>
-                        <br>
-                        <label for="edit-password2">Re-enter your new password:</label>
-                        <input type="password" id="edit-password2" name="edit-password2" required>
-                        <br>
-                        <label id="password-mismatch" style="display: none">New password doesn't match!<br></label>
-                        <label for="edit-password-old">Verify your old password:</label>
-                        <input type="password" id="edit-password-old" name="edit-password-old" required>
-                        <br>
-                        <input id="password-edit-confirm" type="submit" value="Confirm">
-                        <input id="password-edit-cancel" type="button" value="Cancel">
-                    </form>
-                </dd>
-            </div>
-        </div>
 
 
-
-
-
-
-        {% block javascripts %}
-            {#      changing academic info      #}
+            {% block javascripts %}
             <script>
                 document.getElementById('specialisation').addEventListener('change', function() {
                     document.getElementById('academic-info-form').submit();
@@ -155,73 +113,57 @@
                 document.getElementById('phase').addEventListener('change', function() {
                     document.getElementById('academic-info-form').submit();
                 });
-            </script>
-            {#    username info dynamic display    #}
-            <script>
-                usernameDisplay = document.getElementById('username-info-display');
-                usernameEdit = document.getElementById('username-edit-display');
+
                 document.getElementById('username-edit-init').addEventListener('click', function() {
-                    usernameDisplay.style.display = 'none';
-                    usernameEdit.style.display = 'inline';
+                    this.style.display = 'none';
+                    document.getElementById('username-info-display').style.display = 'none';
+                    document.getElementById('username-edit-display').style.display = 'block';
                 });
                 document.getElementById('username-edit-cancel').addEventListener('click', function() {
-                    usernameDisplay.style.display = 'inline';
-                    usernameEdit.style.display = 'none';
+                    document.getElementById('username-edit-init').style.display = 'block';
+                    document.getElementById('username-info-display').style.display = 'block';
+                    document.getElementById('username-edit-display').style.display = 'none';
                 });
                 document.getElementById('username-edit-confirm').addEventListener('click', function() {
-                    usernameDisplay.style.display = 'inline';
-                    usernameEdit.style.display = 'none';
                     document.getElementById('username-edit-form').submit();
                 });
-            </script>
-            {#      email edit      #}
-            <script>
+
                 document.getElementById('email-edit-init').addEventListener('click', function() {
+                    this.style.display = 'none';
                     document.getElementById('email-info-display').style.display = 'none';
-                    document.getElementById('email-edit-display').style.display = 'inline';
+                    document.getElementById('email-edit-display').style.display = 'block';
                 });
                 document.getElementById('email-edit-cancel').addEventListener('click', function() {
-                    document.getElementById('email-info-display').style.display = 'inline';
+                    document.getElementById('email-edit-init').style.display = 'block';
+                    document.getElementById('email-info-display').style.display = 'block';
                     document.getElementById('email-edit-display').style.display = 'none';
                 });
-                document.getElementById('email-edit-confirm').addEventListener('click', function() {
-                    document.getElementById('email-info-display').style.display = 'inline';
-                    document.getElementById('email-edit-display').style.display = 'none';
-                    document.getElementById('email-edit-form').submit();
-                });
-            </script>
-            {#      password edit      #}
-            <script>
+
                 document.getElementById('password-edit-init').addEventListener('click', function() {
+                    this.style.display = 'none';
                     document.getElementById('password-info-display').style.display = 'none';
-                    document.getElementById('password-edit-display').style.display = 'inline';
+                    document.getElementById('password-edit-display').style.display = 'block';
                 });
                 document.getElementById('password-edit-cancel').addEventListener('click', function() {
-                    document.getElementById('password-info-display').style.display = 'inline';
+                    document.getElementById('password-edit-init').style.display = 'block';
+                    document.getElementById('password-info-display').style.display = 'block';
                     document.getElementById('password-edit-display').style.display = 'none';
                 });
                 document.getElementById('password-edit-confirm').addEventListener('click', function(event) {
                     var password1 = document.getElementById('edit-password1').value;
                     var password2 = document.getElementById('edit-password2').value;
-                    // Check if passwords match
                     if (password1 !== password2) {
-                        document.getElementById('password-mismatch').style.display = 'inline';
+                        document.getElementById('password-mismatch').style.display = 'block';
                         event.preventDefault();
                     } else {
                         document.getElementById('password-mismatch').style.display = 'none';
-                        document.getElementById('password-info-display').style.display = 'inline';
-                        document.getElementById('password-edit-display').style.display = 'none';
                         document.getElementById('password-edit-form').submit();
                     }
                 });
             </script>
         {% endblock %}
 
-
-    </div>
-
     {% else %}
         <p>You are not authenticated.</p>
     {% endif %}
-
 {% endblock %}

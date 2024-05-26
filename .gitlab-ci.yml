@@ -21,3 +21,16 @@ deploy-job:
     - php bin/console cache:clear --env=prod --no-debug
     - php bin/console cache:warmup --env=prod --no-debug
     - rsync -avz --exclude=".git/" --exclude=".env" ./ a23www301@shell.studev.groept.be:/var/www/html
+
+stages:
+  - test
+
+accessibility:
+  stage: test
+  image: node:latest
+  script:
+    - npm install pa11y-ci -g
+    - pa11y-ci --config pa11yci.json
+  artifacts:
+    paths:
+      - pa11yci-report

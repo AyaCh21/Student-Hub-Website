@@ -93,13 +93,13 @@ input[type="range"]::-moz-range-progress {
 }
 .prof_rate_submit, .btn-primary {
     background: var(--extra-color);
-    padding: 7px;
-    margin: 10px;
+    padding: 10px 20px;
+    margin: 10px 0;
     border-radius: 20px;
     border: 1px solid var(--extra-color);
     color: var(--dark-color);
     transition: all 0.5s;
-    width: 10%;
+    width: fit-content;
 
     &:hover {
         box-shadow: inset -8em 0 0 var(--light-color), inset 8em 0 0 var(--light-color);

@@ -135,6 +135,35 @@ footer a {
     margin-bottom: 1px;
 }
 
+.btn-primary {
+    background: transparent;
+    color: var(--light-color);
+    margin: 0 20px;
+    border-radius: 40px;
+    border: 1px solid var(--extra-color);
+    width: fit-content;
+    padding: 20px 80px;
+    font-size: 22px;
+    overflow: hidden;
+    transition: all 0.5s;
+
+    &:before, &:after {
+        width: 0;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
+
+    &:hover {
+        /* background-color: var(--extra-color); */
+        color: var(--dark-color);
+        cursor: pointer;
+        box-shadow: inset -10rem 0 0 var(--extra-color), inset 10rem 0 0 var(--extra-color);
+    }
+}
+
 @media only screen and (max-width: 932px) {
     .navbar {
         color: var(--light-color);

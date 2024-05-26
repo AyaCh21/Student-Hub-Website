@@ -88,6 +88,56 @@ class  RatingController extends AbstractController
         ]);
     }
 
+    public function rateThisExam(int $courseId, Request $request): Response
+    {
+        $course = $this->entityManager->getRepository(Course::class)->find($courseId);
+
+        if (!$course) {
+            throw $this->createNotFoundException('Course not found');
+        }
+
+        $user = $this->security->getUser();
+        if ($user === null) {
+            $this->stylesheets[] = 'login.css';
+            return $this->render('login.html.twig', [
+                'stylesheets' => $this->stylesheets
+            ]);
+        }
+
+        // Check if the student has already rated this course
+        $existingRating = $this->entityManager->getRepository(ExamRate::class)
+            ->findOneBy(['course' => $course, 'student' => $user]);
+
+        if ($existingRating) {
+            $this->addFlash('warning', 'You have already rated this course.');
+            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->get('type')]);
+        }
+
+        $rating = new ExamRate();
+        $form = $this->createForm(RatingType::class, $rating);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rating->setRateValue($form->get('rate_value')->getData());
+            $rating->setCourse($course);
+            $rating->setStudent($user);
+
+            $this->entityManager->persist($rating);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'Thank you for rating the course!');
+            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->get('type')]);
+        }
+
+        $this->stylesheets[] = 'rate_form.css';
+
+        return $this->render('rate_this_exam.html.twig', [
+            'form' => $form->createView(),
+            'course' => $course,
+            'stylesheets' => $this->stylesheets
+        ]);
+    }
     /**
      * @Route("/display_rate_course", name="display_course_rate")
      */

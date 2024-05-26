@@ -21,7 +21,7 @@
                     {% else %}
                         <p class="card-text">No ratings available.</p>
                     {% endif %}
-                    <a href="{{ path('display_course_rate') }}" class="btn btn-primary">View All Course Ratings</a>
+                    <a href="{{ path('rate_this_exam', {'courseId': course.id}) }}" class="btn btn-primary">Rate this Course</a>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     {% else %}
                         <p class="card-text">No ratings available.</p>
                     {% endif %}
-                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">View All Professor Ratings</a>
+                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">Rate this Professor</a>
                 </div>
             </div>
         </div>

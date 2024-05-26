@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rate {{ course.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/rate_form.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Rate {{ course.name }}</h1>
+
+        {{ form_start(form) }}
+        {{ form_row(form.rate_value) }}
+        <button class="btn btn-primary">Submit Rating</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

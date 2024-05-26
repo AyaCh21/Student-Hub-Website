@@ -155,6 +155,7 @@ class LectureController extends AbstractController
             'studyMaterials' => $studyMaterials,
             'type' => ucfirst($type),  // Capitalize the first letter of the type for display
             'courseName' => $courseName,  // Pass the course name to the template
+            'course' => $course,
             'comments' => $comments,
             'commentForm' => $commentForm->createView(),
             'replyForm' => $replyForm->createView(),

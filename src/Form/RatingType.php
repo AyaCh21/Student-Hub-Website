@@ -8,7 +8,7 @@
 namespace App\Form;
 
 use App\Entity\Course;
-use App\Entity\examRate;
+use App\Entity\ExamRate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,7 +24,7 @@ class RatingType extends AbstractType
         $this->entityManager = $entityManager;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /*public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // Fetch the courses from the database
         $courses = $this->entityManager->getRepository(Course::class)->findAll();
@@ -58,12 +58,23 @@ class RatingType extends AbstractType
                 'expanded' => true,
                 'required' => true,
             ]);
+    }*/
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('rateValue', ChoiceType::class, [
+                'choices' => array_combine(range(0, 10), range(0, 10)), // Values from 0 to 10
+                'label' => 'Rate the course (from 0 to 10):',
+                'expanded' => true,
+                'required' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => examRate::class,
+            'data_class' => ExamRate::class,
         ]);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\Professor;
 use App\Entity\ProfessorRate;
-use App\Entity\examRate;
+use App\Entity\ExamRate;
 use App\Entity\Student;
 use App\Form\ProfessorRateForm;
 use App\Form\RatingType;
@@ -88,56 +88,57 @@ class  RatingController extends AbstractController
         ]);
     }
 
-    public function rateThisExam(int $courseId, Request $request): Response
+    #[Route("/rate_this_exam", name: "rate_this_exam")]
+    public function rateThisExam(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
-        $course = $this->entityManager->getRepository(Course::class)->find($courseId);
+        $courseId = $request->query->get('courseId');
+
+        if (!$courseId) {
+            throw $this->createNotFoundException('Course ID is missing');
+        }
+
+        $course = $entityManager->getRepository(Course::class)->find($courseId);
 
         if (!$course) {
             throw $this->createNotFoundException('Course not found');
         }
 
-        $user = $this->security->getUser();
-        if ($user === null) {
-            $this->stylesheets[] = 'login.css';
-            return $this->render('login.html.twig', [
-                'stylesheets' => $this->stylesheets
-            ]);
+        $user = $security->getUser();
+        if (!$user) {
+            $this->addFlash('warning', 'You need to log in to rate the course.');
+            return $this->redirectToRoute('login');
         }
 
-        // Check if the student has already rated this course
-        $existingRating = $this->entityManager->getRepository(ExamRate::class)
+        $existingRating = $entityManager->getRepository(ExamRate::class)
             ->findOneBy(['course' => $course, 'student' => $user]);
 
         if ($existingRating) {
-            $this->addFlash('warning', 'You have already rated this course.');
-            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->get('type')]);
+            $this->addFlash('warning', 'You have already rated this exam.');
+            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->query->get('type')]);
         }
 
         $rating = new ExamRate();
+        $rating->setCourse($course);
+        $rating->setStudent($user);
+
         $form = $this->createForm(RatingType::class, $rating);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $rating->setRateValue($form->get('rate_value')->getData());
-            $rating->setCourse($course);
-            $rating->setStudent($user);
+            $entityManager->persist($rating);
+            $entityManager->flush();
 
-            $this->entityManager->persist($rating);
-            $this->entityManager->flush();
-
-            $this->addFlash('success', 'Thank you for rating the course!');
-            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->get('type')]);
+            $this->addFlash('success', 'Thank you for rating this exam!');
+            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->query->get('type')]);
         }
-
-        $this->stylesheets[] = 'rate_form.css';
 
         return $this->render('rate_this_exam.html.twig', [
             'form' => $form->createView(),
             'course' => $course,
-            'stylesheets' => $this->stylesheets
         ]);
     }
+
     /**
      * @Route("/display_rate_course", name="display_course_rate")
      */

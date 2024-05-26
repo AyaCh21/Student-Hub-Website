@@ -7,6 +7,7 @@ use App\Entity\StudyMaterial;
 use App\Entity\Comment;
 use App\Entity\Professor;
 use App\Entity\rating_exam;
+use App\Entity\ExamRate;
 use App\Form\CommentForm;
 use App\Form\ReplyForm;
 use App\Form\RatingType;
@@ -35,8 +36,6 @@ class LectureController extends AbstractController
         $professorName = $professor ? $professor->getName() : 'Unknown Professor';
         // Fetch average professor rating
         $averageProfessorRating = $professor ? $professorRateRepository->getAverageRatingForProfessor($professor->getId()) : null;
-
-
 
         $studyMaterials = $entityManager->getRepository(StudyMaterial::class)->findBy([
             'course' => $id,
@@ -141,9 +140,6 @@ class LectureController extends AbstractController
                 'type' => $type
             ]);
         }
-
-
-
         // Fetch average course rating (this is actual an exam rating)
         $averageCourseRating = $ratingExamRepository->getAverageRatingForCourse($id);
 

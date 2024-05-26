@@ -1,3 +1,5 @@
+{# templates/rate_this_exam.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Rate {{ course.name }}{% endblock %}
@@ -9,11 +11,20 @@
 
 {% block content %}
     <div class="container">
-        <h1>Rate {{ course.name }}</h1>
+        <div class="rating-wrapper">
+            <h1>Rate {{ course.name }}</h1>
 
-        {{ form_start(form) }}
-        {{ form_row(form.rate_value) }}
-        <button class="btn btn-primary">Submit Rating</button>
-        {{ form_end(form) }}
+            {{ form_start(form) }}
+            <div class="form-group">
+                <label>{{ form_label(form.rateValue) }}</label>
+                <div class="rating-choices">
+                    {{ form_widget(form.rateValue) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Submit Rating</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

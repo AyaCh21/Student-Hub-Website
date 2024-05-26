@@ -7431,13 +7431,6 @@
                 }
             ],
             "time": "2024-02-02T06:08:48+00:00"
-            "funding": [
-                {
-                    "url": "https://github.com/sebastianbergmann",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-02-03T06:07:39+00:00"
         },
         {
             "name": "sebastian/resource-operations",

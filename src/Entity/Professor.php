@@ -19,10 +19,10 @@ class Professor
     #[ORM\Column(length: 70)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'professor', targetEntity: Course::class)]
+    #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'professor')]
     private Collection $courses;
 
-    #[ORM\OneToMany(mappedBy: 'professor', targetEntity: ProfessorRate::class)]
+    #[ORM\OneToMany(targetEntity: ProfessorRate::class, mappedBy: 'professor')]
     private Collection $rates;
 
     public function __construct()

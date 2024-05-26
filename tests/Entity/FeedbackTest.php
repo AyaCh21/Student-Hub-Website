@@ -45,9 +45,10 @@ class FeedbackTest extends TestCase
         $feedback = new Feedback();
         $student = new Student();
         $student->setId(123);
+        $student->setUsername('testuser');
         $feedback->setStudent($student);
         $this->assertEquals(123, $feedback->getStudentId());
-    }
+        }
 
     public function testGetAndSetStudentUsername()
     {

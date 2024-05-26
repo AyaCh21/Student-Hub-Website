@@ -6,6 +6,8 @@ use App\Entity\professorRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+
+
 class ProfessorRateRepository extends ServiceEntityRepository
 {
     private ManagerRegistry $registry;
@@ -83,7 +85,7 @@ class ProfessorRateRepository extends ServiceEntityRepository
     public function getAverageRatingForProfessor(int $professorId): array
     {
         $qb = $this->createQueryBuilder('pr');
-        $qb->select('AVG(pr.rate_value) AS average, COUNT(pr.id) AS count')
+        $qb->select('AVG(pr.rateValue) AS average, COUNT(pr.id) AS count')
             ->where('pr.professor = :professorId')
             ->setParameter('professorId', $professorId);
 

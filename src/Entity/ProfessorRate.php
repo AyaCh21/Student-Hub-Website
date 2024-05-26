@@ -22,7 +22,7 @@ class ProfessorRate
     #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id', nullable: false)]
     private ?Student $student = null;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(name: 'rate_value', type: 'integer', nullable: false)]
     private ?int $rateValue = null;
 
     public function getId(): ?int

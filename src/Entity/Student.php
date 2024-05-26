@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use PDO;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -26,6 +27,10 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $phase = null;
     #[ORM\Column(length: 20)]
     private ?string $specialisation=null;
+
+    #[ORM\OneToMany(targetEntity: StudyMaterial::class, mappedBy: 'uploaded_by')]
+    private Collection $studyMaterials;
+
     private array $roles = [];
 
 
@@ -148,6 +153,33 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StudyMaterial>
+     */
+    public function getStudyMaterials(): Collection
+    {
+        return $this->studyMaterials;
+    }
+
+    public function addStudyMaterial(StudyMaterial $studyMaterial): static
+    {
+        if (!$this->studyMaterials->contains($studyMaterial)) {
+            $this->studyMaterials->add($studyMaterial);
+            $studyMaterial->setUploadedBy($this);
+        }
+        return $this;
+    }
+
+    public function removeStudyMaterial(StudyMaterial $studyMaterial): static
+    {
+        if ($this->studyMaterials->removeElement($studyMaterial)) {
+            if ($studyMaterial->getUploadedBy() === $this) {
+                $studyMaterial->setUploadedBy(null);
+            }
+        }
         return $this;
     }
 }

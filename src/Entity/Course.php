@@ -81,7 +81,7 @@ class Course
     /**
      * @return Collection<int, StudyMaterial>
      */
-    public function getStudyMaterials()
+    public function getStudyMaterials(): Collection
     {
         return $this->studyMaterials;
     }

@@ -54,7 +54,7 @@
                 <div id="email-info-display" class="input-box">
                     {{ app.user.email }}
                 </div>
-                <div class="actions">
+
                     <input id="email-edit-init" type="button" value="Edit">
                 </div>
                 <div id="email-edit-display" class="input-box" style="display: none">
@@ -73,10 +73,9 @@
                 <div class="label-box">Password:</div>
                 <div id="password-info-display" class="input-box">
                     ******
+                        <input id="password-edit-init" type="button" value="Edit">
                 </div>
-                <div class="actions">
-                    <input id="password-edit-init" type="button" value="Edit">
-                </div>
+
                 <div id="password-edit-display" class="input-box" style="display: none">
                     <form id="password-edit-form" action="{{ path('changePassword') }}" method="post">
                         <label for="edit-password1">Enter your new password:</label>

@@ -11,7 +11,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     Doctrine\Common\Cache\Cache:
-        alias: doctrine_cache.array
         public: true
 
     # Define the array cache service

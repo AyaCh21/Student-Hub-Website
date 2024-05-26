@@ -100,26 +100,7 @@ input[type=button]:hover, input[type=submit]:hover {
     max-width: 200px;
 }
 
-.info-row {
-    display: flex;
-    align-items: center;
-    width: 35%;
-    margin-bottom: 1rem;
-    gap: 10px;
-}
 
-.info-row .label-box,
-.info-row .input-box {
-    flex: 1;
-    margin-right: 10px;
-}
-
-.info-row .actions {
-    flex-shrink: 0;
-    display: flex;
-    gap: 5px;
-    margin-left: 10px;
-}
 
 .input-box form {
     display: flex;
@@ -223,4 +204,26 @@ input[type=button]:hover, input[type=submit]:hover {
 #password-edit-cancel:hover {
     background-color: #45a049;
 }
+.info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+    margin-bottom: 1rem;
+    gap: 10px;
+}
 
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label-box {
+    flex-shrink: 0;
+    width: 100px;
+}
+
+.input-box {
+    flex: 1;
+}

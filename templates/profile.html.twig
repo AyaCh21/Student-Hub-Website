@@ -33,66 +33,79 @@
             </form>
 
             <div class="info-row">
-                <div class="label-box">Username:</div>
-                <div id="username-info-display" class="input-box">
-                    {{ app.user.username }}
+                <div class="info-item">
+                    <div class="label-box">Username:</div>
+                    <div id="username-info-display" class="input-box">
+                        {{ app.user.username }}
+                    </div>
                 </div>
-                <div class="actions">
-                    <input id="username-edit-init" type="button" value="Edit">
-                </div>
-                <div id="username-edit-display" class="input-box" style="display: none">
-                    <form id="username-edit-form" action="{{ path('changeUsername') }}" method="post">
-                        <input type="text" id="edit-username" name="edit-username" value="{{ app.user.username }}">
-                        <input id="username-edit-confirm" type="button" value="Confirm">
-                        <input id="username-edit-cancel" type="button" value="Cancel">
-                    </form>
-                </div>
-            </div>
-
-            <div class="info-row">
-                <div class="label-box">Email:</div>
-                <div id="email-info-display" class="input-box">
-                    {{ app.user.email }}
-                </div>
-
-                    <input id="email-edit-init" type="button" value="Edit">
-                </div>
-                <div id="email-edit-display" class="input-box" style="display: none">
-                    <form id="email-edit-form" action="{{ path('changeEmail') }}" method="post">
-                        <label for="edit-email">Enter your new email address:</label>
-                        <input type="text" id="edit-email" name="edit-email" value="{{ app.user.email }}" required>
-                        <label for="edit-email-password">Verify your password:</label>
-                        <input type="password" id="edit-email-password" name="edit-email-password" required>
-                        <input id="email-edit-confirm" type="submit" value="Confirm">
-                        <input id="email-edit-cancel" type="button" value="Cancel">
-                    </form>
+                <div class="info-item">
+                    <div class="actions">
+                        <input id="username-edit-init" type="button" value="Edit">
+                    </div>
+                    <div id="username-edit-display" class="input-box" style="display: none">
+                        <form id="username-edit-form" action="{{ path('changeUsername') }}" method="post">
+                            <input type="text" id="edit-username" name="edit-username" value="{{ app.user.username }}">
+                            <input id="username-edit-confirm" type="button" value="Confirm">
+                            <input id="username-edit-cancel" type="button" value="Cancel">
+                        </form>
+                    </div>
                 </div>
             </div>
 
             <div class="info-row">
-                <div class="label-box">Password:</div>
-                <div id="password-info-display" class="input-box">
-                    ******
+                <div class="info-item">
+                    <div class="label-box">Email:</div>
+                    <div id="email-info-display" class="input-box">
+                        {{ app.user.email }}
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="actions">
+                        <input id="email-edit-init" type="button" value="Edit">
+                    </div>
+                    <div id="email-edit-display" class="input-box" style="display: none">
+                        <form id="email-edit-form" action="{{ path('changeEmail') }}" method="post">
+                            <label for="edit-email">Enter your new email address:</label>
+                            <input type="text" id="edit-email" name="edit-email" value="{{ app.user.email }}" required>
+                            <label for="edit-email-password">Verify your password:</label>
+                            <input type="password" id="edit-email-password" name="edit-email-password" required>
+                            <input id="email-edit-confirm" type="submit" value="Confirm">
+                            <input id="email-edit-cancel" type="button" value="Cancel">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="label-box">Password:</div>
+                    <div id="password-info-display" class="input-box">
+                        ******
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="actions">
                         <input id="password-edit-init" type="button" value="Edit">
-                </div>
-
-                <div id="password-edit-display" class="input-box" style="display: none">
-                    <form id="password-edit-form" action="{{ path('changePassword') }}" method="post">
-                        <label for="edit-password1">Enter your new password:</label>
-                        <input type="password" id="edit-password1" name="edit-password1" required>
-                        <label for="edit-password2">Re-enter your new password:</label>
-                        <input type="password" id="edit-password2" name="edit-password2" required>
-                        <label id="password-mismatch" style="display: none">New password doesn't match!<br></label>
-                        <label for="edit-password-old">Verify your old password:</label>
-                        <input type="password" id="edit-password-old" name="edit-password-old" required>
-                        <input id="password-edit-confirm" type="submit" value="Confirm">
-                        <input id="password-edit-cancel" type="button" value="Cancel">
-                    </form>
+                    </div>
+                    <div id="password-edit-display" class="input-box" style="display: none">
+                        <form id="password-edit-form" action="{{ path('changePassword') }}" method="post">
+                            <label for="edit-password1">Enter your new password:</label>
+                            <input type="password" id="edit-password1" name="edit-password1" required>
+                            <label for="edit-password2">Re-enter your new password:</label>
+                            <input type="password" id="edit-password2" name="edit-password2" required>
+                            <label id="password-mismatch" style="display: none">New password doesn't match!<br></label>
+                            <label for="edit-password-old">Verify your old password:</label>
+                            <input type="password" id="edit-password-old" name="edit-password-old" required>
+                            <input id="password-edit-confirm" type="submit" value="Confirm">
+                            <input id="password-edit-cancel" type="button" value="Cancel">
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {% block javascripts %}
+
+            {% block javascripts %}
             <script>
                 document.getElementById('specialisation').addEventListener('change', function() {
                     document.getElementById('academic-info-form').submit();
@@ -102,10 +115,12 @@
                 });
 
                 document.getElementById('username-edit-init').addEventListener('click', function() {
+                    this.style.display = 'none';
                     document.getElementById('username-info-display').style.display = 'none';
                     document.getElementById('username-edit-display').style.display = 'block';
                 });
                 document.getElementById('username-edit-cancel').addEventListener('click', function() {
+                    document.getElementById('username-edit-init').style.display = 'block';
                     document.getElementById('username-info-display').style.display = 'block';
                     document.getElementById('username-edit-display').style.display = 'none';
                 });
@@ -114,19 +129,23 @@
                 });
 
                 document.getElementById('email-edit-init').addEventListener('click', function() {
+                    this.style.display = 'none';
                     document.getElementById('email-info-display').style.display = 'none';
                     document.getElementById('email-edit-display').style.display = 'block';
                 });
                 document.getElementById('email-edit-cancel').addEventListener('click', function() {
+                    document.getElementById('email-edit-init').style.display = 'block';
                     document.getElementById('email-info-display').style.display = 'block';
                     document.getElementById('email-edit-display').style.display = 'none';
                 });
 
                 document.getElementById('password-edit-init').addEventListener('click', function() {
+                    this.style.display = 'none';
                     document.getElementById('password-info-display').style.display = 'none';
                     document.getElementById('password-edit-display').style.display = 'block';
                 });
                 document.getElementById('password-edit-cancel').addEventListener('click', function() {
+                    document.getElementById('password-edit-init').style.display = 'block';
                     document.getElementById('password-info-display').style.display = 'block';
                     document.getElementById('password-edit-display').style.display = 'none';
                 });

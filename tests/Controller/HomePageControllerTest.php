@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Tests\Controller;
+use App\Repository\StudentRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Entity\Student;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
@@ -28,16 +29,26 @@ class HomePageControllerTest extends WebTestCase
         }
     }
 
+    //in this test, examine whether the redirecting is successful while a unauthorized user is trying to access profile page
     public function testProfileRedirectToLogin()
     {
         try {
             $client = static::createClient();
+
+            $client->request('GET', '/logout');
+
+            $client->request('GET', '/home');
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+
             $crawler = $client->request('GET', '/profile');
             $this->assertSame(302, $client->getResponse()->getStatusCode());
             $this->assertSame('/login', $client->getResponse()->headers->get('Location'));
+            $crawler = $client->followRedirect();
+            $this->assertSelectorTextContains('h1', 'Login');
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
-            $this->fail('Exception caught during test: ' . $e->getMessage());
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }
     }
 
@@ -45,16 +56,23 @@ class HomePageControllerTest extends WebTestCase
     {
         try {
             $client = static::createClient();
-            $crawler = $client->request('GET', '/profile');
-            // Replace this with actual logic to retrieve or create a user
-            $user = new Student();
 
-            $client->loginUser($user);
-            $this->assertSame(302, $client->getResponse()->getStatusCode());
-            $this->assertSame('/profile', $client->getResponse()->headers->get('Location'));
+            $userRepository = static::getContainer()->get(StudentRepository::class);
+
+            // retrieve the test user
+            $testUser = $userRepository->findOneBy(['username'=>'dumb']);
+
+            // simulate $testUser being logged in
+            $client->loginUser($testUser);
+
+            $crawler = $client->request('GET', '/profile');
+            $this->assertResponseIsSuccessful();
+
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+            $this->assertSelectorTextContains('h3', 'Your Profile');
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
-            $this->fail('Exception caught during test: ' . $e->getMessage());
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }
     }
 

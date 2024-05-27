@@ -18,7 +18,7 @@ class UserControllerTest extends WebTestCase
     }
 
     //in this test, examine whether the redirecting is successful while a unauthorized user is trying to access profile page
-    public function testProfileRedirectToLogin()
+    public function testUnauthenticatedProfileRedirect()
     {
         try {
             $client = static::createClient();
@@ -40,22 +40,18 @@ class UserControllerTest extends WebTestCase
         }
     }
 
-    public function testProfileRedirectToProfile()
+    public function testAuthenticatedProfileRedirect()
     {
         try {
             $client = static::createClient();
 
+            //login user
             $userRepository = static::getContainer()->get(StudentRepository::class);
-
-            // retrieve the test user
             $testUser = $userRepository->findOneBy(['username'=>'dumb']);
-
-            // simulate $testUser being logged in
             $client->loginUser($testUser);
 
             $crawler = $client->request('GET', '/profile');
             $this->assertResponseIsSuccessful();
-
             $this->assertSame(200, $client->getResponse()->getStatusCode());
             $this->assertSelectorTextContains('h3', 'Your Profile');
         } catch (\Exception $e) {

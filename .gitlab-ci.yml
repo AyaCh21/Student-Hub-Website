@@ -22,7 +22,7 @@ test-job:
   when: manual
   image: php:8
   script:
-    - composer install
+    - composer install --prefer-dist --no-interaction --optimize-autoloader
     - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage.cobertura.xml
     - ls -a
     - cat coverage.cobertura.xml

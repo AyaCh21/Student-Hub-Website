@@ -3,8 +3,6 @@ image : composer:2.2
 
 #prepare container with some extra configuration
 before_script:
-  - apk add --no-cache php8 php8-mysqli php8-pdo php8-pdo_mysql php8-pdo_pgsql php8-session php8-openssl
-  - apk add --no-cache php8-mbstring php8-xml php8-ctype php8-json php8-phar php8-tokenizer php8-zip
   - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
   - mkdir -p ~/.ssh
   - eval `ssh-agent -s`

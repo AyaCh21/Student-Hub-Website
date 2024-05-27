@@ -10,6 +10,7 @@ before_script:
   - chmod 700 ~/.ssh
   - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
   - apk add rsync
+  - compose require phpunit/phpunit-coveralls
 
 deploy-job:
   only:
@@ -18,9 +19,15 @@ deploy-job:
   when: manual
   script:
     - composer install --prefer-dist --no-interaction --optimize-autoloader
+    - vendor/bin/phpunit --coverage-clover=coverage.xml tests/
     - php bin/console cache:clear --env=prod --no-debug
     - php bin/console cache:warmup --env=prod --no-debug
     - rsync -avz --exclude=".git/" 
                  --exclude=".env" 
-                 --exclude="tests/"
                  ./ a23www301@shell.studev.groept.be:/var/www/html
+  artifacts:
+    untracked: false
+    when: on_success
+    access: all
+    paths:
+      - coverage.xml

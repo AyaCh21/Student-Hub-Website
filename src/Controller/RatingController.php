@@ -92,6 +92,7 @@ class  RatingController extends AbstractController
     public function rateThisExam(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $courseId = $request->query->get('courseId');
+        $type = $request->query->get('type');
 
         if (!$courseId) {
             throw $this->createNotFoundException('Course ID is missing');
@@ -112,10 +113,10 @@ class  RatingController extends AbstractController
         $existingRating = $entityManager->getRepository(ExamRate::class)
             ->findOneBy(['course' => $course, 'student' => $user]);
 
-        if ($existingRating) {
+        /*if ($existingRating) {
             $this->addFlash('warning', 'You have already rated this exam.');
             return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->query->get('type')]);
-        }
+        }*/
 
         $rating = new ExamRate();
         $rating->setCourse($course);
@@ -130,12 +131,13 @@ class  RatingController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Thank you for rating this exam!');
-            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $request->query->get('type')]);
+            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $type]);
         }
 
         return $this->render('rate_this_exam.html.twig', [
             'form' => $form->createView(),
             'course' => $course,
+            'type' => $type
         ]);
     }
 

@@ -21,7 +21,8 @@
                     {% else %}
                         <p class="card-text">No ratings available.</p>
                     {% endif %}
-                    <a href="{{ path('rate_this_exam', {'courseId': course.id}) }}" class="btn btn-primary">Rate this Exam</a>
+                    <a href="{{ path('rate_this_exam', {'courseId': course.id, 'type': type}) }}" class="btn btn-primary">Rate this Exam</a>
+
                 </div>
             </div>
         </div>

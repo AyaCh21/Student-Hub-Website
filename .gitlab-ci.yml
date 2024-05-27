@@ -32,7 +32,7 @@ test-job:
     # install composer
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-    - composer install
+    - composer install --prefer-dist --no-interaction
     - composer require --dev phpunit/phpunit phpunit/php-code-coverage
   script: 
     - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage.cobertura.xml

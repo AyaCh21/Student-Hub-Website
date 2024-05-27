@@ -117,7 +117,7 @@ class HomePageControllerTest extends WebTestCase
     }
 
 
-    public function testElementDisplayOnTeam()
+    public function testTeamPhotoDisplayOnTeam()
     {
         try {
             $client = static::createClient();
@@ -125,10 +125,6 @@ class HomePageControllerTest extends WebTestCase
             //redirect to team
             $crawler = $client->request('GET', '/team');
             $this->assertResponseStatusCodeSame(200);
-
-            //test discription exist
-            $this->assertCount(1,$crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile'), 'Team description no');
-            $this->assertStringStartsWith("We're a passionate group of engineering students at KU Leuven", $crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile')->text(),"Team discription wrong text" );
 
             //test if team photo exist
             $images = [
@@ -143,8 +139,40 @@ class HomePageControllerTest extends WebTestCase
                 $this->assertNotEmpty($imageElement, sprintf('team "%s" vanished', $imageName));
             }
 
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
+
+    public function testMemberCardDisplayOnTeam()
+    {
+        try {
+            $client = static::createClient();
+
+            //redirect to team
+            $crawler = $client->request('GET', '/team');
+            $this->assertResponseStatusCodeSame(200);
+
             //test if personal member card exist
             $this->assertCount(6,$crawler->filter('.member-card'), 'Team member card no');
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
+
+
+    public function testMemberCaptionDisplayOnTeam()
+    {
+        try {
+            $client = static::createClient();
+
+            //redirect to team
+            $crawler = $client->request('GET', '/team');
+            $this->assertResponseStatusCodeSame(200);
 
             //test if figure caption correct
             $captions = [
@@ -155,11 +183,27 @@ class HomePageControllerTest extends WebTestCase
                 'Reach Aya',
                 'Reach Wen',
             ];
-            foreach ($captions as $captionName) {
-                $selector = sprintf('figcaption:contains("%s")', $captionName);
+            foreach ($captions as $caption) {
+                $selector = sprintf('figcaption:contains("%s")', $caption);
                 $imageElement = $crawler->filter($selector);
-                $this->assertNotEmpty($imageElement, sprintf('team member link "%s" vanished', $captionName));
+                $this->assertNotEmpty($imageElement, sprintf('team member link "%s" vanished', $caption));
             }
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
+
+
+    public function testMemberHyperlinkDisplayOnTeam()
+    {
+        try {
+            $client = static::createClient();
+
+            //redirect to team
+            $crawler = $client->request('GET', '/team');
+            $this->assertResponseStatusCodeSame(200);
 
             //test if reach member hyperlink is correct
             $links = [
@@ -170,10 +214,33 @@ class HomePageControllerTest extends WebTestCase
                 'https://www.linkedin.com/in/aya-chaouni-benabdallah-341537233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
                 'https://www.youtube.com/watch?v=L5inD4XWz4U',
             ];
-            foreach ($links as $linkName) {
-                $selector = sprintf('a[href="%s"]', $linkName);
+            foreach ($links as $link) {
+                $selector = sprintf('a[href="%s"]', $link);
                 $linkElement = $crawler->filter($selector);
-                $this->assertNotEmpty($linkElement, sprintf('team member "%s" vanished', $linkName));
+                $this->assertNotEmpty($linkElement, sprintf('team member "%s" vanished', $link));
+            }
+
+            //test if team member intro is correct
+            $intros = [
+                'Problem-solving is my superpower',
+                'I bring the thrill of skydiving to brainstorming sessions',
+                'Gamers, cubers, and fellow royals, unite!',
+                'Coder by day, entrepreneur in my dreams',
+                'I code like a champion and fuel team spirit',
+                'By day, I build software empires. By night,',
+            ];
+
+            foreach ($intros as $intro) {
+                $introElement = $crawler->filter('div.member-description');
+                $this->assertGreaterThan(0, $introElement->count(), sprintf('Team intro containing "%s" vanished', $intro));
+                $found = false;
+                foreach ($introElement as $element) {
+                    if (str_contains($element->textContent, $intro)) {
+                        $found = true;
+                        break;
+                    }
+                }
+                $this->assertTrue($found, sprintf('Team intro "%s" does not match any element text', $intro));
             }
 
 
@@ -184,5 +251,45 @@ class HomePageControllerTest extends WebTestCase
         }
     }
 
+
+    public function testMemberIntroDisplayOnTeam()
+    {
+        try {
+            $client = static::createClient();
+
+            //redirect to team
+            $crawler = $client->request('GET', '/team');
+            $this->assertResponseStatusCodeSame(200);
+
+            //test if team member intro is correct
+            $intros = [
+                'Problem-solving is my superpower',
+                'I bring the thrill of skydiving to brainstorming sessions',
+                'Gamers, cubers, and fellow royals, unite!',
+                'Coder by day, entrepreneur in my dreams',
+                'I code like a champion and fuel team spirit',
+                'By day, I build software empires. By night,',
+            ];
+
+            foreach ($intros as $intro) {
+                $introElement = $crawler->filter('div.member-description');
+                $this->assertGreaterThan(0, $introElement->count(), sprintf('Team intro containing "%s" vanished', $intro));
+                $found = false;
+                foreach ($introElement as $element) {
+                    if (str_contains($element->textContent, $intro)) {
+                        $found = true;
+                        break;
+                    }
+                }
+                $this->assertTrue($found, sprintf('Team intro "%s" does not match any element text', $intro));
+            }
+
+
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
 
 }

@@ -17,6 +17,8 @@ stages:
 
 test-job:
   stage: test
+  only:
+    - dev
   when: manual
   image: php:8
   script:

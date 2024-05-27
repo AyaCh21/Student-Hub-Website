@@ -10,24 +10,38 @@ before_script:
   - chmod 700 ~/.ssh
   - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
   - apk add rsync
-  - composer require phpunit/phpunit-coveralls
+
+stages:
+  - test
+  - deploy
+
+test-job:
+  stage: test
+  when: manual
+  image: php:8
+  script:
+    - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage.cobertura.xml
+  artifacts:
+    untracked: false
+    when: on_success
+    access: all
+    expire_in: 30 days
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.cobertura.xml
+
 
 deploy-job:
+  stage: deploy
   only:
     - dev
     - main
   when: manual
   script:
     - composer install --prefer-dist --no-interaction --optimize-autoloader
-    - vendor/bin/phpunit --coverage-clover=coverage.xml tests/
     - php bin/console cache:clear --env=prod --no-debug
     - php bin/console cache:warmup --env=prod --no-debug
     - rsync -avz --exclude=".git/" 
                  --exclude=".env" 
                  ./ a23www301@shell.studev.groept.be:/var/www/html
-  artifacts:
-    untracked: false
-    when: on_success
-    access: all
-    paths:
-      - coverage.xml

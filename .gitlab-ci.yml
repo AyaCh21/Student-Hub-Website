@@ -1,5 +1,5 @@
 #define the base docker image file
-image : composer:2.2
+image : composer:2.7
 
 #prepare container with some extra configuration
 before_script:

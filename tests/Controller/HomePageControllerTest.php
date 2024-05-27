@@ -78,6 +78,40 @@ class HomePageControllerTest extends WebTestCase
         }
     }
 
+    public function testDirectingToTeam()
+    {
+        try {
+            $client = static::createClient();
 
+            //redirect to home while logged in
+            $userRepository = static::getContainer()->get(StudentRepository::class);
+            $testUser = $userRepository->findOneBy(['username'=>'dumb']);
+            $client->loginUser($testUser);
+
+            $crawler = $client->request('GET', '/team');
+            $this->assertResponseStatusCodeSame(200);
+
+            //test discription exist
+            $this->assertCount(1,$crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile'), 'Team description no');
+            $this->assertStringStartsWith("We're a passionate group of engineering students at KU Leuven", $crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile')->text(),"Team discription wrong text" );
+
+            //test if team photo exist
+            $images = [
+                'team_img1.jpeg',
+                'team_img2.jpeg',
+                'team_img3.jpeg',
+                'team_img_4.jpeg',
+            ];
+            foreach ($images as $imageName) {
+                $selector = sprintf('img[src$="%s"]', $imageName);
+                $imageElement = $crawler->filter($selector);
+                $this->assertNotEmpty($imageElement, sprintf('team "%s" vanished', $imageName));
+            }
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
 
 }

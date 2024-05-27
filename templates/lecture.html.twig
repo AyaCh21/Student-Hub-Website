@@ -38,7 +38,7 @@
                     {% else %}
                         <p class="card-text">No ratings available.</p>
                     {% endif %}
-                    <a href="{{ path('display_professor_rate') }}" class="btn btn-primary">Rate this Professor</a>
+                    <a href="{{ path('rate_professor', {'professorId': professor.id, 'type': type, 'courseId': course.id}) }}" class="btn btn-primary">Rate this Professor</a>
                 </div>
             </div>
         </div>

@@ -160,6 +160,7 @@ class LectureController extends AbstractController
             'averageCourseRating' => $averageCourseRating,
             'averageProfessorRating' => $averageProfessorRating,
             'professorName' => $professorName,
+            'professor' => $professor,
             'form' => $form->createView()
         ]);
     }

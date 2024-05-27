@@ -19,8 +19,11 @@ class ProfessorRate
     #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'rates')]
     #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id', nullable: false)]
     private ?Student $student = null;
+    /*#[ORM\Column(name: 'rate_value', type: "integer", nullable: false)]
+    private ?int $rate_value = null;*/
+
     #[ORM\Column(name: 'rate_value', type: "integer", nullable: false)]
-    private ?int $rate_value = null;
+    private ?int $rateValue = null;
 
     public function getId(): ?int
     {
@@ -66,7 +69,7 @@ class ProfessorRate
         return $this;
     }
 
-    public function getRate(): ?int
+    /*public function getRate(): ?int
     {
         return $this->rate_value;
     }
@@ -75,6 +78,17 @@ class ProfessorRate
     {
         $this->rate_value = $rate;
 
+        return $this;
+    }*/
+
+    public function getRateValue(): ?int
+    {
+        return $this->rateValue;
+    }
+
+    public function setRateValue(int $rateValue): self
+    {
+        $this->rateValue = $rateValue;
         return $this;
     }
 }

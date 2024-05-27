@@ -11,23 +11,18 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProfessorRateForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('studentUsername', TextType::class, [
-                'label' => 'Your Username',
+            ->add('rateValue', ChoiceType::class, [
+                'choices' => array_combine(range(0, 10), range(0, 10)), // Values from 0 to 10
+                'label' => 'Rate the course (from 0 to 10):',
+                'expanded' => true,
                 'required' => true,
-            ])
-            ->add('rate',RangeType::class,[
-                'attr' => ['min' => 0, 'max' => 10],
-                'label' => 'choose the rate:'
-            ])
-
-            ->add('save', SubmitType::class, [
-                'label' => 'Submit rate'
             ]);
     }
 

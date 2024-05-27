@@ -16,8 +16,9 @@
             {{ form_start(form) }}
             <div class="form-group">
                 <label>{{ form_label(form.rateValue) }}</label>
-                <div class="rating-choices">
-                    {{ form_widget(form.rateValue) }}
+                <div class="rating-slider-container">
+                    {{ form_widget(form.rateValue, {'attr': {'class': 'rating-slider'}}) }}
+                    <div id="slider-value">5</div> {# Default value, you can set it dynamically based on form data #}
                 </div>
             </div>
             <div class="form-group">
@@ -26,4 +27,23 @@
             {{ form_end(form) }}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.rating-slider');
+            const sliderValue = document.getElementById('slider-value');
+
+            if (slider) {
+                slider.addEventListener('input', function() {
+                    sliderValue.textContent = slider.value;
+                });
+
+                // Set initial slider value
+                sliderValue.textContent = slider.value;
+            }
+        });
+    </script>
 {% endblock %}

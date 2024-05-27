@@ -27,17 +27,16 @@
     margin-bottom: 5px;
 }
 
-.rating-choices {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+.rating-slider {
+    width: 100%;
+    margin: 10px 0;
 }
 
-.rating-choices label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
+#slider-value {
+    text-align: center;
+    color: var(--light-color);
+    font-size: 1.2em;
+    margin-top: 10px;
 }
 
 .btn-primary {
@@ -55,12 +54,4 @@
 
 .btn-primary:hover {
     background-color: var(--light-color);
-}
-
-.form-check-label {
-    color: var(--light-color);
-}
-
-.form-check-input {
-    margin-right: 10px;
 }

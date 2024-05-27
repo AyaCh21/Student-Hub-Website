@@ -11,7 +11,46 @@ before_script:
   - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
   - apk add rsync
 
+stages:
+  - test
+  - deploy
+
+test-job:
+  stage: test
+  only:
+    - dev
+  when: manual
+  image: php:8.2
+  before_script:
+    # dependencies for composer to run
+    - apt-get update
+    - apt-get -yq install git unzip zip libzip-dev zlib1g-dev
+    - docker-php-ext-install zip
+    # xdebug is needed for phpunit to generate coverage
+    - pecl install xdebug
+    - docker-php-ext-enable xdebug
+    # install composer
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    - composer install
+    - composer require --dev phpunit/phpunit phpunit/php-code-coverage
+  script: 
+    - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage.cobertura.xml
+    - ls -a
+    - cat coverage.cobertura.xml
+  artifacts:
+    untracked: false
+    when: on_success
+    access: all
+    expire_in: 30 days
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.cobertura.xml
+
+
 deploy-job:
+  stage: deploy
   only:
     - dev
     - main
@@ -22,5 +61,4 @@ deploy-job:
     - php bin/console cache:warmup --env=prod --no-debug
     - rsync -avz --exclude=".git/" 
                  --exclude=".env" 
-                 --exclude="tests/"
                  ./ a23www301@shell.studev.groept.be:/var/www/html

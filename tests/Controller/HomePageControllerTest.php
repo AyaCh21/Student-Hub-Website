@@ -18,7 +18,7 @@ class HomePageControllerTest extends WebTestCase
     }
 
     //test redirecting to home page while authenticated and not authenticated
-    public function testDirectingToHome()
+    public function testUnauthorizedDirectingToHome()
     {
         try {
             $client = static::createClient();
@@ -29,6 +29,17 @@ class HomePageControllerTest extends WebTestCase
             $this->assertResponseStatusCodeSame(200);
             $this->assertSelectorTextContains('.container-title', 'StudHub!');
             $this->assertCount(1, $crawler->filter('a[href="/register"] input[type="button"][value="Join Now"]'));
+
+            } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
+
+    public function testAuthorizedDirectingToHome()
+    {
+        try {
+            $client = static::createClient();
 
             //redirect to home while logged in
             $userRepository = static::getContainer()->get(StudentRepository::class);
@@ -45,6 +56,27 @@ class HomePageControllerTest extends WebTestCase
         }
     }
 
+    public function testDirectingToPolicy()
+    {
+        try {
+            $client = static::createClient();
+
+
+            $crawler = $client->request('GET', '/home');
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+
+            $this->assertCount(1, $crawler->filter('a[href="https://admin.kuleuven.be/privacy/en/"]'));
+            $this->assertSame('Privacy Policy', $crawler->filter('a[href="https://admin.kuleuven.be/privacy/en/"]')->text(), 'Link text wrong.');
+
+            $this->assertCount(1, $crawler->filter('a[href="https://admin.kuleuven.be/icts/english/cookiepolicy/"]'));
+            $this->assertSame('Terms of Use', $crawler->filter('a[href="https://admin.kuleuven.be/icts/english/cookiepolicy/"]')->text(), 'Link text wrong.');
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
 
 
 

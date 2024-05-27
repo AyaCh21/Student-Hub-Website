@@ -9,7 +9,7 @@ before_script:
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   - chmod 700 ~/.ssh
   - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
-  - apk add rsync
+  - apt-get install -y rsync
 
 stages:
   - test

@@ -14,15 +14,12 @@ section {
     margin: 1px;
     align-content: center;
 }
-
 section:nth-child(1) {
     scroll-snap-align: end;
 }
-
 section:nth-child(2) {
     scroll-snap-align: start;
 }
-
 .photo_wrapper {
     padding-top: 7rem;
     display: flex;
@@ -47,7 +44,6 @@ section:nth-child(2) {
     font-size: 2vw;
     width: auto;
 }
-
 .team-wrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -55,7 +51,6 @@ section:nth-child(2) {
     height: 50rem;
     gap: 1rem;
 }
-
 .member-card {
     display: flex;
     flex-direction: row;
@@ -131,12 +126,19 @@ RELATIVE SIZES IN CSS:
     .navbar {
         margin-bottom: -7rem;
     }
+    .navbar ul {
+        background: transparent;
+        border-radius: 2rem;
+    }
     .team-wrapper {
         position: relative;
         grid-template-columns: repeat(2,1fr);
         align-content: center;
         height: fit-content;
         padding-bottom: 4vh;
+    }
+    .team-description {
+        text-align: center;
     }
     .member-card {
         width: fit-content;
@@ -149,12 +151,24 @@ RELATIVE SIZES IN CSS:
 }
 
 @media only screen and (max-width: 932px) {
+    section:first-child {
+        height: 100vh;
+    }
+    section:last-child {
+    }
+    .photo_wrapper img:first-child,
+    .photo_wrapper img:nth-child(2){
+        display: none;
+    }
+    .photo_wrapper img {
+        width: 40vw;
+        height: auto;
+    }
     .team-wrapper {
         display: flex;
         flex-direction: column;
         margin: auto;
         align-items: center;
-        height: fit-content;
     }
     .team-wrapper {
         padding-bottom: 4rem;
@@ -166,9 +180,8 @@ RELATIVE SIZES IN CSS:
         height: fit-content;
         scroll-snap-align: start;
     }
-
     footer {
-        margin-top: -4.5rem;
+        margin-top: -6.5rem;
     }
 
 

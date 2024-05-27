@@ -5,7 +5,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "2.12",
-            "ref": "a952424ca4d5ab4dbc66c8be78236a5f13124112"
+            "ref": "7b1b0b637b337f6beb895589948cd119da705524"
         },
         "files": [
             "config/packages/doctrine.yaml",
@@ -27,7 +27,7 @@
         ]
     },
     "phpunit/phpunit": {
-        "version": "10.2",
+        "version": "11.1",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -92,56 +92,17 @@
             "ref": "df66ee1f226c46f01e85c29c2f7acce0596ba35a"
         },
         "files": [
-            "./config/packages/mailer.yaml"
+            "config/packages/mailer.yaml"
         ]
     },
     "symfony/maker-bundle": {
-        "version": "1.58",
+        "version": "1.59",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
-    },
-    "symfony/panther": {
-        "version": "2.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "673836afb0eac2b0ec36c44f2ff0379e5a4b2177"
-        }
-    },
-    "symfony/phpunit-bridge": {
-        "version": "7.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.3",
-            "ref": "a411a0480041243d97382cac7984f7dce7813c08"
-        },
-        "files": [
-            ".env.test",
-            "bin/phpunit",
-            "phpunit.xml.dist",
-            "tests/bootstrap.php"
-        ]
-    },
-    "symfony/phpunit-bridge": {
-        "version": "7.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.3",
-            "ref": "a411a0480041243d97382cac7984f7dce7813c08"
-        },
-        "files": [
-            ".env.test",
-            "bin/phpunit",
-            "phpunit.xml.dist",
-            "tests/bootstrap.php"
-        ]
     },
     "symfony/routing": {
         "version": "6.4",
@@ -165,8 +126,8 @@
             "ref": "2ae08430db28c8eb4476605894296c82a642028f"
         },
         "files": [
-            "./config/packages/security.yaml",
-            "./config/routes/security.yaml"
+            "config/packages/security.yaml",
+            "config/routes/security.yaml"
         ]
     },
     "symfony/twig-bundle": {
@@ -178,8 +139,8 @@
             "ref": "cab5fd2a13a45c266d45a7d9337e28dee6272877"
         },
         "files": [
-            "./config/packages/twig.yaml",
-            "./templates/base.html.twig"
+            "config/packages/twig.yaml",
+            "templates/base.html.twig"
         ]
     },
     "symfony/ux-icons": {
@@ -203,7 +164,7 @@
             "ref": "c32cfd98f714894c4f128bb99aa2530c1227603c"
         },
         "files": [
-            "./config/packages/validator.yaml"
+            "config/packages/validator.yaml"
         ]
     },
     "symfony/web-profiler-bundle": {
@@ -215,8 +176,8 @@
             "ref": "e42b3f0177df239add25373083a564e5ead4e13a"
         },
         "files": [
-            "./config/packages/web_profiler.yaml",
-            "./config/routes/web_profiler.yaml"
+            "config/packages/web_profiler.yaml",
+            "config/routes/web_profiler.yaml"
         ]
     },
     "symfonycasts/reset-password-bundle": {
@@ -228,10 +189,10 @@
             "ref": "97c1627c0384534997ae1047b93be517ca16de43"
         },
         "files": [
-            "./config/packages/reset_password.yaml"
+            "config/packages/reset_password.yaml"
         ]
     },
     "twig/extra-bundle": {
-        "version": "v3.9.3"
+        "version": "v3.10.0"
     }
 }

@@ -4,11 +4,15 @@ namespace App\Tests\Entity;
 
 use App\Entity\Db;
 use App\Entity\Student;
+use App\Entity\StudyMaterial;
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
+use Doctrine\Common\Collections\Collection;
+
 
 class StudentTest extends TestCase
 {
@@ -72,6 +76,7 @@ class StudentTest extends TestCase
         $this->assertNotEquals("P6", $student->getPassword());
 
     }
+
     public function testGetAllStudents()
     {
         $pdoMock = $this->createMock(PDO::class);
@@ -94,7 +99,7 @@ class StudentTest extends TestCase
 
         // Set up expectations for fetch method and sample data
         $stmtMock->expects($this->exactly(count($sampleData) + 1))
-        ->method('fetch')
+            ->method('fetch')
             ->willReturnOnConsecutiveCalls(...array_map(function ($data) {
                 return $data;
             }, $sampleData));
@@ -106,4 +111,64 @@ class StudentTest extends TestCase
             $this->assertInstanceOf(Student::class, $student);
         }
     }
+
+    public function testGetPhase()
+    {
+        $student = new Student();
+        $student->setPhase(2);
+        $this->assertEquals(2, $student->getPhase());
     }
+
+    public function testSetPhase()
+    {
+        $student = new Student();
+        $student->setPhase(2);
+        $this->assertEquals(2, $student->getPhase());
+    }
+
+    public function testGetSpecialisation()
+    {
+        $student = new Student();
+        $student->setSpecialisation("Computer Science");
+        $this->assertEquals("Computer Science", $student->getSpecialisation());
+    }
+
+    public function testSetSpecialisation()
+    {
+        $student = new Student();
+        $student->setSpecialisation("Mathematics");
+        $this->assertEquals("Mathematics", $student->getSpecialisation());
+    }
+
+    public function testEraseCredentials()
+    {
+        $student = new Student();
+        $student->eraseCredentials();
+        // Ensure method does not throw exceptions
+        $this->assertTrue(true);
+    }
+
+    public function testGetUserIdentifier()
+    {
+        $student = new Student();
+        $student->setId(1);
+        $this->assertEquals("1", $student->getUserIdentifier());
+    }
+
+    public function testGetRoles()
+    {
+        $student = new Student();
+        $student->setRoles(["ROLE_STUDENT", "ROLE_USER"]);
+        $this->assertContains("ROLE_STUDENT", $student->getRoles());
+        $this->assertContains("ROLE_USER", $student->getRoles());
+    }
+
+    public function testSetRoles()
+    {
+        $student = new Student();
+        $student->setRoles(["ROLE_STUDENT", "ROLE_USER"]);
+        $this->assertContains("ROLE_STUDENT", $student->getRoles());
+        $this->assertContains("ROLE_USER", $student->getRoles());
+        }
+
+}

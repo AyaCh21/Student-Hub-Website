@@ -35,4 +35,7 @@
   <php>
     <env name="DATABASE_URL" value="mysql://root:nmsl2020@127.0.0.1:3306/a23www301"/>
   </php>
+  <include>
+    <file>config/packages/security.yaml</file>
+  </include>
 </phpunit>

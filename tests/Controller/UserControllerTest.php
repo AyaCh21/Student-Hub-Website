@@ -29,7 +29,7 @@ class UserControllerTest extends WebTestCase
 
             $this->assertResponseIsSuccessful();
             $this->assertResponseStatusCodeSame(200);
-            $this->assertSelectorTextContains('h1', 'Login');
+            $this->assertSelectorTextContains('h1', 'Login Page');
 
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
@@ -57,6 +57,41 @@ class UserControllerTest extends WebTestCase
             $this->assertSelectorExists('input[name="_remember_me"]');
             $this->assertSelectorExists('a[href="/register"] input[type="button"][value="Register Now"]');
             $this->assertSelectorExists('a[href="/reset-password"] input[type="button"][value="Oops I forgot my password"]');
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
+    }
+
+    public function testExistUserLogin()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+            $client = static::createClient();
+            $client->followRedirects();
+            $crawler =$client->request('GET', '/login');
+
+            $form = $crawler->selectButton('Login')->form();
+            $form['_username'] = "dumb";
+            $form['_password'] = "dumb";
+            $form['_remember_me']->tick();
+            $client->submit($form);
+//            $crawler = $client->submitForm('Login', [
+//                'username' => 'dumb',
+//                'password' => 'dumb',
+//                'remember_me' => false,
+//            ]);
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+            $crawler =$client->request('GET', '/home');
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+            $this->assertCount(1, $crawler->filter('a[href="/study"] input[type="button"][value="Study Now!"]'));
+
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());

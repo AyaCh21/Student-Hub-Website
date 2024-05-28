@@ -36,8 +36,8 @@ class ProfessorRateTest extends TestCase
     public function testGetAndSetRate()
     {
         $professorRate = new ProfessorRate();
-        $professorRate->setRate(5);
-        $this->assertEquals(5, $professorRate->getRate());
+        $professorRate->setRateValue(5);
+        $this->assertEquals(5, $professorRate->getRateValue());
     }
 
     public function testGetAndSetStudentUsername()

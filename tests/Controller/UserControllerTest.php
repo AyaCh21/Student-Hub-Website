@@ -277,7 +277,6 @@ class UserControllerTest extends WebTestCase
     }
 
 
-
     public function testNewUserRegisterThenLogin()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
@@ -365,6 +364,7 @@ class UserControllerTest extends WebTestCase
         }
     }
 
+
     public function testAuthenticatedProfileRedirect()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
@@ -382,6 +382,88 @@ class UserControllerTest extends WebTestCase
             $this->assertResponseIsSuccessful();
             $this->assertSame(200, $client->getResponse()->getStatusCode());
             $this->assertSelectorTextContains('h3', 'Your Profile');
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
+    }
+
+
+//    public function testChangeUserPhaseNSpecialization()
+//    {
+//        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+//        $prevHandler = set_exception_handler(null);
+//
+//        try {
+//            $client = static::createClient();
+//            $client->followRedirects();
+//
+//            // Login as a user
+//            $client->request('GET', '/login');
+//            $client->submitForm('Login', [
+//                '_username' => 'dumb', // Replace with your actual username
+//                '_password' => 'dumb', // Replace with your actual password
+//            ]);
+//
+//            // Go to the profile page
+//            $client->request('GET', '/profile');
+//
+//            $client->executeScript("
+//            document.getElementById('specialisation').value = 'Electronics';
+//            ");
+//
+//        } catch (\Exception $e) {
+//            // Handle the exception gracefully, for example:
+//            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+//        } finally {
+//            // Restore the previous exception handler
+//            set_exception_handler($prevHandler);
+//        }
+//    }
+
+    public function testEditUsername()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+        $client = static::createClient();
+        $client->followRedirects();
+
+        $userRepository = static::getContainer()->get(StudentRepository::class);
+        $testUser = $userRepository->findOneBy(['username'=>'integration_test_new_user']);
+        $client->loginUser($testUser);
+
+        // Simulate accessing the page where the username can be edited
+        $crawler = $client->request('GET', '/profile');
+
+        // Fill the form with a new username and submit it
+        $form = $crawler->filter('#username-edit-confirm')->form();
+        $form['edit-username'] = 'integration_test_new_user_NEWNAME';
+        $client->submit($form);
+
+
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        // Simulate accessing the page again to change the username back
+        $crawler = $client->request('GET', '/profile');
+
+        $this->assertEquals("integration_test_new_user_NEWNAME", $crawler->filter('#username-info-display')->text());
+
+        // Fill the form with the original username and submit it
+        $form = $crawler->filter('#username-edit-confirm')->form();
+        $form['edit-username'] = 'integration_test_new_user';
+        $client->submit($form);
+
+
+        // Simulate accessing the page again to change the username back
+        $crawler = $client->request('GET', '/profile');
+
+        $this->assertEquals("integration_test_new_user", $crawler->filter('#username-info-display')->text());
+
+
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());

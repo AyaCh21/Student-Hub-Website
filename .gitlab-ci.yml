@@ -40,7 +40,8 @@ test-job:
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
   artifacts:
     paths: 
-      - cobertura.xml
+      - coverage.cobertura.xml
+      - phpunit-html
     untracked: false
     when: on_success
     access: all
@@ -48,7 +49,7 @@ test-job:
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: cobertura.xml
+        path: coverage.cobertura.xml
 
 
 deploy-job:

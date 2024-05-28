@@ -7,7 +7,7 @@
   </testsuites>
   <coverage>
     <report>
-      <cobertura outputFile="cobertura.xml"/>
+      <cobertura outputFile="coverage.cobertura.xml"/>
       <html outputDirectory="phpunit-html"/>
       <text outputFile="php://stdout"/>
     </report>

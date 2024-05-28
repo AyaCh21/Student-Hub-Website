@@ -184,7 +184,10 @@ footer a {
         transform: none;
 
     }
-
+    .navbar ul {
+        background: transparent;
+        border-radius: 2rem;
+    }
     .navbar ul {
         display: flex;
         flex-direction: row;
@@ -195,6 +198,7 @@ footer a {
     svg {
         display: flex;
     }
+
     footer {
         position: relative;
         width: auto;

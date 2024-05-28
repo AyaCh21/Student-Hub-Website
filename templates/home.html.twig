@@ -9,6 +9,17 @@
     </div>
 
     {% if is_granted('ROLE_USER') %}
+        <style>
+            @media only screen and (max-width: 932px) {
+                .container-title {
+                    margin: 100px 5px;
+                }
+
+                .home-button {
+                    margin: -45px 10px;
+                }
+            }
+        </style>
         <div class="home-buttons">
             <div class="home-button">
                 <a href="{{ path('study') }}">

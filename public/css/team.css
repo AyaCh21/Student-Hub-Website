@@ -123,12 +123,19 @@ RELATIVE SIZES IN CSS:
  */
 
 @media only screen and (max-width: 1500px) {
+
     .navbar {
         margin-bottom: -7rem;
+        position: relative;
+
     }
     .navbar ul {
         background: transparent;
         border-radius: 2rem;
+    }
+    .photo_wrapper  {
+        height: auto;
+        margin-top: auto;
     }
     .team-wrapper {
         position: relative;
@@ -139,6 +146,7 @@ RELATIVE SIZES IN CSS:
     }
     .team-description {
         text-align: center;
+        margin: auto;
     }
     .member-card {
         width: fit-content;
@@ -151,6 +159,7 @@ RELATIVE SIZES IN CSS:
 }
 
 @media only screen and (max-width: 932px) {
+
     section:first-child {
         height: 100vh;
     }
@@ -164,6 +173,13 @@ RELATIVE SIZES IN CSS:
         width: 40vw;
         height: auto;
     }
+    .photo_wrapper {
+        padding-top: 1rem;
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: auto;
+        position: relative;
+    }
     .team-wrapper {
         display: flex;
         flex-direction: column;
@@ -172,6 +188,10 @@ RELATIVE SIZES IN CSS:
     }
     .team-wrapper {
         padding-bottom: 4rem;
+    }
+    .team-description {
+        text-align: center;
+        margin: auto;
     }
     .member-card {
         width: fit-content;
@@ -184,5 +204,50 @@ RELATIVE SIZES IN CSS:
         margin-top: -6.5rem;
     }
 
+    @media only screen and (max-width: 670px) {
 
+        section:first-child {
+            height: 100vh;
+        }
+        section:last-child {
+        }
+        .photo_wrapper img:first-child,
+        .photo_wrapper img:nth-child(2){
+            display: none;
+        }
+        .photo_wrapper img {
+            width: 40vw;
+            height: auto;
+        }
+        .photo_wrapper {
+            padding-top: 7rem;
+            display: flex;
+            justify-content: space-evenly;
+            margin-left: 40px;
+            position: relative;
+        }
+        .team-wrapper {
+            display: flex;
+            flex-direction: column;
+            margin-left:20px;
+            align-items: center;
+        }
+        .team-wrapper {
+            padding-bottom: 4rem;
+        }
+        .team-description {
+            text-align:center;
+            margin-left:40px;
+        }
+        .member-card {
+            width: fit-content;
+        }
+        section:nth-child(2) {
+            height: fit-content;
+            scroll-snap-align: start;
+        }
+        footer {
+            margin-top: -6.5rem;
+        }
+        }
 }

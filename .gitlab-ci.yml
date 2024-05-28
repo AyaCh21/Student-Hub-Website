@@ -29,6 +29,9 @@ test-job:
     # xdebug is needed for phpunit to generate coverage
     - pecl install xdebug
     - docker-php-ext-enable xdebug
+    # try installing symfony
+    - wget https://get.symfony.com/cli/installer -O - | bash
+    - mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
     # install composer
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer

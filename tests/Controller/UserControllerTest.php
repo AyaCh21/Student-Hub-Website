@@ -17,6 +17,25 @@ class UserControllerTest extends WebTestCase
         return new \App\Kernel('test', true);
     }
 
+    public function testLoginPageRedirectSuccessful()
+    {
+        try {
+            $client = static::createClient();
+
+            $client->request('GET', '/login');
+
+            $this->assertResponseIsSuccessful();
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('h1', 'Login');
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }
+    }
+
+
+
     //in this test, examine whether the redirecting is successful while a unauthorized user is trying to access profile page
     public function testUnauthenticatedProfileRedirect()
     {

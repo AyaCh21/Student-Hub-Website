@@ -248,13 +248,13 @@ class UserController extends AbstractController
 
 
         // Redirect to the controller action responsible for persisting the user
-//        return $this->redirectToRoute('login');
-        $this->stylesheets[]='login.css';
-        return $this->render('login.html.twig', [
-            'stylesheets'=>$this->stylesheets,
-            'username' => $username,
-            'error' => $error,
-        ]);
+        return $this->redirectToRoute('login');
+//        $this->stylesheets[]='login.css';
+//        return $this->render('login.html.twig', [
+//            'stylesheets'=>$this->stylesheets,
+//            'username' => $username,
+//            'error' => $error,
+//        ]);
     }
 
     public function delete(UserPasswordHasherInterface $passwordHasher, UserInterface $user): void

@@ -19,7 +19,6 @@ test-job:
   stage: test
   only:
     - dev
-  when: manual
   image: php:8.2
   before_script:
     # dependencies for composer to run

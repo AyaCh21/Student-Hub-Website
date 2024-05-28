@@ -36,9 +36,7 @@ test-job:
   script:
     - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
-    - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage.cobertura.xml
-    - ls -a
-    - cat coverage.cobertura.xml
+    - vendor/bin/phpunit --coverage-text --colors=never
   artifacts:
     untracked: false
     when: on_success

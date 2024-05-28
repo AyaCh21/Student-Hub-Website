@@ -50,6 +50,16 @@ input[type=button]:hover, input[type=submit]:hover {
         display: flex;
         flex-direction: column;
         padding: 1em;
+        margin-left:40px;
+    }
+    .navbar {
+        position: relative;
+        margin-left:40px;
+
+    }
+    .navbar ul {
+        background: transparent;
+        border-radius: 2rem;
     }
     .profile-p {
         display: none;
@@ -59,6 +69,19 @@ input[type=button]:hover, input[type=submit]:hover {
         flex-direction: row;
         justify-content: space-evenly;
         align-items: baseline;
+    }
+    .form-row {
+
+        margin-left:70px;
+        margin-right: 1px;
+    }
+    .info-row{
+        margin-right: 150px;
+    }
+    footer {
+        position: fixed;
+        width: auto;
+        font-size: 3vw;
     }
 }
 
@@ -77,6 +100,7 @@ input[type=button]:hover, input[type=submit]:hover {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 3rem;
+
 }
 
 .reset-form {
@@ -227,3 +251,4 @@ input[type=button]:hover, input[type=submit]:hover {
 .input-box {
     flex: 1;
 }
+

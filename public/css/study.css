@@ -211,6 +211,26 @@ body, html {
         display: flex;
         flex-direction: column;
         opacity: 1;
+        margin-left: 25px;
+    }
+    .navbar {
+        margin-bottom: 2rem;
+
+
+    }
+    .navbar {
+        color: var(--light-color);
+        margin-top: 1em;
+        height: fit-content;
+    }
+
+    .navbar:before, .navbar a:hover, .navbar a:hover:before {
+        transform: none;
+
+    }
+    .navbar ul {
+        background: transparent;
+        border-radius: 2rem;
     }
     .search-form input[type="text"],
     .search-form select {
@@ -234,6 +254,26 @@ body, html {
     }
     .option a {
         color: var(--dark-color);
+
+    }
+
+    .phase-header {
+        /*background: var(--minor-color);*/
+
+        margin-left: 20px;
+        position: sticky;
+
+    }
+
+    .phases-wrapper {
+
+        position: sticky;
+        margin-bottom: 20px;
+        margin-left: 10px;
+    }
+    footer {
+        position:relative;
+
 
     }
 

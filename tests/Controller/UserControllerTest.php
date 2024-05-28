@@ -9,6 +9,11 @@ use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
+
+//======================================================================================================//
+//Note: this controller revolves firewall and user authentication,
+//      hence comprehensive tests applied to ensure the security of website and personal infomation.
+//=====================================================================================================//
 class UserControllerTest extends WebTestCase
 {
     protected static function createKernel(array $options = []): \Symfony\Component\HttpKernel\KernelInterface
@@ -704,6 +709,36 @@ class UserControllerTest extends WebTestCase
             set_exception_handler($prevHandler);
         }
 
+    }
+
+
+    //in this test, examine whether the redirecting is successful while a unauthorized user is trying to access profile page
+    public function testUnauthenticatedStudyRedirect()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+            $client = static::createClient();
+
+            $client->request('GET', '/logout');
+
+            $client->request('GET', '/home');
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+
+            $crawler = $client->request('GET', '/study');
+            $this->assertSame(302, $client->getResponse()->getStatusCode());
+            $this->assertSame('/login', $client->getResponse()->headers->get('Location'));
+            $crawler = $client->followRedirect();
+            $this->assertSelectorTextContains('h1', 'Login');
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
     }
 
 }

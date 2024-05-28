@@ -529,4 +529,46 @@ class UserControllerTest extends WebTestCase
         }
     }
 
+
+    public function testEditEmailWithIncorrectPassword()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+            $client = static::createClient();
+            $client->followRedirects();
+
+            $userRepository = static::getContainer()->get(StudentRepository::class);
+            $testUser = $userRepository->findOneBy(['username'=>'integration_test_new_user']);
+            $client->loginUser($testUser);
+
+            // Simulate accessing the page where the username can be edited
+            $crawler = $client->request('GET', '/profile');
+
+            $this->assertEquals("integration_test_new_user@integration_test_new_user.com", $crawler->filter('#email-info-display')->text());
+
+            // Fill the form with a new username and submit it
+            $form = $crawler->filter('#email-edit-confirm')->form();
+            $form['edit-email-password'] = 'incorrect_password';
+            $form['edit-email'] = 'integration_test_new_user_NEWNAME@integration_test_new_user_NEWNAME.com';
+            $client->submit($form);
+
+
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+            // Simulate accessing the page again to change the username back
+            $crawler = $client->request('GET', '/profile');
+            $this->assertEquals("integration_test_new_user@integration_test_new_user.com", $crawler->filter('#email-info-display')->text());
+
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
+    }
+
+
 }

@@ -1,0 +1,29 @@
+{# templates/rate_lab_instructor.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Rate {{ labInstructor.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/rate_form.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="rating-wrapper">
+            <h1>Rate {{ labInstructor.name }}</h1>
+
+            {{ form_start(form) }}
+            <div class="form-group">
+                <label>{{ form_label(form.rateValue) }}</label>
+                <div class="rating-choices">
+                    {{ form_widget(form.rateValue) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Submit Rating</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -27,6 +27,19 @@ class Course
     #[ORM\OneToMany(targetEntity: StudyMaterial::class, mappedBy: 'course')]
     private Collection $studyMaterials;
 
+    #[ORM\ManyToMany(targetEntity: LabInstructor::class, inversedBy: 'courses')]
+    #[ORM\JoinTable(name: 'course_lab_instructor')]
+    private Collection $labInstructors;
+
+    public function __construct()
+    {
+        $this->labInstructors = new ArrayCollection();
+    }
+
+
+
+
+
     #[ORM\Column(name: 'phase', type: "integer", nullable: true)]
     private ?int $phase = null;
 
@@ -164,5 +177,31 @@ class Course
 
         return $this;
     }
+
+    public function getLabInstructors(): Collection
+    {
+        return $this->labInstructors;
+    }
+
+    public function addLabInstructor(LabInstructor $labInstructor): self
+    {
+        if (!$this->labInstructors->contains($labInstructor)) {
+            $this->labInstructors[] = $labInstructor;
+            $labInstructor->addCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLabInstructor(LabInstructor $labInstructor): self
+    {
+        if ($this->labInstructors->removeElement($labInstructor)) {
+            $labInstructor->removeCourse($this);
+        }
+
+        return $this;
+    }
+
+
 }
 

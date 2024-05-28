@@ -301,4 +301,104 @@ class  RatingController extends AbstractController
             'student' => $student
         ]);
     }
+
+    // for type = "lab" specific stuff :
+    #[Route('/rate_lab', name: 'rate_lab')]
+    public function rateLab(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $courseId = $request->query->get('courseId');
+        $type = $request->query->get('type');
+
+        if (!$courseId) {
+            throw $this->createNotFoundException('Course ID is missing');
+        }
+
+        $course = $entityManager->getRepository(Course::class)->find($courseId);
+
+        if (!$course) {
+            throw $this->createNotFoundException('Course not found');
+        }
+
+        $user = $security->getUser();
+        if (!$user) {
+            $this->addFlash('warning', 'You need to log in to rate the lab.');
+            return $this->redirectToRoute('login');
+        }
+
+        $existingRating = $entityManager->getRepository(LabRate::class)
+            ->findOneBy(['course' => $course, 'student' => $user]);
+
+        $rating = new LabRate();
+        $rating->setCourse($course);
+        $rating->setStudent($user);
+
+        $form = $this->createForm(LabRateForm::class, $rating);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($rating);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Thank you for rating this lab!');
+            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $type]);
+        }
+
+        return $this->render('rate_lab.html.twig', [
+            'form' => $form->createView(),
+            'course' => $course,
+            'type' => $type
+        ]);
+    }
+
+    #[Route('/rate_lab_instructor', name: 'rate_lab_instructor')]
+    public function rateLabInstructor(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $labInstructorId = $request->query->get('labInstructorId');
+        $type = $request->query->get('type');
+        $courseId = $request->query->get('courseId');
+
+        if (!$labInstructorId) {
+            throw $this->createNotFoundException('Lab Instructor ID is missing');
+        }
+
+        $labInstructor = $entityManager->getRepository(LabInstructor::class)->find($labInstructorId);
+
+        if (!$labInstructor) {
+            throw $this->createNotFoundException('Lab Instructor not found');
+        }
+
+        $user = $security->getUser();
+        if (!$user) {
+            $this->addFlash('warning', 'You need to log in to rate the lab instructor.');
+            return $this->redirectToRoute('login');
+        }
+
+        $existingRating = $entityManager->getRepository(LabInstructorRate::class)
+            ->findOneBy(['labInstructor' => $labInstructor, 'student' => $user]);
+
+        $rating = new LabInstructorRate();
+        $rating->setLabInstructor($labInstructor);
+        $rating->setStudent($user);
+
+        $form = $this->createForm(LabInstructorRateForm::class, $rating);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($rating);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Thank you for rating this lab instructor!');
+            return $this->redirectToRoute('lecture', ['id' => $courseId, 'type' => $type]);
+        }
+
+        return $this->render('rate_lab_instructor.html.twig', [
+            'form' => $form->createView(),
+            'labInstructor' => $labInstructor,
+            'type' => $type
+        ]);
+    }
+
+
 }

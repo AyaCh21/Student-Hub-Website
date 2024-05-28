@@ -17,6 +17,7 @@ class UserControllerTest extends WebTestCase
         return new \App\Kernel('test', true);
     }
 
+
     public function testLoginPageRedirectSuccessful()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
@@ -39,6 +40,7 @@ class UserControllerTest extends WebTestCase
             set_exception_handler($prevHandler);
         }
     }
+
 
     public function testLoginPageFormExist()
     {
@@ -65,6 +67,7 @@ class UserControllerTest extends WebTestCase
             set_exception_handler($prevHandler);
         }
     }
+
 
     public function testExistUserLogin()
     {
@@ -100,6 +103,7 @@ class UserControllerTest extends WebTestCase
             set_exception_handler($prevHandler);
         }
     }
+
 
     public function testNonExistUserLogin()
     {
@@ -137,6 +141,7 @@ class UserControllerTest extends WebTestCase
         }
     }
 
+
     public function testRegisterPageRedirectSuccessful()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
@@ -153,6 +158,35 @@ class UserControllerTest extends WebTestCase
             $this->assertResponseStatusCodeSame(200);
             $this->assertSelectorTextContains('.container-title', 'Register');
 
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
+    }
+
+    public function testRegisterPageFormExist()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+            $client = static::createClient();
+
+            $client->request('GET', '/register');
+
+            $this->assertResponseIsSuccessful();
+            $this->assertSelectorExists('form');
+            $this->assertSelectorExists('input[name="_username"]');
+            $this->assertSelectorExists('input[name="_email"]');
+            $this->assertSelectorExists('input[name="_password_1"]');
+            $this->assertSelectorExists('input[name="_password_2"]');
+            $this->assertSelectorExists('select[name="_specialization"]');
+            $this->assertSelectorExists('select[name="_phase"]');
+            $this->assertSelectorExists('button[type="submit"].btn');
+            $this->assertSelectorExists('a[href="/login"]');
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());

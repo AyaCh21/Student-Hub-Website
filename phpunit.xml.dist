@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         backupGlobals="false"
+<phpunit bootstrap="vendor/autoload.php"
          colors="true"
-         bootstrap="tests/bootstrap.php"
-         convertDeprecationsToExceptions="false"
->
-    <php>
-        <ini name="display_errors" value="1" />
-        <ini name="error_reporting" value="-1" />
-        <server name="APP_ENV" value="test" force="true" />
-        <server name="SHELL_VERBOSITY" value="-1" />
-        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.6" />
-        <env name="APP_ENV" value="test"/>
-        <env name="DATABASE_URL" value="mysql://a23www301:ra3wnmlO@mysql.studev.groept.be:3306/a23www301"/>
-        <env name="DATABASE_USER" value="a23www301"/>
-        <env name="DATABASE_PASSWORD" value="ra3wnmlO"/>
-    </php>
+         verbose="true"
+         stopOnFailure="false"
+         stopOnError="false"
+         stopOnRisky="false"
+         stopOnSkipped="false"
+         stopOnIncomplete="false">
 
     <testsuites>
         <testsuite name="Project Test Suite">
@@ -27,22 +14,16 @@
         </testsuite>
     </testsuites>
 
-
-
-
-
-    <coverage processUncoveredFiles="true">
+    <coverage cacheDirectory=".phpunit.cache/code-coverage"
+              processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <report>
+            <cobertura outputFile="cobertura.xml"/>
+            <html outputDirectory="phpunit-html"/>
+            <text outputFile="php://stdout"/>
+        </report>
     </coverage>
 
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
-
-    <extensions>
-        <extension class="Symfony\Component\Panther\ServerExtension" />
-
-    </extensions>
 </phpunit>

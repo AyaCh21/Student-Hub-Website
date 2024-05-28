@@ -39,6 +39,8 @@ test-job:
     - export XDEBUG_MODE=coverage
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
   artifacts:
+    paths: 
+      - coverage/cobertura.xml
     untracked: false
     when: on_success
     access: all
@@ -46,7 +48,7 @@ test-job:
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: coverage.cobertura.xml
+        path: coverage/cobertura.xml
 
 
 deploy-job:

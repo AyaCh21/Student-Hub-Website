@@ -20,12 +20,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\StudyMaterialType;
+use App\Entity\LabInstructor;
+use App\Entity\LabRate;
+use App\Repository\LabRateRepository;
+use App\Repository\LabInstructorRateRepository;
+
 
 class LectureController extends AbstractController
 {
     #[Route("/lecture/{id}/{type}", name: "lecture")]
     public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request, RatingExamRepository $ratingExamRepository, ProfessorRateRepository $professorRateRepository,
-                            ProfessorRepository $professorRepository): Response
+                            ProfessorRepository $professorRepository, LabRateRepository $labRateRepository, LabInstructorRateRepository $labInstructorRateRepository): Response
     {
         // Fetch the course name
         $course = $entityManager->getRepository(Course::class)->find($id);
@@ -143,6 +148,24 @@ class LectureController extends AbstractController
         // Fetch average course rating (this is actual an exam rating)
         $averageCourseRating = $ratingExamRepository->getAverageRatingForCourse($id);
 
+
+
+        // Fetch lab instructors and their average ratings
+        $labInstructors = $course->getLabInstructors();  // This returns a collection of LabInstructor
+        $labInstructorRatings = [];
+        $labInstructorNames = [];  // Initialize an array to store lab instructor names
+
+        foreach ($labInstructors as $labInstructor) {
+            $labInstructorRatings[] = [
+                'labInstructor' => $labInstructor,
+                'averageRating' => $labInstructorRateRepository->getAverageRatingForLabInstructor($labInstructor->getId())
+            ];
+            $labInstructorNames[] = $labInstructor->getName();  // Add the name to the array
+        }
+
+
+        $averageLabRating = $labRateRepository->getAverageRatingForLab($id);
+
         // Fetch average professor rating
         //$averageProfessorRating = $professor ? $professorRateRepository->getAverageRatingForProfessor($professor->getId()) : null;
 
@@ -161,7 +184,12 @@ class LectureController extends AbstractController
             'averageProfessorRating' => $averageProfessorRating,
             'professorName' => $professorName,
             'professor' => $professor,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'averageLabRating' => $averageLabRating,
+            'labInstructorName' => $labInstructorNames,  // Pass the array of names to the view
+            'labInstructor' => $labInstructors,  // Pass the collection of lab instructors
+            'labInstructorRatings' => $labInstructorRatings,  // Pass this variable to the view
+
         ]);
     }
     #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]

@@ -27,6 +27,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use App\Entity\LabRate;
+use App\Entity\LabInstructor;
 use App\Entity\LabInstructorRate;
 use App\Form\LabRateForm;
 use App\Form\LabInstructorRateForm;

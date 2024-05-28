@@ -13,27 +13,31 @@ class HomePageControllerTest extends WebTestCase
 {
     protected static function createKernel(array $options = []): \Symfony\Component\HttpKernel\KernelInterface
     {
-        // Use your AppKernel class name here
         return new \App\Kernel('test', true);
     }
 
 
     public function testUnauthorizedDirectingToHome()
     {
+        // Backup the current exception handler
+        $prevHandler = set_exception_handler(null);
+
         try {
             $client = static::createClient();
 
-            //redirect to home while logged out
+            // Redirect to home while logged out
             $client->request('GET', '/logout');
 
             $crawler = $client->request('GET', '/home');
             $this->assertResponseStatusCodeSame(200);
             $this->assertSelectorTextContains('.container-title', 'StudHub!');
             $this->assertCount(1, $crawler->filter('a[href="/register"] input[type="button"][value="Join Now"]'));
-
-            } catch (\Exception $e) {
-            // Handle the exception gracefully, for example:
+        } catch (\Exception $e) {
+            // Handle the exception gracefully
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
         }
     }
 

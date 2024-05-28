@@ -167,6 +167,7 @@ class UserControllerTest extends WebTestCase
         }
     }
 
+
     public function testRegisterPageFormExist()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
@@ -187,6 +188,45 @@ class UserControllerTest extends WebTestCase
             $this->assertSelectorExists('select[name="_phase"]');
             $this->assertSelectorExists('button[type="submit"].btn');
             $this->assertSelectorExists('a[href="/login"]');
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
+    }
+
+
+    public function testExistUserRegister()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+            $client = static::createClient();
+            $client->followRedirects();
+            $crawler =$client->request('GET', '/register');
+
+            $form = $crawler->selectButton('Register')->form();
+            $form['_username'] = 'dumb';  // Replace with an actual existing username
+            $form['_email'] = 'dumb@dumb.com';
+            $form['_password_1'] = 'dumb';
+            $form['_password_2'] = 'dumb';
+            $form['_specialization'] = 'Electronics';
+            $form['_phase'] = '1';
+
+            $client->submit($form);
+//            $crawler = $client->submitForm('Login', [
+//                'username' => 'dumb',
+//                'password' => 'dumb',
+//                'remember_me' => false,
+//            ]);
+
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+            $currentUrl = $client->getRequest()->getUri();
+            $this->assertStringContainsString('/register', $currentUrl);
+
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());

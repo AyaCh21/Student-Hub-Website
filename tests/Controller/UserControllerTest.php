@@ -712,7 +712,7 @@ class UserControllerTest extends WebTestCase
     }
 
 
-    //in this test, examine whether the redirecting is successful while a unauthorized user is trying to access profile page
+    //in this test, examine whether the redirecting is successful while a unauthorized user is trying to access study page
     public function testUnauthenticatedStudyRedirect()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
@@ -732,6 +732,33 @@ class UserControllerTest extends WebTestCase
             $this->assertSame('/login', $client->getResponse()->headers->get('Location'));
             $crawler = $client->followRedirect();
             $this->assertSelectorTextContains('h1', 'Login');
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
+    }
+
+
+    public function testAuthenticatedStudyRedirect()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+            $client = static::createClient();
+
+            //login user
+            $userRepository = static::getContainer()->get(StudentRepository::class);
+            $testUser = $userRepository->findOneBy(['username' => 'dumb']);
+            $client->loginUser($testUser);
+
+            $crawler = $client->request('GET', '/study');
+            $this->assertResponseIsSuccessful();
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+            $this->assertSelectorTextContains('h2', 'FavoriteCourse');
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());

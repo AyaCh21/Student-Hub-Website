@@ -489,12 +489,10 @@ class UserControllerTest extends WebTestCase
             $testUser = $userRepository->findOneBy(['username'=>'integration_test_new_user']);
             $client->loginUser($testUser);
 
-            // Simulate accessing the page where the username can be edited
             $crawler = $client->request('GET', '/profile');
 
             $this->assertEquals("integration_test_new_user@integration_test_new_user.com", $crawler->filter('#email-info-display')->text());
 
-            // Fill the form with a new username and submit it
             $form = $crawler->filter('#email-edit-confirm')->form();
             $form['edit-email-password'] = 'integration_test_new_user';
             $form['edit-email'] = 'integration_test_new_user_NEWNAME@integration_test_new_user_NEWNAME.com';
@@ -502,19 +500,16 @@ class UserControllerTest extends WebTestCase
 
 
             $this->assertSame(200, $client->getResponse()->getStatusCode());
-            // Simulate accessing the page again to change the username back
             $crawler = $client->request('GET', '/profile');
 
             $this->assertEquals("integration_test_new_user_NEWNAME@integration_test_new_user_NEWNAME.com", $crawler->filter('#email-info-display')->text());
 
-            // Fill the form with the original username and submit it
             $form = $crawler->filter('#email-edit-confirm')->form();
             $form['edit-email-password'] = 'integration_test_new_user';
             $form['edit-email'] = 'integration_test_new_user@integration_test_new_user.com';
             $client->submit($form);
 
 
-            // Simulate accessing the page again to change the username back
             $crawler = $client->request('GET', '/profile');
 
             $this->assertEquals("integration_test_new_user@integration_test_new_user.com", $crawler->filter('#email-info-display')->text());
@@ -543,12 +538,10 @@ class UserControllerTest extends WebTestCase
             $testUser = $userRepository->findOneBy(['username'=>'integration_test_new_user']);
             $client->loginUser($testUser);
 
-            // Simulate accessing the page where the username can be edited
             $crawler = $client->request('GET', '/profile');
 
             $this->assertEquals("integration_test_new_user@integration_test_new_user.com", $crawler->filter('#email-info-display')->text());
 
-            // Fill the form with a new username and submit it
             $form = $crawler->filter('#email-edit-confirm')->form();
             $form['edit-email-password'] = 'incorrect_password';
             $form['edit-email'] = 'integration_test_new_user_NEWNAME@integration_test_new_user_NEWNAME.com';
@@ -556,7 +549,6 @@ class UserControllerTest extends WebTestCase
 
 
             $this->assertSame(200, $client->getResponse()->getStatusCode());
-            // Simulate accessing the page again to change the username back
             $crawler = $client->request('GET', '/profile');
             $this->assertEquals("integration_test_new_user@integration_test_new_user.com", $crawler->filter('#email-info-display')->text());
 
@@ -570,5 +562,89 @@ class UserControllerTest extends WebTestCase
         }
     }
 
+
+    public function testEditPasswordBackNForth()
+    {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
+        try {
+            $client = static::createClient();
+            $client->followRedirects();
+            $crawler =$client->request('GET', '/login');
+
+            //login using old pass
+            $form = $crawler->selectButton('Login')->form();
+            $form['_username'] = "integration_test_new_user";
+            $form['_password'] = "integration_test_new_user";
+            $form['_remember_me']->tick();
+            $client->submit($form);
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+            //test login successful
+            $crawler =$client->request('GET', '/home');
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+            $this->assertCount(1, $crawler->filter('a[href="/study"] input[type="button"][value="Study Now!"]'));
+            $crawler = $client->request('GET', '/profile');
+            // Fill the form with a new pass and submit it
+            $form = $crawler->filter('#password-edit-confirm')->form();
+            $form['edit-password1'] = 'new_password';
+            $form['edit-password2'] = 'new_password';
+            $form['edit-password-old'] = 'integration_test_new_user';
+            $client->submit($form);
+
+            //logout and login again to test password
+            $client->request('GET', '/logout');
+            $crawler = $client->request('GET', '/home');
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+            $this->assertCount(1, $crawler->filter('a[href="/register"] input[type="button"][value="Join Now"]'));
+            //login with new pass
+            $crawler =$client->request('GET', '/login');
+            $form = $crawler->selectButton('Login')->form();
+            $form['_username'] = "integration_test_new_user";
+            $form['_password'] = "new_password";
+            $form['_remember_me']->tick();
+            $client->submit($form);
+            //test if new pass valid
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+            $crawler =$client->request('GET', '/home');
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+            $this->assertCount(1, $crawler->filter('a[href="/study"] input[type="button"][value="Study Now!"]'));
+
+            //change it back and logout and login again
+            $crawler = $client->request('GET', '/profile');
+            // Fill the form with a new pass and submit it
+            $form = $crawler->filter('#password-edit-confirm')->form();
+            $form['edit-password1'] = 'integration_test_new_user';
+            $form['edit-password2'] = 'integration_test_new_user';
+            $form['edit-password-old'] = 'new_password';
+            $client->submit($form);
+            //logout and login again to test password
+            $client->request('GET', '/logout');
+            $crawler = $client->request('GET', '/home');
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+            $this->assertCount(1, $crawler->filter('a[href="/register"] input[type="button"][value="Join Now"]'));
+            //final login to check if it was changed back
+            $crawler =$client->request('GET', '/login');
+            $form = $crawler->selectButton('Login')->form();
+            $form['_username'] = "integration_test_new_user";
+            $form['_password'] = "integration_test_new_user";
+            $form['_remember_me']->tick();
+            $client->submit($form);
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+            //test final login successfun
+            $crawler =$client->request('GET', '/home');
+            $this->assertSelectorTextContains('.container-title', 'StudHub!');
+            $this->assertCount(1, $crawler->filter('a[href="/study"] input[type="button"][value="Study Now!"]'));
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
+    }
 
 }

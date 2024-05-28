@@ -100,6 +100,9 @@ class HomePageControllerTest extends WebTestCase
 
     public function testDirectingToTeam()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
         try {
             $client = static::createClient();
 
@@ -129,12 +132,18 @@ class HomePageControllerTest extends WebTestCase
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
         }
     }
 
 
     public function testTeamPhotoDisplayOnTeam()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
         try {
             $client = static::createClient();
 
@@ -159,11 +168,17 @@ class HomePageControllerTest extends WebTestCase
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
         }
     }
 
     public function testMemberCardDisplayOnTeam()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
         try {
             $client = static::createClient();
 
@@ -177,12 +192,18 @@ class HomePageControllerTest extends WebTestCase
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
         }
     }
 
 
     public function testMemberCaptionDisplayOnTeam()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
         try {
             $client = static::createClient();
 
@@ -208,12 +229,18 @@ class HomePageControllerTest extends WebTestCase
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
         }
     }
 
 
     public function testMemberHyperlinkDisplayOnTeam()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
         try {
             $client = static::createClient();
 
@@ -264,12 +291,18 @@ class HomePageControllerTest extends WebTestCase
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
         }
     }
 
 
     public function testMemberIntroDisplayOnTeam()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
+
         try {
             $client = static::createClient();
 
@@ -305,6 +338,9 @@ class HomePageControllerTest extends WebTestCase
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        }finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
         }
     }
 

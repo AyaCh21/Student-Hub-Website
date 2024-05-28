@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-         colors="true"
-         verbose="true"
-         stopOnFailure="false"
-         stopOnError="false"
-         stopOnRisky="false"
-         stopOnSkipped="false"
-         stopOnIncomplete="false">
-
-    <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <coverage cacheDirectory=".phpunit.cache/code-coverage"
-              processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-        <report>
-            <cobertura outputFile="cobertura.xml"/>
-            <html outputDirectory="phpunit-html"/>
-            <text outputFile="php://stdout"/>
-        </report>
-    </coverage>
-
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" stopOnFailure="false" stopOnError="false" stopOnRisky="false" stopOnSkipped="false" stopOnIncomplete="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <testsuites>
+    <testsuite name="Project Test Suite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+  <coverage>
+    <report>
+      <cobertura outputFile="cobertura.xml"/>
+      <html outputDirectory="phpunit-html"/>
+      <text outputFile="php://stdout"/>
+    </report>
+  </coverage>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
 </phpunit>

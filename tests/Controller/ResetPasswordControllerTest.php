@@ -11,7 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 
 //=====================================================================//
-//Note: this controller revolves the use of an actual email,
+//Note: Tests: 3, Assertions: 9, Warnings: 2.
+//      this controller revolves the use of an actual email,
 //      hence only test the render and redirections.
 //=====================================================================//
 class ResetPasswordControllerTest extends WebTestCase
@@ -40,10 +41,29 @@ class ResetPasswordControllerTest extends WebTestCase
         }
     }
 
+
+    //unable to test without valid realife email
     public function testReset()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
 
+        try {
+            $client = static::createClient();
+
+            $client->request('GET', '/reset/invalidtoken');
+            //impossible to reset without valid token
+            $this->assertResponseStatusCodeSame(404);
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
     }
+
 
     public function testResetPasswordRequestPage()
     {

@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 //======================================================================================================//
-//Note:
+//Note: Tests: 2, Assertions: 15, Warnings: 2.
 //      this controller uses JSOn to fetch all necessary course data at loading, most functionality implemented by JavaScript.
 //      hence simple test added to check redirection successful.
 //=====================================================================================================//

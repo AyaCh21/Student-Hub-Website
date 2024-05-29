@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@mysql.studev.groept.be" uuid="2d3abe39-a4c7-4850-929a-f00c34237ca5">
+    <data-source source="LOCAL" name="mysql.studev.groept.be" uuid="2d3abe39-a4c7-4850-929a-f00c34237ca5">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
@@ -14,7 +14,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="studhub_test@localhost" uuid="22a20161-de0c-488f-8628-ebd21c0bc210">
+    <data-source source="LOCAL" name="@localhost" uuid="22a20161-de0c-488f-8628-ebd21c0bc210">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

@@ -3,31 +3,20 @@ body, html {
     overflow: visible; /* Ensure content is not clipped */
 }
 
-.phase-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    /*height: auto;*/
-    margin:0.4rem;
-    padding: 5px;
-    flex-grow: 1; /* Allow it to grow with content */
-    flex-shrink: 1; /* Allow it to shrink if necessary */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
+
 .phase-header {
     /*background: var(--minor-color);*/
     background: #4a4a4a;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 5px;
     position: sticky;
     top: 0; /* Sticks to the top of the container */
     z-index: 1; /* so it appears above the other content */
     border-radius: 8px; /* rounded corners */
     cursor: pointer;
 }
+
 
 .phase-icon {
     display: block;
@@ -38,24 +27,38 @@ body, html {
     display: flex;
     flex-direction: column;
     position: sticky;
-    margin-bottom: 10rem;
-    width: 100%;
+    width: 60%;
     overflow: hidden;
-    height: fit-content;
+    height:auto;
     align-content: start;
-    flex: 1;
+    /*flex: 1;*/
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     border-radius: 8px; /* Rounded corners */
+    margin: 0 auto;
+}
+
+.phase-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    margin:0.4rem;
+    padding: 5px;
+    flex-grow: 1; /* Allow it to grow with content */
+    flex-shrink: 1; /* Allow it to shrink if necessary */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden;
 }
 
 .courses {
-    width: 90vw;
+    /*width: 90vw;*/
     padding: 10px 0;
-    height: fit-content;
+    height: auto;
     /*flex-direction: column;*/
     gap: 10px; /* Space between courses */
     overflow-y: auto;  /* this is so tat there is a scroll bar for the list of courses*/
     margin: auto;
+    display: block;
 }
 
 .courses.expanded {
@@ -65,27 +68,19 @@ body, html {
     /*height: fit-content;*/
     height: auto;
     overflow: visible;
-
 }
 
-/*.courses.expanded {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; !* Space between courses *!
-   min-height: auto;
-}*/
 
 .courses li {
     list-style: none;
-    width: 25rem;
-    height: fit-content;
+    width: 31rem;
+    /*height: 6rem;*/
     margin: 1rem;
     cursor: pointer;
     display: inline-block;
     text-align: start;
     border-radius: 0.8rem; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-
 }
 .course {
     display: block;

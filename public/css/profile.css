@@ -105,23 +105,26 @@ input[type=button]:hover, input[type=submit]:hover {
 
 .reset-form {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-right: 2rem;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 .reset-form label {
+    font-size: larger;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .reset-form select {
-    padding: 0.5rem;
-    font-size: 1rem;
+    background-color:#858888;
+    width: 150px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    max-width: 200px;
+    border-radius: 20px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    margin-top: 20px;
+    margin-right: 1.5rem;
 }
 
 
@@ -149,14 +152,14 @@ input[type=button]:hover, input[type=submit]:hover {
 #username-edit-cancel {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #1f4be5;
-    color: white;
+    background-color: var(--light-color);
+    color: var(--dark-color);
     cursor: pointer;
 }
 
 #username-edit-confirm:hover,
 #username-edit-cancel:hover {
-    background-color: #1f4be5;
+    background-color: var(--light-color);
 }
 
 
@@ -182,14 +185,14 @@ input[type=button]:hover, input[type=submit]:hover {
 #email-edit-cancel {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #1f4be5;
-    color: white;
+    background-color: var(--light-color);
+    color: var(--dark-color);
     cursor: pointer;
 }
 
 #email-edit-confirm:hover,
 #email-edit-cancel:hover {
-    background-color: #1f4be5;
+    background-color: var(--light-color);
 }
 
 #password-edit-display {
@@ -219,14 +222,14 @@ input[type=button]:hover, input[type=submit]:hover {
 #password-edit-cancel {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #1f4be5;
-    color: white;
+    background-color: var(--light-color);
+    color: var(--dark-color);
     cursor: pointer;
 }
 
 #password-edit-confirm:hover,
 #password-edit-cancel:hover {
-    background-color: #1f4be5;
+    background-color:var(--light-color);
 }
 .info-row {
     display: flex;

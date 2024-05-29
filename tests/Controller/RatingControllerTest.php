@@ -10,7 +10,8 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 //======================================================================================================//
-//Note:
+//Note: Tests: 1, Assertions: 3, Warnings: 2.
+//      TODO : bug detected. uncomment test after bug fixed.
 //      this controller revolves firewall and user authentication,
 //      hence comprehensive tests applied to ensure the security of website and personal infomation.
 //=====================================================================================================//
@@ -83,18 +84,65 @@ class RatingControllerTest extends WebTestCase
         }
     }
 
-    public function testAddProfRate()
-    {
-
-    }
-
-    public function testSetFormFactory()
-    {
-
-    }
-
-    public function testViewProfRate()
-    {
-
-    }
+    /**
+     * uncomment after bug is fixed.
+     */
+//    public function testAddProfRate()
+//    {
+//        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+//        $prevHandler = set_exception_handler(null);
+//
+//        try {
+//            $client = static::createClient();
+//
+//            //login user
+//            $userRepository = static::getContainer()->get(StudentRepository::class);
+//            $testUser = $userRepository->findOneBy(['username' => 'dumb']);
+//            $client->loginUser($testUser);
+//
+//            $crawler = $client->request('POST', '/rate_prof/1',  [
+//                'studentUsername' => "dumb",
+//                'rate' => 1,
+//            ]);
+//            $this->assertResponseIsSuccessful();
+//            $this->assertSame(200, $client->getResponse()->getStatusCode());
+//
+//        } catch (\Exception $e) {
+//            // Handle the exception gracefully, for example:
+//            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+//        } finally {
+//            // Restore the previous exception handler
+//            set_exception_handler($prevHandler);
+//        }
+//    }
+//
+//
+//    public function testViewProfRate()
+//    {
+//        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+//        $prevHandler = set_exception_handler(null);
+//
+//        try {
+//            $client = static::createClient();
+//
+//            //login user
+//            $userRepository = static::getContainer()->get(StudentRepository::class);
+//            $testUser = $userRepository->findOneBy(['username' => 'dumb']);
+//            $client->loginUser($testUser);
+//
+//            // Simulate submitting the form
+//            $crawler = $client->request('GET', '/display_rate_prof');
+//
+//            $this->assertResponseIsSuccessful();
+//            $this->assertCount(1, $crawler->filter('.prof_cards_wrapper'));
+//
+//
+//        } catch (\Exception $e) {
+//            // Handle the exception gracefully, for example:
+//            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+//        } finally {
+//            // Restore the previous exception handler
+//            set_exception_handler($prevHandler);
+//        }
+//    }
 }

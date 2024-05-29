@@ -7,6 +7,7 @@ use App\Entity\StudyMaterial;
 use App\Entity\Comment;
 use App\Entity\Professor;
 use App\Entity\rating_exam;
+use App\Entity\ExamRate;
 use App\Form\CommentForm;
 use App\Form\ReplyForm;
 use App\Form\RatingType;
@@ -19,12 +20,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\StudyMaterialType;
+use App\Entity\LabInstructor;
+use App\Entity\LabRate;
+use App\Repository\LabRateRepository;
+use App\Repository\LabInstructorRateRepository;
+
 
 class LectureController extends AbstractController
 {
     #[Route("/lecture/{id}/{type}", name: "lecture")]
     public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request, RatingExamRepository $ratingExamRepository, ProfessorRateRepository $professorRateRepository,
-                            ProfessorRepository $professorRepository): Response
+                            ProfessorRepository $professorRepository, LabRateRepository $labRateRepository, LabInstructorRateRepository $labInstructorRateRepository): Response
     {
         // Fetch the course name
         $course = $entityManager->getRepository(Course::class)->find($id);
@@ -35,8 +41,6 @@ class LectureController extends AbstractController
         $professorName = $professor ? $professor->getName() : 'Unknown Professor';
         // Fetch average professor rating
         $averageProfessorRating = $professor ? $professorRateRepository->getAverageRatingForProfessor($professor->getId()) : null;
-
-
 
         $studyMaterials = $entityManager->getRepository(StudyMaterial::class)->findBy([
             'course' => $id,
@@ -141,11 +145,26 @@ class LectureController extends AbstractController
                 'type' => $type
             ]);
         }
-
-
-
         // Fetch average course rating (this is actual an exam rating)
         $averageCourseRating = $ratingExamRepository->getAverageRatingForCourse($id);
+
+
+
+        // Fetch lab instructors and their average ratings
+        $labInstructors = $course->getLabInstructors();  // This returns a collection of LabInstructor
+        $labInstructorRatings = [];
+        $labInstructorNames = [];  // Initialize an array to store lab instructor names
+
+        foreach ($labInstructors as $labInstructor) {
+            $labInstructorRatings[] = [
+                'labInstructor' => $labInstructor,
+                'averageRating' => $labInstructorRateRepository->getAverageRatingForLabInstructor($labInstructor->getId())
+            ];
+            $labInstructorNames[] = $labInstructor->getName();  // Add the name to the array
+        }
+
+
+        $averageLabRating = $labRateRepository->getAverageRatingForLab($id);
 
         // Fetch average professor rating
         //$averageProfessorRating = $professor ? $professorRateRepository->getAverageRatingForProfessor($professor->getId()) : null;
@@ -155,6 +174,7 @@ class LectureController extends AbstractController
             'studyMaterials' => $studyMaterials,
             'type' => ucfirst($type),  // Capitalize the first letter of the type for display
             'courseName' => $courseName,  // Pass the course name to the template
+            'course' => $course,
             'comments' => $comments,
             'commentForm' => $commentForm->createView(),
             'replyForm' => $replyForm->createView(),
@@ -163,7 +183,13 @@ class LectureController extends AbstractController
             'averageCourseRating' => $averageCourseRating,
             'averageProfessorRating' => $averageProfessorRating,
             'professorName' => $professorName,
-            'form' => $form->createView()
+            'professor' => $professor,
+            'form' => $form->createView(),
+            'averageLabRating' => $averageLabRating,
+            'labInstructorName' => $labInstructorNames,  // Pass the array of names to the view
+            'labInstructor' => $labInstructors,  // Pass the collection of lab instructors
+            'labInstructorRatings' => $labInstructorRatings,  // Pass this variable to the view
+
         ]);
     }
     #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]

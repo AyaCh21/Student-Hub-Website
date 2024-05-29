@@ -1,7 +1,8 @@
-{# templates/rate_professor.html.twig #}
+{# templates/rate_lab_instructor.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Rate {{ professor.name }}{% endblock %}
+{% block title %}Rate {{ labInstructor.name }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -11,7 +12,7 @@
 {% block content %}
     <div class="container">
         <div class="rating-wrapper">
-            <h1>Rate {{ professor.name }}</h1>
+            <h1>Rate {{ labInstructor.name }}</h1>
 
             {{ form_start(form) }}
             <div class="form-group">

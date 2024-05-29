@@ -1,34 +1,35 @@
 <?php
+
 namespace App\Entity;
 
-
-use App\Repository\RatingExamRepository;
+use App\Repository\LabRateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
-#[ORM\Entity(repositoryClass: RatingExamRepository::class)]
-#[ORM\Table('ratingExam')]
-class ExamRate
+#[ORM\Entity(repositoryClass: LabRateRepository::class)]
+#[ORM\Table('ratingLab')]
+class LabRate
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'rate')]
+    #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'labRates')]
     #[ORM\JoinColumn(name: 'course_id', referencedColumnName: 'id')]
-//    #[ORM\Column(name: 'course_id', type: "integer")]
     private ?Course $course = null;
 
-    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'rate')]
-    #[ORM\JoinColumn(name: 'student_id',referencedColumnName: 'id')]
-//    #[ORM\Column(name: 'student_id', type: "integer")]
+    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'labRates')]
+    #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id')]
     private ?Student $student = null;
 
-    #[ORM\Column(name: 'rate_value', type: 'integer', nullable: true)]
+    #[ORM\Column(name: 'rate_value', type: "integer", nullable: false)]
     private ?int $rateValue = null;
 
-    // Getters and setters for courseId, studentId, and rateValue properties
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getCourse(): ?Course
     {
         return $this->course;
@@ -54,8 +55,9 @@ class ExamRate
         return $this->rateValue;
     }
 
-    public function setRateValue(?int $rateValue): void
+    public function setRateValue(int $rateValue): void
     {
         $this->rateValue = $rateValue;
     }
+
 }

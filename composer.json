@@ -38,8 +38,8 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-        "phpunit/php-code-coverage": "^9.2",
-        "phpunit/phpunit": "^9.6",
+        "phpunit/php-code-coverage": "^11.0",
+        "phpunit/phpunit": "^11.1",
         "symfony/maker-bundle": "*",
         "symfony/stopwatch": "6.4.*",
         "symfony/web-profiler-bundle": "6.4.*"

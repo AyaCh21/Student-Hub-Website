@@ -17,9 +17,27 @@ use PHPUnit\Framework\TestCase;
 class ResetPasswordControllerTest extends WebTestCase
 {
 
-    public function testCheckEmail()
+    public function testCheckEmailPage()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
 
+        try {
+            $client = static::createClient();
+
+            $client->request('GET', '/reset-password/check-email');
+
+            $this->assertResponseIsSuccessful();
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('p', 'If an account matching');
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
     }
 
     public function testReset()
@@ -27,7 +45,7 @@ class ResetPasswordControllerTest extends WebTestCase
 
     }
 
-    public function testResetPasswordRequest()
+    public function testResetPasswordRequestPage()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
         $prevHandler = set_exception_handler(null);

@@ -12,8 +12,7 @@ use PHPUnit\Framework\TestCase;
 //======================================================================================================//
 //Note: Tests: 1, Assertions: 3, Warnings: 2.
 //      TODO : bug detected. uncomment test after bug fixed.
-//      this controller revolves firewall and user authentication,
-//      hence comprehensive tests applied to ensure the security of website and personal infomation.
+//
 //=====================================================================================================//
 class RatingControllerTest extends WebTestCase
 {

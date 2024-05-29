@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 //======================================================================================================//
-//Note: Tests: 18, Assertions: 111, Warnings: 2.
+//Note:
 //      this controller uses JSOn to fetch all necessary course data at loading, most functionality implemented by JavaScript.
 //      hence simple test added to check redirection successful.
 //=====================================================================================================//
@@ -53,7 +53,7 @@ class StudyControllerTest extends WebTestCase
     }
 
 
-    public function testToggleFavorite()
+    public function testToggleFavoriteValidRequest()
     {
         // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
         $prevHandler = set_exception_handler(null);
@@ -70,6 +70,21 @@ class StudyControllerTest extends WebTestCase
             $this->assertResponseIsSuccessful();
             $this->assertSame(200, $client->getResponse()->getStatusCode());
             $this->assertSelectorTextContains('h2', 'FavoriteCourse');
+
+            $crawler = $client->request('POST', '/favorite/toggle',  [
+                'courseId' => 1,
+                'isChecked' => 1,
+            ]);
+            $this->assertResponseIsSuccessful();
+            $this->assertSame(200, $client->getResponse()->getStatusCode());
+//            $this->assertCount(2, $crawler->filter('h3.course-toggle:contains("Fundamentals of Mathematics")'));
+            //need functional testing for result
+
+            $crawler = $client->request('POST', '/favorite/toggle',  [
+                'courseId' => 0,
+                'isChecked' => 0,
+            ]);
+            $this->assertSame(400, $client->getResponse()->getStatusCode());
         } catch (\Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());

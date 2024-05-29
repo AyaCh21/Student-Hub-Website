@@ -9,6 +9,10 @@ use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
+//======================================================================================================//
+//Note: Tests: 9, Assertions: 67, Warnings: 2.
+//      this controller revolves user authentication,
+//=====================================================================================================//
 class HomePageControllerTest extends WebTestCase
 {
     protected static function createKernel(array $options = []): \Symfony\Component\HttpKernel\KernelInterface

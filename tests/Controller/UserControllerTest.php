@@ -11,7 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 
 //======================================================================================================//
-//Note: this controller revolves firewall and user authentication,
+//Note: Tests: 18, Assertions: 111, Warnings: 2.
+//      this controller revolves firewall and user authentication,
 //      hence comprehensive tests applied to ensure the security of website and personal infomation.
 //=====================================================================================================//
 class UserControllerTest extends WebTestCase

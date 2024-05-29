@@ -2,7 +2,11 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\ResetPasswordController;
+use App\Repository\StudentRepository;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Entity\Student;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 
@@ -10,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 //Note: this controller revolves the use of an actual email,
 //      hence only test the render and redirections.
 //=====================================================================//
-class ResetPasswordControllerTest extends TestCase
+class ResetPasswordControllerTest extends WebTestCase
 {
 
     public function testCheckEmail()
@@ -23,9 +27,27 @@ class ResetPasswordControllerTest extends TestCase
 
     }
 
-    public function testRequest()
+    public function testResetPasswordRequest()
     {
+        // PHPUnit 11 checks for any leftovers in error handlers, manual cleanup
+        $prevHandler = set_exception_handler(null);
 
+        try {
+            $client = static::createClient();
+
+            $client->request('GET', '/reset-password');
+
+            $this->assertResponseIsSuccessful();
+            $this->assertResponseStatusCodeSame(200);
+            $this->assertSelectorTextContains('h1', 'Reset your password');
+
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, for example:
+            $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+        } finally {
+            // Restore the previous exception handler
+            set_exception_handler($prevHandler);
+        }
     }
 
 

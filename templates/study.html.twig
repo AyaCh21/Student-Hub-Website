@@ -113,39 +113,41 @@
         <button onclick="searchCourse()">Search</button>
     </div>
 
-    <div class="favorite-wrapper">
-        <div class="phase-header">
-            <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#fff" viewBox="0 -960 960 960" width="34">
-                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
-            </svg>
-            <h2 class="phase-toggle is-size-6-mobile is-size-4-desktop" onclick="togglePhase(this)">FavoriteCourse</h2>
+
+    <div class="phases-wrapper">
+        <div class="phase-wrapper favorite-wrapper">
+            <div class="phase-header">
+                <svg class="phase-icon" xmlns="http://www.w3.org/2000/svg" height="34" fill="#fff" viewBox="0 -960 960 960" width="34">
+                    <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path>
+                </svg>
+                <h2 class="phase-toggle is-size-6-mobile is-size-4-desktop" onclick="togglePhase(this)">FavoriteCourse</h2>
+            </div>
+            <ul class="courses" style="display: none;">
+                {% for course in favoriteData %}
+                    <li class="course" id="{{ course.name | lower | replace({' ': '_'}) }}">
+                        <h3 class="course-toggle is-size-7-mobile is-size-5-desktop" onclick="toggleCourse(this)">{{ course.name }}</h3>
+                        <label>
+                            <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)"
+                                   {% if course.id in favoriteData|column('id') %}checked  {% endif %}>
+                            choose as favorite
+                        </label>
+                        {% if course.pdf is defined and course.pdf is not null %}
+                            <div class="pdf-viewer">
+                                <embed src="{{ asset(course.pdf) }}" type="application/pdf" width="600" height="400"></embed>
+                            </div>
+                        {% endif %}
+                        <ul class="options" style="display: none;">
+                            <li class="option">
+                                <a href="{{ path('lecture', {'id': course.id, 'type': 'lecture'}) }}">Lecture</a>
+                            </li>
+                            <li class="option">
+                                <a href="{{ path('lecture', {'id': course.id, 'type': 'lab'}) }}">Lab</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-        <ul class="courses" style="display: none;">
-            {% for favoriteCourse in favoriteData %}
-                <li class="course">
-                    <h3 class="course-toggle is-size-5-mobile is-size-3-desktop" onclick="toggleCourse(this)">{{ favoriteCourse.name }}</h3>
-                    <label>
-                        <input type="checkbox" class="favorite-toggle" data-course-id="{{ favoriteCourse.id }}" onchange="toggleFavorite(this)"
-                               {% if favoriteCourse.id in favoriteData|column('id') %}checked  {% endif %}>
-                        choose as favorite
-                    </label>
-                    <!-- Assuming favorite courses have PDF and options as well -->
-                    {% if favoriteCourse.pdf is defined and favoriteCourse.pdf is not null %}
-                        <div class="pdf-viewer">
-                            <embed src="{{ asset(favoriteCourse.pdf) }}" type="application/pdf" width="600" height="400"></embed>
-                        </div>
-                    {% endif %}
-                    <ul class="options" style="display: none;">
-                        <li class="option">
-                            <a href="{{ path('lecture', {'id': favoriteCourse.id, 'type': 'lecture'}) }}">Lecture</a>
-                        </li>
-                        <li class="option">
-                            <a href="{{ path('lecture', {'id': favoriteCourse.id, 'type': 'lab'}) }}">Lab</a>
-                        </li>
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
     </div>
 
 
@@ -162,13 +164,11 @@
                     {% for course in courses %}
                         <li class="course" id="{{ course.name | lower | replace({' ': '_'}) }}">
                             <h3 class="course-toggle is-size-7-mobile is-size-5-desktop" onclick="toggleCourse(this)">{{ course.name }}</h3>
-                            <!-- Add toggle favorite checkbox or button -->
                             <label>
-                            <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)"
-                            {% if course.id in favoriteData|column('id') %}checked  {% endif %}>
+                                <input type="checkbox" class="favorite-toggle" data-course-id="{{ course.id }}" onchange="toggleFavorite(this)"
+                                       {% if course.id in favoriteData|column('id') %}checked  {% endif %}>
                                 choose as favorite
                             </label>
-                            <!-- End of toggle favorite -->
                             {% if course.pdf is defined and course.pdf is not null %}
                                 <div class="pdf-viewer">
                                     <embed src="{{ asset(course.pdf) }}" type="application/pdf" width="600" height="400"></embed>
@@ -245,8 +245,10 @@
             var courses = element.parentElement.nextElementSibling;
             if (courses.style.display === 'none' || !courses.style.display) {
                 courses.style.display = 'block';
+                element.parentElement.parentElement.style.height = 'fit-content';
             } else {
                 courses.style.display = 'none';
+                element.parentElement.parentElement.style.height = 'auto';
             }
         }
 
@@ -254,8 +256,10 @@
             var options = element.nextElementSibling.nextElementSibling;
             if (options.style.display === 'none' || !options.style.display) {
                 options.style.display = 'block';
+                element.parentElement.style.height = 'fit-content';
             } else {
                 options.style.display = 'none';
+                element.parentElement.style.height = 'auto';
             }
         }
     </script>

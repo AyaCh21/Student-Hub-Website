@@ -28,6 +28,16 @@ class ExamRate
     #[ORM\Column(name: 'rate_value', type: 'integer', nullable: true)]
     private ?int $rateValue = null;
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     // Getters and setters for courseId, studentId, and rateValue properties
     public function getCourse(): ?Course
     {

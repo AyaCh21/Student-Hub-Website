@@ -61,6 +61,7 @@ production-job:
     - git config --global user.name "Wiktoria Laura Radecka"
     - git config --global user.email "wiktorialaura.radecka@student.kuleuven.be"
     - git remote set-url origin git@gitlab.kuleuven.be:groep-t/courses/web-technology/students/projects/Team301.git
+    - git fetch origin
     - git checkout main
     - git merge dev
     - git push origin main

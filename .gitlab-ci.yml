@@ -38,7 +38,8 @@ unit-job:
     - build-job
   before_script:
     # dependencies for composer to run
-    - apk add git unzip zip libzip-dev zlib-dev autoconf build-base
+    - apt-get update
+    - apt-get -y install git unzip zip libzip-dev zlib1g-dev autoconf build-essential
     - docker-php-ext-install zip
     # xdebug is needed for phpunit to generate coverage
     - pecl install xdebug
@@ -46,7 +47,6 @@ unit-job:
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
     - php -r "unlink('composer-setup.php');"
-
   script:
     - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage

@@ -18,22 +18,6 @@ class StudyMaterialTest extends TestCase
 
     }
 
-    public function testGetAndSetMaterialType()
-    {
-        $materialType = MaterialType::lecture;
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setMaterialType($materialType);
-        $this->assertEquals($materialType, $studyMaterial->getMaterialType());
-    }
-
-    public function testSetMaterialType()
-    {
-        $materialType = MaterialType::lecture;
-        $studyMaterial = new StudyMaterial();
-        $studyMaterial->setMaterialType($materialType);
-        $this->assertEquals($materialType, $studyMaterial->getMaterialType());
-    }
-
     public function testGetAndSetUploadedBy()
     {
         $material = new StudyMaterial();

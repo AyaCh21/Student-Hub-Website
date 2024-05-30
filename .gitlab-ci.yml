@@ -43,7 +43,7 @@ test-job:
     - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
     - export XDEBUG_MODE=coverage
-    - php bin/console doctrine:migr
+    - php bin/console doctrine:migrate
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
   artifacts:
     paths: 

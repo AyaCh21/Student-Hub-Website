@@ -25,7 +25,10 @@ test-job:
     - mysql:latest
   variables:
     MYSQL_DATABASE: a23www301
+    MYSQL_USER: root
     MYSQL_ROOT_PASSWORD: ra3wnmlO
+    MYSQL_PASSWORD: ra3wnmlO
+    DATABASE_URL: "mysql://root:nmsl2020@127:0:0:1:3306/a23www301"
   before_script:
     # dependencies for composer to run
     - apt-get update
@@ -34,7 +37,7 @@ test-job:
     # xdebug is needed for phpunit to generate coverage
     - pecl install xdebug
     - docker-php-ext-enable xdebug
-    - docker-php-ext-install pdo pdo_mysql
+    - dockertudhub_test" t-php-ext-install pdo pdo_mysql
     # install composer
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
@@ -42,11 +45,10 @@ test-job:
   script:
     - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
+    - php bin/console doctrine:migrations:migrate --env=test
+    - php bin/console doctrine:fixtures:load -n --env=test
     - export XDEBUG_MODE=coverage
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
-    - php artisan migrate
-    # Run tests
-    - php artisan test
   artifacts:
     paths: 
       - coverage.cobertura.xml

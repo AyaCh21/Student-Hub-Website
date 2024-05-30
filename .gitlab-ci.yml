@@ -44,6 +44,9 @@ test-job:
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
     - export XDEBUG_MODE=coverage
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
+    - php artisan migrate
+    # Run tests
+    - php artisan test
   artifacts:
     paths: 
       - coverage.cobertura.xml

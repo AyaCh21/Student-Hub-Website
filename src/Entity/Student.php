@@ -15,7 +15,7 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
     #[ORM\Column(length: 120)]
     private ?string $username = null;
@@ -23,7 +23,7 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
     #[ORM\Column(length: 20)]
     private ?string $password = null;
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $phase = null;
     #[ORM\Column(length: 20)]
     private ?string $specialisation=null;

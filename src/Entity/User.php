@@ -8,33 +8,33 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+/*#[ORM\Entity(repositoryClass: UserRepository::class)]*/
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
+   /* #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer')]*/
     private ?int $id;
 
-    #[ORM\Column(type: 'string')]
+/*    #[ORM\Column(type: 'string')]*/
     private string $username;
 
-    #[ORM\Column(type: 'string', length: 400, unique: true)]
+/*    #[ORM\Column(type: 'string', length: 400, unique: true)]*/
     private ?string $email;
 
-    #[ORM\Column(type: 'string')]
+/*    #[ORM\Column(type: 'string')]*/
     private string $password;
 
-    #[ORM\Column(type: 'int')]
+/*    #[ORM\Column(type: 'integer')]*/
     private int $phase;
 
-    #[ORM\Column(type: 'string')]
+/*    #[ORM\Column(type: 'string')]*/
     private string $specialization;
 
-    #[ORM\Column(type: 'int')]
+/*    #[ORM\Column(type: 'integer')]*/
     private int $newUser;
 
-    #[ORM\Column(type: 'json')]
+/*    #[ORM\Column(type: 'json')]*/
     private array $roles = [];
 
     /**

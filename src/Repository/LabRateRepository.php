@@ -6,6 +6,15 @@ use App\Entity\LabRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<LabRate>
+ *
+ * @method LabRate|null find($id, $lockMode = null, $lockVersion = null)
+ * @method LabRate|null findOneBy(array $criteria, array $orderBy = null)
+ * @method LabRate[]    findAll()
+ * @method LabRate[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+
 class LabRateRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

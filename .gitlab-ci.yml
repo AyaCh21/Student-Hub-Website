@@ -26,6 +26,8 @@ test-job:
   variables:
     MYSQL_DATABASE: a23www301
     MYSQL_ROOT_PASSWORD: ra3wnmlO
+    PANTHER_APP_ENV: panther
+    DATABASE_URL: "mysql://root:nmsl2020@127.0.0.1:3306/a23www301"
   before_script:
     # dependencies for composer to run
     - apt-get update
@@ -42,8 +44,12 @@ test-job:
   script:
     - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
+    - composer require --dev dbrekelmans/bdi && vendor/bin/bdi detect drivers
     - export XDEBUG_MODE=coverage
-    - php bin/console doctrine:migrations:migrate
+    - apt-get install chromium-chromedriver
+    - export PANTHER_CHROME_DIRVER_BINARY="/usr/lib/chromium/chromedriver"
+    - export PANTHER_NO_SANDBOX=1
+    - export PANTHER_WEB_SERVER_PART=9800
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
   artifacts:
     paths: 

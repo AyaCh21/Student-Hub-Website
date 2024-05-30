@@ -6,11 +6,6 @@ use App\Entity\Course;
 use App\Entity\StudyMaterial;
 use App\Entity\Comment;
 use App\Entity\Professor;
-use App\Entity\rating_exam;
-use App\Entity\ExamRate;
-use App\Form\CommentForm;
-use App\Form\ReplyForm;
-use App\Form\RatingType;
 use App\Repository\RatingExamRepository;
 use App\Repository\ProfessorRateRepository;
 use App\Repository\ProfessorRepository;
@@ -19,15 +14,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\CommentForm;
+use App\Form\ReplyForm;
 use App\Form\StudyMaterialType;
-use App\Entity\LabInstructor;
-use App\Entity\LabRate;
-use App\Repository\LabRateRepository;
-use App\Repository\LabInstructorRateRepository;
-
-
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use Psr\Log\LoggerInterface;
+use App\Service\PdfTextExtractor;
+use App\Service\TextSummarizer;
+use App\Service\SummaryPdfGenerator;
 class LectureController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger) {
+        $this->logger = $logger;
+    }
+
     #[Route("/lecture/{id}/{type}", name: "lecture")]
     public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request, RatingExamRepository $ratingExamRepository, ProfessorRateRepository $professorRateRepository,
                             ProfessorRepository $professorRepository, LabRateRepository $labRateRepository, LabInstructorRateRepository $labInstructorRateRepository): Response
@@ -47,18 +52,13 @@ class LectureController extends AbstractController
             'type' => $type
         ]);
 
-//        here the correct comments are gotten, it includes the replies to those comments (their children)
         $comments = $entityManager->getRepository(Comment::class)->findBy([
             'course_id' => $id,
             'type' => $type,
         ]);
 
-        $this->stylesheets[]='lecture.css';
+        $this->stylesheets[] = 'lecture.css';
         $this->javascripts[] = 'lecture.js';
-
-        $comment = new Comment();
-        $commentForm = $this->createForm(CommentForm::class, $comment);
-        $commentForm->handleRequest($request);
 
         $comment = new Comment();
         $commentForm = $this->createForm(CommentForm::class, $comment);
@@ -71,15 +71,12 @@ class LectureController extends AbstractController
             $comment->setCreatedAt(new \DateTime());
             $comment->setUpdatedAt(new \DateTime());
 
-            //this art is if the comment is a reply to another comment:
-            // Check if the comment is a reply to a top-level comment
             $parentId = $request->request->get('parent_id');
             if ($parentId) {
                 $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
                 if ($parentComment && $parentComment->getParent() === null) {
                     $comment->setParent($parentComment);
                 } else {
-                    // Handle the case where the parent comment is not top-level
                     throw new \Exception('You can only reply to top-level comments.');
                 }
             }
@@ -93,7 +90,6 @@ class LectureController extends AbstractController
         $replyForm = $this->createForm(ReplyForm::class, $comment);
         $replyForm->handleRequest($request);
 
-        // Handle the reply form submission
         if ($replyForm->isSubmitted() && $replyForm->isValid()) {
             $replyComment->setCourseId($id);
             $replyComment->setUserId($this->getUser()->getId());
@@ -101,7 +97,6 @@ class LectureController extends AbstractController
             $replyComment->setCreatedAt(new \DateTime());
             $replyComment->setUpdatedAt(new \DateTime());
 
-            // Set parent for reply
             $parentId = $request->request->get('parent_id');
             if ($parentId) {
                 $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
@@ -115,10 +110,6 @@ class LectureController extends AbstractController
 
             return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
         }
-        $studyMaterials = $entityManager->getRepository(StudyMaterial::class)->findBy([
-            'course' => $id,
-            'type' => $type
-        ]);
 
         $studyMaterial = new StudyMaterial();
         $studyMaterial->setCourse($entityManager->getRepository(Course::class)->find($id));
@@ -192,9 +183,46 @@ class LectureController extends AbstractController
 
         ]);
     }
-    #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]
-    public function viewPdf(int $id, EntityManagerInterface $entityManager): Response
+    #[Route('/generate_summary', name: 'generate_summary')]
+    public function generateSummary(Request $request, EntityManagerInterface $entityManager, PdfTextExtractor $pdfTextExtractor, TextSummarizer $textSummarizer, SummaryPdfGenerator $summaryPdfGenerator): Response
     {
+        $data = json_decode($request->getContent(), true);
+        $pdfId = $data['pdf_id'];
+
+        $studyMaterial = $entityManager->getRepository(StudyMaterial::class)->find($pdfId);
+        if (!$studyMaterial) {
+            return new Response('Material not found', 404);
+        }
+
+        $outputPath = sys_get_temp_dir() . '/summary.pdf';
+        $pages = [];
+
+        // Check if the study material has a file path or a blob
+        if ($studyMaterial->getFilePath()) {
+            $pdfPath = $studyMaterial->getFilePath();
+            $pages = $pdfTextExtractor->extractTextFromPath($pdfPath);
+        } elseif ($studyMaterial->getTestPdf()) {
+            $pdfBlob = stream_get_contents($studyMaterial->getTestPdf());
+            $pages = $pdfTextExtractor->extractTextFromBlob($pdfBlob);
+        }
+
+        // Check if the extracted text is empty or incomplete
+        if (empty($pages)) {
+            return new Response('Failed to extract text from PDF', 500);
+        }
+
+        // Summarize text using the existing summarizer
+        $summary = $textSummarizer->summarize($pages);
+
+        // Generate summary PDF
+        $summaryPdfGenerator->generate($summary, $outputPath);
+
+        $response = new BinaryFileResponse($outputPath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'summary.pdf');
+        return $response;
+    }
+    #[Route('/study_material/{id}/view_pdf', name: 'view_pdf')]
+    public function viewPdf(int $id, EntityManagerInterface $entityManager): Response {
         $studyMaterial = $entityManager->getRepository(StudyMaterial::class)->find($id);
 
         if (!$studyMaterial || !$studyMaterial->getTestPdf()) {
@@ -205,5 +233,4 @@ class LectureController extends AbstractController
         $response->headers->set('Content-Type', 'application/pdf');
         return $response;
     }
-
 }

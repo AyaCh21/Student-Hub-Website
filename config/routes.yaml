@@ -30,5 +30,19 @@ display_course_rate:
     controller: App\Controller\RatingController::viewCourseRate
 
 lecture:
-  path: /lecture/{id}/{type}
-  controller: App\Controller\LectureController::lecture
+    path: /lecture/{id}/{type}
+    controller: App\Controller\LectureController::lecture
+    methods: GET|POST
+
+
+view_pdf:
+    path: /study_material/{id}/view_pdf
+    controller: App\Controller\LectureController::viewPdf
+    methods: GET
+
+
+# config/routes.yaml
+generate_summary:
+    path: /generate_summary
+    controller: App\Controller\LectureController::generateSummary
+    methods: POST

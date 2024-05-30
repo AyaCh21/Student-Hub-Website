@@ -32,23 +32,20 @@ use App\Entity\LabInstructorRate;
 use App\Form\LabRateForm;
 use App\Form\LabInstructorRateForm;
 
-#[AllowDynamicProperties] class RatingController extends AbstractController
+class  RatingController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private array $stylesheets;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, private Security $security,)
     {
         $this->entityManager = $entityManager;
     }
-    public function setFormFactory(FormFactoryInterface $formFactory): void
-    {
-        $this->formFactory = $formFactory;
-    }
+
     /**
      * @Route("/rate_course", name="course_rate")
      */
-    public function rateCourse(Request $request): Response
+    public function addCourseRate(Request $request, AuthenticationUtils $authenticationUtils,UserPasswordHasherInterface $passwordHasher): Response
     {
         $rating = new examRate(); // Instantiate examRate without constructor parameters
 

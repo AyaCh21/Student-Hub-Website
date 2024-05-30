@@ -89,17 +89,18 @@
                         <a href="{{ material.getFilePath() }}" target="_blank" rel="noopener noreferrer">
                             {{ pdf_parts | last }}
                         </a>
+                        <button class="generate-summary" data-pdf-id="{{ material.getId() }}">Generate Summary</button>
                     </div>
                 {% elseif material.getTestPdf() %}
                     <div class="pdf-link">
                         <a href="{{ path('view_pdf', {id: material.getId()}) }}" target="_blank" rel="noopener noreferrer">
                             {{ material.getText() }}
                         </a>
+                        <button class="generate-summary" data-pdf-id="{{ material.getId() }}">Generate Summary</button>
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
-
 
         <div class="section upload-section">
             <h2 class="section-title">Upload your file here</h2>
@@ -114,8 +115,6 @@
             </div>
         </div>
 
-
-
         <div class="section comments-section">
             <h2 class="section-title">Comments</h2>
             {#this is where the user will post their own comment#}
@@ -125,11 +124,10 @@
                 <button type="submit" class="btn btn-primary">Add Comment</button>
                 {{ form_end(commentForm) }}
             </div>
-            {# below this all the comments for this page will be displayed#}
             <div class="comment-list">
                 {% for comment in comments %}
                     {% if comment.getParent() is null %}
-                        <div class="comment-wrapper">  <!-- Added wrapper for each top-level comment -->
+                        <div class="comment-wrapper">
                             <div class="comment">
                                 <p>{{ comment.getCommentText() }}</p>
                                 <small>Posted by User {{ comment.getUserId() }} on {{ comment.getCreatedAt()|date('Y-m-d H:i') }}</small>
@@ -138,7 +136,7 @@
                             {% if comment.getChildren() is not empty %}
                                 <div class="replies">
                                     {% for child in comment.getChildren() %}
-                                        <div class="comment-wrapper">  <!-- Added wrapper for each child comment -->
+                                        <div class="comment-wrapper">
                                             <div class="comment">
                                                 <p>{{ child.getCommentText() }}</p>
                                                 <small>Posted by User {{ child.getUserId() }} on {{ child.getCreatedAt()|date('Y-m-d H:i') }}</small>
@@ -154,22 +152,47 @@
         </div>
     </div>
 
-    {#    template for a reply form that is intially hidden#}
     <div id="reply-form-template" style="display: none;">
         {{ form_start(replyForm) }}
         {{ form_widget(replyForm.comment_text) }}
-        {{ form_widget(replyForm._token) }} {# Render the CSRF token #}
+        {{ form_widget(replyForm._token) }}
         <input type="hidden" name="parent_id" class="parent_id">
         <button type="submit" class="btn btn-primary">Reply</button>
         {{ form_end(replyForm) }}
     </div>
 
-{% endblock %}
-
-
-{% block javascripts %}
-    {{ parent() }}
-    {% for js in javascripts %}
-        <script src="{{ asset('js/' ~ js) }}"></script>
-    {% endfor %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.generate-summary').forEach(button => {
+                button.addEventListener('click', function() {
+                    const pdfId = this.dataset.pdfId;
+                    fetch('{{ path('generate_summary') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token('generate_summary') }}'
+                        },
+                        body: JSON.stringify({ pdf_id: pdfId })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.blob();
+                        })
+                        .then(blob => {
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.style.display = 'none';
+                            a.href = url;
+                            a.download = 'summary.pdf';
+                            document.body.appendChild(a);
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    </script>
 {% endblock %}

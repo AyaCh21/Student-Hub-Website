@@ -63,10 +63,10 @@ when@test:
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
 
-            legacy:
-                algorithm: sodium
-                encode_as_base64: false
-                iterations: 1
+#            legacy:
+#                algorithm: sodium
+#                encode_as_base64: false
+#                iterations: 1
 
             App\Entity\User:
                 # the new hasher, along with its options

@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 
+use App\Repository\CourseRateRepository;
 use App\Repository\RatingExamRepository;
 use Doctrine\ORM\Mapping as ORM;
 

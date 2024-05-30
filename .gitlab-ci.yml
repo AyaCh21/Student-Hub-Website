@@ -10,33 +10,34 @@ before_script:
   - chmod 700 ~/.ssh
   - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
   - apk add rsync
+  - docker-php-ext-install pdo pdo_mysql
+  - apk add chromium-chromedriver
 
 stages:
   - test
-  - production
   - deploy
 
-test-job:
+build-job:
+  stage: test
+  only: 
+    - dev
+  script:
+    - composer install --prefer-dist --no-interaction --optimize-autoloader
+
+unit-job:
   stage: test
   only:
     - dev
+  needs: 
+    - build-job
   image: php:8.2
-  services:
-    - mysql:latest
-  variables:
-    MYSQL_DATABASE: a23www301
-    MYSQL_ROOT_PASSWORD: ra3wnmlO
-    PANTHER_APP_ENV: panther
-    DATABASE_URL: "mysql://root:nmsl2020@127.0.0.1:3306/a23www301"
   before_script:
-    # dependencies for composer to run
-    - apt-get update
+    - # dependencies for composer to run
     - apt-get -yq install git unzip zip libzip-dev zlib1g-dev
     - docker-php-ext-install zip
     # xdebug is needed for phpunit to generate coverage
     - pecl install xdebug
     - docker-php-ext-enable xdebug
-    - docker-php-ext-install pdo pdo_mysql
     # install composer
     - php -r "copy(\"https://getcomposer.org/installer\", \"composer-setup.php\");"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
@@ -44,12 +45,6 @@ test-job:
   script:
     - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
-    - composer require --dev dbrekelmans/bdi && vendor/bin/bdi detect drivers
-    - export XDEBUG_MODE=coverage
-    - apt-get install chromium-chromedriver
-    - export PANTHER_CHROME_DIRVER_BINARY="/usr/lib/chromium/chromedriver"
-    - export PANTHER_NO_SANDBOX=1
-    - export PANTHER_WEB_SERVER_PART=9800
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
   artifacts:
     paths: 
@@ -64,30 +59,12 @@ test-job:
         coverage_format: cobertura
         path: coverage.cobertura.xml
 
-production-job:
-  stage: production
-  needs:
-    - test-job
-  only:
-    - dev
-  before_script:
-    - git config --global user.name "Wiktoria Laura Radecka"
-    - git config --global user.email "wiktorialaura.radecka@student.kuleuven.be"
-    - ssh-keyscan gitlab.kuleuven.be >> ~/.ssh/known_hosts
-    - git remote set-url origin git@gitlab.kuleuven.be:groep-t/courses/web-technology/students/projects/Team301.git
-  script:
-    - git fetch origin
-    - git checkout main
-    - git merge dev
-    - git push origin main
-
 deploy-job:
   stage: deploy
   only:
-    - main
+    - dev
   when: manual
   script:
-    - composer install --prefer-dist --no-interaction --optimize-autoloader
     - php bin/console cache:clear --env=prod --no-debug
     - php bin/console cache:warmup --env=prod --no-debug
     - rsync -avz --exclude=".git/" 

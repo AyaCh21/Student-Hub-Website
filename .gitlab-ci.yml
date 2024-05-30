@@ -21,6 +21,11 @@ test-job:
   only:
     - dev
   image: php:8.2
+  services:
+    - mysql:latest
+  variables:
+    MYSQL_DATABASE: a23www301
+    MYSQL_ROOT_PASSWORD: ra3wnmlO
   before_script:
     # dependencies for composer to run
     - apt-get update
@@ -29,6 +34,7 @@ test-job:
     # xdebug is needed for phpunit to generate coverage
     - pecl install xdebug
     - docker-php-ext-enable xdebug
+#    - docker-php-ext-install pdo pdo_mysql
     # install composer
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer

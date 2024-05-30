@@ -35,20 +35,14 @@ unit-job:
     - dev
   needs: 
     - build-job
-  image: php:8.2
   before_script:
-    - # dependencies for composer to run
+    # dependencies for composer to run
     - apt-get -yq install git unzip zip libzip-dev zlib1g-dev
     - docker-php-ext-install zip
     # xdebug is needed for phpunit to generate coverage
     - pecl install xdebug
     - docker-php-ext-enable xdebug
-    # install composer
-    - php -r "copy(\"https://getcomposer.org/installer\", \"composer-setup.php\");"
-    - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-    - php -r "unlink('composer-setup.php');"
   script:
-    - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
     - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
   artifacts:

@@ -40,51 +40,106 @@ document.getElementById('comment-form').addEventListener('submit', function(even
     });
 });
 
-// Reply button functionality
-document.querySelectorAll('.reply-button').forEach(button => {
-    button.addEventListener('click', function() {
-        const commentId = this.getAttribute('data-comment-id');
-        const commentWrapper = this.closest('.comment-wrapper');
+/*
+document.addEventListener("DOMContentLoaded", function() { // Ensure the code runs after the DOM is fully loaded
 
-        // Remove any existing reply form in this comment wrapper
-        const existingForm = commentWrapper.querySelector('.reply-form');
-        if (existingForm) {
-            existingForm.remove();
-        }
+    // Reply Button Functionality
+    document.querySelectorAll('.reply-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = this.getAttribute('data-comment-id');
+            const commentWrapper = this.closest('.comment-wrapper');
 
-        // Clone the hidden reply form template
-        const replyFormTemplate = document.getElementById('reply-form-template');
-        const replyForm = replyFormTemplate.cloneNode(true);
-        replyForm.style.display = 'block';
-        replyForm.classList.add('reply-form');
-        replyForm.querySelector('.parent_id').value = commentId;
+            // Remove any existing reply form in this comment wrapper
+            const existingForm = commentWrapper.querySelector('.reply-form');
+            if (existingForm) {
+                existingForm.remove(); // Ensure only one reply form is open at a time
+            }
 
-        // Append the reply form to the current comment wrapper
-        commentWrapper.appendChild(replyForm);
-        replyForm.scrollIntoView({ behavior: 'smooth' });
+            // Clone the hidden reply form template
+            const replyFormTemplate = document.getElementById('reply-form-template');
+            const replyForm = replyFormTemplate.cloneNode(true); // Clone the template
+            replyForm.id = ''; // Clear the ID to avoid duplicates
+            replyForm.style.display = 'block'; // Make the form visible
+            replyForm.classList.add('reply-form');
+            replyForm.querySelector('.parent_id').value = commentId; // Set the parent_id for the reply
 
-        // Add event listener to the newly added reply form's submit button
-        replyForm.querySelector('form').addEventListener('submit', handleReplyFormSubmit);
+            // Append the reply form to the current comment wrapper
+            commentWrapper.appendChild(replyForm);
+            replyForm.scrollIntoView({ behavior: 'smooth' }); // Scroll to the form smoothly
+
+            // Add event listener to the newly added reply form's submit button
+            replyForm.querySelector('form').addEventListener('submit', handleReplyFormSubmit);
+        });
     });
+
+    function handleReplyFormSubmit(event) { // Function to handle reply form submission
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, { // Use fetch to submit the form
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest' // Indicate an AJAX request
+            }
+        }).then(response => {
+            if (response.ok) {
+                form.reset(); // Reset the form after successful submission
+                form.closest('.reply-form').remove(); // Remove the form after successful submission
+            }
+        }).catch(error => {
+            console.error('Error submitting reply form:', error); // Handle any errors
+        });
+    }
 });
+*/
 
-function handleReplyFormSubmit(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listeners to all reply buttons
+    document.querySelectorAll('.reply-button').forEach(button => {
+        button.addEventListener('click', event => {
+            const commentId = event.target.getAttribute('data-comment-id');
+            const replyForm = document.getElementById(`reply-form-${commentId}`);
 
-    fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    }).then(response => {
-        if (response.ok) {
-            form.reset();
-            form.closest('.reply-form').remove(); // Remove the form after successful submission
-        }
-    }).catch(error => {
-        console.error('Error submitting reply form:', error);
+            // Toggle visibility of the reply form
+            if (replyForm.style.display === 'none' || replyForm.style.display === '') {
+                replyForm.style.display = 'block';
+            } else {
+                replyForm.style.display = 'none';
+            }
+
+            // Set the parent_id hidden field value
+            const parentIdField = replyForm.querySelector('input[name="reply_form[parent_id]"]');
+            if (parentIdField) {
+                parentIdField.value = commentId;
+            }
+
+            // Add event listener for the reply form submission
+            replyForm.querySelector('form').addEventListener('submit', handleReplyFormSubmit);
+        });
     });
-}
+
+    function handleReplyFormSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            if (response.ok) {
+                form.reset();
+                form.closest('.reply-form').style.display = 'none'; // Hide the form after successful submission
+            } else {
+                console.error('Failed to submit reply form.');
+            }
+        }).catch(error => {
+            console.error('Error submitting reply form:', error);
+        });
+    }
+});

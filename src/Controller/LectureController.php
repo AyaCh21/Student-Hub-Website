@@ -28,6 +28,8 @@ use App\Repository\LabInstructorRateRepository;
 
 class LectureController extends AbstractController
 {
+    private array $stylesheets;
+    private array $javascripts;
     #[Route("/lecture/{id}/{type}", name: "lecture")]
     public function lecture(int $id, string $type, EntityManagerInterface $entityManager,Request $request, RatingExamRepository $ratingExamRepository, ProfessorRateRepository $professorRateRepository,
                             ProfessorRepository $professorRepository, LabRateRepository $labRateRepository, LabInstructorRateRepository $labInstructorRateRepository): Response
@@ -71,9 +73,9 @@ class LectureController extends AbstractController
             $comment->setCreatedAt(new \DateTime());
             $comment->setUpdatedAt(new \DateTime());
 
-            //this art is if the comment is a reply to another comment:
+            //this part is if the comment is a reply to another comment:
             // Check if the comment is a reply to a top-level comment
-            $parentId = $request->request->get('parent_id');
+            /*$parentId = $request->request->get('parent_id');
             if ($parentId) {
                 $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
                 if ($parentComment && $parentComment->getParent() === null) {
@@ -82,14 +84,14 @@ class LectureController extends AbstractController
                     // Handle the case where the parent comment is not top-level
                     throw new \Exception('You can only reply to top-level comments.');
                 }
-            }
+            }*/
             $entityManager->persist($comment);
             $entityManager->flush();
 
             return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
         }
 
-        $replyComment = new Comment();
+        /*$replyComment = new Comment();
         $replyForm = $this->createForm(ReplyForm::class, $comment);
         $replyForm->handleRequest($request);
 
@@ -102,7 +104,7 @@ class LectureController extends AbstractController
             $replyComment->setUpdatedAt(new \DateTime());
 
             // Set parent for reply
-            $parentId = $request->request->get('parent_id');
+            $parentId = $request->request->get('reply_form')['parent_id'];
             if ($parentId) {
                 $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
                 if ($parentComment) {
@@ -114,6 +116,46 @@ class LectureController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
+        }*/
+
+        // alternative way to handle the replies
+        $replyForms = [];
+        foreach ($comments as $comment) {
+            if ($comment->getParent() === null) {
+                $replyComment = new Comment();
+                $replyForm = $this->createForm(ReplyForm::class, $replyComment, [
+                    'action' => $this->generateUrl('lecture', ['id' => $id, 'type' => $type])
+                ]);
+                $replyForms[$comment->getId()] = $replyForm->createView();
+            }
+        }
+
+        // Handle reply form submission
+        if ($request->isMethod('POST') && $request->request->has('reply_form')) {
+            $replyComment = new Comment();
+            $replyForm = $this->createForm(ReplyForm::class, $replyComment);
+            $replyForm->handleRequest($request);
+
+            if ($replyForm->isSubmitted() && $replyForm->isValid()) {
+                $replyComment->setCourseId($id);
+                $replyComment->setUserId($this->getUser()->getId());
+                $replyComment->setType($type);
+                $replyComment->setCreatedAt(new \DateTime());
+                $replyComment->setUpdatedAt(new \DateTime());
+
+                $parentId = $replyForm->get('parent_id')->getData();
+                if ($parentId) {
+                    $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
+                    if ($parentComment) {
+                        $replyComment->setParent($parentComment);
+                    }
+                }
+
+                $entityManager->persist($replyComment);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('lecture', ['id' => $id, 'type' => $type]);
+            }
         }
         $studyMaterials = $entityManager->getRepository(StudyMaterial::class)->findBy([
             'course' => $id,
@@ -148,8 +190,6 @@ class LectureController extends AbstractController
         // Fetch average course rating (this is actual an exam rating)
         $averageCourseRating = $ratingExamRepository->getAverageRatingForCourse($id);
 
-
-
         // Fetch lab instructors and their average ratings
         $labInstructors = $course->getLabInstructors();  // This returns a collection of LabInstructor
         $labInstructorRatings = [];
@@ -162,7 +202,6 @@ class LectureController extends AbstractController
             ];
             $labInstructorNames[] = $labInstructor->getName();  // Add the name to the array
         }
-
 
         $averageLabRating = $labRateRepository->getAverageRatingForLab($id);
 
@@ -177,7 +216,8 @@ class LectureController extends AbstractController
             'course' => $course,
             'comments' => $comments,
             'commentForm' => $commentForm->createView(),
-            'replyForm' => $replyForm->createView(),
+            /*'replyForm' => $replyForm->createView(),*/
+            'replyForms' => $replyForms,
             'stylesheets' => $this->stylesheets,
             'javascripts' => $this->javascripts,
             'averageCourseRating' => $averageCourseRating,

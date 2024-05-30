@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ asset('css/lecture.css') }}">
 {% endblock %}
 
+{#{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/lecture.js') }}"></script>
+{% endblock %}#}
+
 {% block content %}
     <div class="container">
         <h1>{{ courseName }}: {{ type }}</h1>
@@ -114,8 +119,6 @@
             </div>
         </div>
 
-
-
         <div class="section comments-section">
             <h2 class="section-title">Comments</h2>
             {#this is where the user will post their own comment#}
@@ -135,6 +138,14 @@
                                 <small>Posted by User {{ comment.getUserId() }} on {{ comment.getCreatedAt()|date('Y-m-d H:i') }}</small>
                                 <button class="reply-button" data-comment-id="{{ comment.getId() }}">Reply</button>
                             </div>
+                            <!-- Reply Form (Hidden by default) -->
+                            <div class="reply-form" id="reply-form-{{ comment.id }}" style="display: none;">
+                                {{ form_start(replyForms[comment.id], {'attr': {'class': 'reply-form'}}) }}
+                                {{ form_widget(replyForms[comment.id]) }}
+                                <input type="hidden" name="reply_form[parent_id]" value="{{ comment.id }}">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                {{ form_end(replyForms[comment.id]) }}
+                            </div>
                             {% if comment.getChildren() is not empty %}
                                 <div class="replies">
                                     {% for child in comment.getChildren() %}
@@ -152,24 +163,60 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
 
-    {#    template for a reply form that is intially hidden#}
-    <div id="reply-form-template" style="display: none;">
-        {{ form_start(replyForm) }}
-        {{ form_widget(replyForm.comment_text) }}
-        {{ form_widget(replyForm._token) }} {# Render the CSRF token #}
-        <input type="hidden" name="parent_id" class="parent_id">
-        <button type="submit" class="btn btn-primary">Reply</button>
-        {{ form_end(replyForm) }}
+        {#    template for a reply form that is intially hidden#}
+        {#<div id="reply-form-template" style="display: none;">
+            {{ form_start(replyForm) }}
+            {{ form_widget(replyForm.comment_text) }}
+            {{ form_widget(replyForm._token) }} #}{# Render the CSRF token #}{#
+            <input type="hidden" name="parent_id" class="parent_id">
+            <button type="submit" class="btn btn-primary">Reply</button>
+            {{ form_end(replyForm) }}
+        </div>#}
     </div>
-
 {% endblock %}
 
-
+{#
 {% block javascripts %}
     {{ parent() }}
     {% for js in javascripts %}
         <script src="{{ asset('js/' ~ js) }}"></script>
+        <script src="{{ asset('js/lecture.js') }}"></script>
     {% endfor %}
+{% endblock %}#}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("DOM fully loaded and parsed");
+
+            // Add event listeners to all reply buttons
+            document.querySelectorAll('.reply-button').forEach(button => {
+                console.log("Attaching event listener to reply button", button);
+                button.addEventListener('click', event => {
+                    console.log("Reply button clicked"); // Log when the reply button is clicked
+                    const commentId = event.target.getAttribute('data-comment-id');
+                    const replyForm = document.getElementById(`reply-form-${commentId}`);
+                    console.log("Reply form element:", replyForm);
+
+                    // Toggle visibility of the reply form
+                    if (replyForm.style.display === 'none' || replyForm.style.display === '') {
+                        replyForm.style.display = 'block';
+                    } else {
+                        replyForm.style.display = 'none';
+                    }
+
+                    // Set the parent_id hidden field value
+                    const parentIdField = replyForm.querySelector('input[name="reply_form[parent_id]"]');
+                    if (parentIdField) {
+                        parentIdField.value = commentId;
+                    }
+                });
+            });
+        });
+
+    </script>
 {% endblock %}
+
+

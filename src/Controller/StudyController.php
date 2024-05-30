@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Course;
 use App\Entity\Favorite;
 use App\Entity\User;

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class ReplyForm extends AbstractType
 {
@@ -15,7 +16,8 @@ class ReplyForm extends AbstractType
         $builder
             ->add('comment_text', TextareaType::class, [
                 'label' => 'Reply',
-            ]);
+            ])
+            ->add('parent_id', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

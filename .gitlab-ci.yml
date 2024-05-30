@@ -37,7 +37,7 @@ unit-job:
     - build-job
   before_script:
     # dependencies for composer to run
-    - apk add git unzip zip libzip-dev zlib1g-dev
+    - apk add git unzip zip libzip-dev zlib-dev
     - docker-php-ext-install zip
     # xdebug is needed for phpunit to generate coverage
     - pecl install xdebug

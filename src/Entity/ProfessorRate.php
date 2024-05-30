@@ -69,6 +69,18 @@ class ProfessorRate
         return $this;
     }
 
+    /*public function getRate(): ?int
+    {
+        return $this->rate_value;
+    }
+
+    public function setRate(int $rate): static
+    {
+        $this->rate_value = $rate;
+
+        return $this;
+    }*/
+
     public function getRateValue(): ?int
     {
         return $this->rateValue;

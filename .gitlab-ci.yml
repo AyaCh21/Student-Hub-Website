@@ -12,6 +12,8 @@ before_script:
   - apk add rsync
   - docker-php-ext-install pdo pdo_mysql
   - apk add chromium-chromedriver
+  - export PANTHER_NO_SANDBOX=1
+  - export SYMFONY_DEPRECATIONS_HELPER=weak
 
 stages:
   - test
@@ -21,8 +23,11 @@ build-job:
   stage: test
   only: 
     - dev
+  artifacts:
+    paths:
+      - vendor/
   script:
-    - composer install --prefer-dist --no-interaction --optimize-autoloader
+    - composer install
 
 unit-job:
   stage: test

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" stopOnFailure="false" stopOnError="false" stopOnRisky="false" stopOnSkipped="false" stopOnIncomplete="false" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         stopOnFailure="false"
+         stopOnError="false"
+         stopOnRisky="false"
+         stopOnSkipped="false"
+         stopOnIncomplete="false"
+         cacheDirectory=".phpunit.cache">
   <testsuites>
     <testsuite name="Project Test Suite">
       <directory>tests</directory>
@@ -17,4 +25,16 @@
       <directory suffix=".php">src</directory>
     </include>
   </source>
+  <php>
+    <!-- Specify the test environment -->
+    <env name="APP_ENV" value="test"/>
+    <!-- Include the .env.test file -->
+    <env name="APP_ENV_FILE" value=".env.test"/>
+  </php>
+  <php>
+    <env name="DATABASE_URL" value="mysql://root:nmsl2020@127.0.0.1:3306/a23www301"/>
+  </php>
+  <include>
+    <file>config/packages/security.yaml</file>
+  </include>
 </phpunit>

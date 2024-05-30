@@ -2,19 +2,22 @@
 
 namespace App\Tests\Controller;
 
+use App\Kernel;
 use App\Repository\StudentRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Entity\Student;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class UserControllerTest extends WebTestCase
 {
-    protected static function createKernel(array $options = []): \Symfony\Component\HttpKernel\KernelInterface
+    protected static function createKernel(array $options = []): KernelInterface
     {
         // Use your AppKernel class name here
-        return new \App\Kernel('test', true);
+        return new Kernel('test', true);
     }
 
     public function testLoginPageRedirectSuccessful()
@@ -31,7 +34,7 @@ class UserControllerTest extends WebTestCase
             $this->assertResponseStatusCodeSame(200);
             $this->assertSelectorTextContains('h1', 'Login');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         } finally {
@@ -62,7 +65,7 @@ class UserControllerTest extends WebTestCase
             $this->assertSame('/login', $client->getResponse()->headers->get('Location'));
             $crawler = $client->followRedirect();
             $this->assertSelectorTextContains('h1', 'Login');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         } finally {
@@ -88,7 +91,7 @@ class UserControllerTest extends WebTestCase
             $this->assertResponseIsSuccessful();
             $this->assertSame(200, $client->getResponse()->getStatusCode());
             $this->assertSelectorTextContains('h3', 'Your Profile');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {

@@ -2,18 +2,21 @@
 
 namespace App\Tests\Controller;
 
+use App\Kernel;
 use App\Repository\StudentRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Entity\Student;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class HomePageControllerTest extends WebTestCase
 {
-    protected static function createKernel(array $options = []): \Symfony\Component\HttpKernel\KernelInterface
+    protected static function createKernel(array $options = []): KernelInterface
     {
-        return new \App\Kernel('test', true);
+        return new Kernel('test', true);
     }
 
 
@@ -32,7 +35,7 @@ class HomePageControllerTest extends WebTestCase
             $this->assertResponseStatusCodeSame(200);
             $this->assertSelectorTextContains('.container-title', 'StudHub!');
             $this->assertCount(1, $crawler->filter('a[href="/register"] input[type="button"][value="Join Now"]'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         } finally {
@@ -59,7 +62,7 @@ class HomePageControllerTest extends WebTestCase
             $this->assertResponseStatusCodeSame(200);
             $this->assertSelectorTextContains('.container-title', 'StudHub!');
             $this->assertCount(1, $crawler->filter('a[href="/study"] input[type="button"][value="Study Now!"]'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {
@@ -88,7 +91,7 @@ class HomePageControllerTest extends WebTestCase
             $this->assertCount(1, $crawler->filter('a[href="https://admin.kuleuven.be/icts/english/cookiepolicy/"]'));
             $this->assertSame('Terms of Use', $crawler->filter('a[href="https://admin.kuleuven.be/icts/english/cookiepolicy/"]')->text(), 'Link text wrong.');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {
@@ -114,9 +117,9 @@ class HomePageControllerTest extends WebTestCase
             $crawler = $client->request('GET', '/team');
             $this->assertResponseStatusCodeSame(200);
 
-            //test discription exist
+            //test description exist
             $this->assertCount(1,$crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile'), 'Team description no');
-            $this->assertStringStartsWith("We're a passionate group of engineering students at KU Leuven", $crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile')->text(),"Team discription wrong text" );
+            $this->assertStringStartsWith("We're a passionate group of engineering students at KU Leuven", $crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile')->text(),"Team description wrong text" );
 
             ////redirect to team while logged out
             $client->request('GET', '/logout');
@@ -124,12 +127,12 @@ class HomePageControllerTest extends WebTestCase
             $crawler = $client->request('GET', '/team');
             $this->assertResponseStatusCodeSame(200);
 
-            //test discription exist
+            //test description exist
             $this->assertCount(1,$crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile'), 'Team description no');
-            $this->assertStringStartsWith("We're a passionate group of engineering students at KU Leuven", $crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile')->text(),"Team discription wrong text" );
+            $this->assertStringStartsWith("We're a passionate group of engineering students at KU Leuven", $crawler->filter('div.team-description.is-size-3-desktop.is-size-5-mobile')->text(),"Team description wrong text" );
 
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {
@@ -165,7 +168,7 @@ class HomePageControllerTest extends WebTestCase
             }
 
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {
@@ -189,7 +192,7 @@ class HomePageControllerTest extends WebTestCase
             //test if personal member card exist
             $this->assertCount(6,$crawler->filter('.member-card'), 'Team member card no');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {
@@ -226,7 +229,7 @@ class HomePageControllerTest extends WebTestCase
                 $this->assertNotEmpty($imageElement, sprintf('team member link "%s" vanished', $caption));
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {
@@ -288,7 +291,7 @@ class HomePageControllerTest extends WebTestCase
 
 
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {
@@ -335,7 +338,7 @@ class HomePageControllerTest extends WebTestCase
 
 
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception gracefully, for example:
             $this->fail('Exception caught during test: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
         }finally {

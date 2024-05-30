@@ -5,6 +5,7 @@ namespace App\Tests\Entity;
 use App\Entity\Course;
 use App\Entity\StudyMaterial;
 use App\Config\MaterialType;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class StudyMaterialTest extends TestCase
@@ -36,7 +37,7 @@ class StudyMaterialTest extends TestCase
     public function testGetAndSetUploadedBy()
     {
         $material = new StudyMaterial();
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
         $material->setUploadedAt($dateTime);
         $this->assertEquals($dateTime, $material->getUploadedAt());
     }
@@ -44,7 +45,7 @@ class StudyMaterialTest extends TestCase
 
     public function testGetAndSetUploadedAt()
     {
-        $uploadedAt = new \DateTime();
+        $uploadedAt = new DateTime();
         $studyMaterial = new StudyMaterial();
         $studyMaterial->setUploadedAt($uploadedAt);
         $this->assertEquals($uploadedAt, $studyMaterial->getUploadedAt());

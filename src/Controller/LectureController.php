@@ -25,6 +25,9 @@ use Psr\Log\LoggerInterface;
 use App\Service\PdfTextExtractor;
 use App\Service\TextSummarizer;
 use App\Service\SummaryPdfGenerator;
+use App\Repository\LabRateRepository;
+use App\Repository\LabInstructorRateRepository;
+
 class LectureController extends AbstractController
 {
     private $logger;

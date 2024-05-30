@@ -37,4 +37,7 @@
   <include>
     <file>config/packages/security.yaml</file>
   </include>
+  <extensions>
+    <extension class="Symfony\Component\Panther\ServerExtension" />
+  </extensions>
 </phpunit>

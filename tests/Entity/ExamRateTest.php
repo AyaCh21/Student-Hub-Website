@@ -8,7 +8,7 @@ use App\Entity\Student;
 use PHPUnit\Framework\TestCase;
 use App\Entity\ExamRate;
 
-class rating_examTest extends TestCase
+class examRateTest extends TestCase
 {
     public function testGetAndSetCourseId()
     {

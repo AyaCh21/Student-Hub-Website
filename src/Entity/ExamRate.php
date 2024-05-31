@@ -18,12 +18,10 @@ class ExamRate
 
     #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'rate')]
     #[ORM\JoinColumn(name: 'course_id', referencedColumnName: 'id')]
-//    #[ORM\Column(name: 'course_id', type: "integer")]
     private ?Course $course = null;
 
     #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'rate')]
     #[ORM\JoinColumn(name: 'student_id',referencedColumnName: 'id')]
-//    #[ORM\Column(name: 'student_id', type: "integer")]
     private ?Student $student = null;
 
     #[ORM\Column(name: 'rate_value', type: 'integer', nullable: true)]

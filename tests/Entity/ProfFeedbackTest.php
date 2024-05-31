@@ -6,7 +6,7 @@ use App\Entity\Feedbackprof;
 use App\Entity\Student;
 use App\Entity\Professor;
 
-class FeedbackprofTest extends TestCase
+class ProfFeedbackTest extends TestCase
 {
     public function testGetAndSetId()
     {

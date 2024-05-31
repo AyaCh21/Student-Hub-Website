@@ -2,6 +2,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Course;
 use PHPUnit\Framework\TestCase;
 use App\Entity\Comment;
 
@@ -17,8 +18,10 @@ class CommentTest extends TestCase
     public function testGetAndSetCourseId()
     {
         $comment = new Comment();
-        $comment->setCourseId(456);
-        $this->assertEquals(456, $comment->getCourseId());
+        $course = new Course();
+        $course->setId(456);
+        $comment->setCourse($course);
+        $this->assertEquals($course, $comment->getCourse());
     }
 
     public function testGetAndSetUserId()

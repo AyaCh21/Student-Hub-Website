@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FeedbackProfRepository::class)]
 #[ORM\Table(name: 'Feedbackprof')]
-class Feedbackprof
+class ProfessorFeedback
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,13 +16,11 @@ class Feedbackprof
     #[ORM\ManyToOne(targetEntity: Student::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Student $student = null;
-    #[ORM\Column(type: 'integer')]
-    private ?int $studentId = null;
     #[ORM\ManyToOne(targetEntity: Professor::class)]
     #[ORM\JoinColumn(name: 'professor_id', referencedColumnName: 'id', nullable: false)]
     private ?Professor $professor = null;
     #[ORM\Column(type: 'text')]
-    private ?string $feedback = null;
+    private ?string $feedback_text = null;
 
 
     public function getId(): ?int
@@ -56,17 +54,6 @@ class Feedbackprof
         $this->studentUsername = $studentUsername;
         return $this;
     }
-
-    public function getStudentId(): ?int
-    {
-        return $this->student?->getId();
-    }
-
-    public function setStudentId(?int $studentId): self
-    {
-        $this->studentId = $studentId;
-        return $this;
-    }
     public function setStudent(?Student $student): self
     {
         $this->student = $student;
@@ -75,14 +62,14 @@ class Feedbackprof
         }
         return $this;
     }
-    public function getFeedback(): ?string
+    public function getFeedbackText(): ?string
     {
-        return $this->feedback;
+        return $this->feedback_text;
     }
 
-    public function setFeedback(?string $feedback): self
+    public function setFeedbackText(?string $feedback_text): self
     {
-        $this->feedback = $feedback;
+        $this->feedback_text = $feedback_text;
         return $this;
     }
 }

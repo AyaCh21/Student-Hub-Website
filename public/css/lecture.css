@@ -79,6 +79,18 @@ h1 {
     transition: background-color 0.3s, transform 0.3s;
     margin-top: 10px; /* Add margin to separate from other elements */
 }
+.btn-upload-pdf {
+    background-color: var(--extra-color); /* Adjust to your theme color */
+    border: none;
+    color: #323939;  /* Dark text color to contrast with the button background */
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 20px; /* Add margin to separate from other elements */
+}
 
 /* Button hover effect */
 .btn-primary:hover {
@@ -116,24 +128,6 @@ h1 {
     margin-bottom: 10px;
 }
 
-/*we probably dont need the download buttons anymore*/
-.download-button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    color: var(--dark-color);
-    background-color: var(--extra-color);
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.download-button:hover {
-    background-color: #d48800;
-}
-
 .pdf-link {
     margin-bottom: 10px;
 }
@@ -165,6 +159,7 @@ h1 {
     background-color: var(--dark-color);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
     padding: 20px;
     max-width: 600px;
     margin: 20px auto;
@@ -176,6 +171,7 @@ h1 {
     margin-bottom: 15px;
     text-align: center;
 }
+
 
 .form-group {
     margin-bottom: 15px;
@@ -342,4 +338,101 @@ input[type="file"]::-webkit-file-upload-button {
     top: 20px;
     right: 20px;
     min-width: 200px;
+}
+/* lecture.css */
+
+/* Center the form within the section */
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 10vh; /* Adjust based on how much vertical space you want the section to take */
+    padding-left: 20px; /* Adjust this value to move the content to the right */
+}
+
+.upload-section .section-title {
+    align-self: flex-start; /* Align the title to the left */
+    margin-left: 0; /* Ensure no left margin */
+}
+
+/* Adjust form-inline to use flexbox for side-by-side layout */
+#form-inline {
+    display: flex;
+    gap: 20px; /* Adjust the gap between text bar and choose file */
+}
+
+
+
+/* Adjust the choose file section */
+#choose-file {
+    margin-bottom: 20px; /* Adjust this value to control the spacing */
+    flex: 1; /* Allow choose file input to take available space */
+}
+
+/* Adjust spacing for the upload button */
+#upload-button {
+    margin-top: 20px; /* Adjust this value to control the space above the button */
+    margin-left: 40px;
+}
+
+/* Optional: Adjust spacing for the entire form group if needed */
+#course-field,
+#type-field {
+    margin-bottom: 20px; /* Ensures consistent spacing for all form groups */
+}
+
+/* Ensure the form is not too wide */
+.section.upload-section .container {
+    max-width: 800px; /* Adjust the max-width as needed */
+    width: 100%;
+    padding: 20px;
+    margin-left: 20px; /* Add left margin to move the content to the right */
+}
+/* Increase space for the last card-text paragraph */
+.card-body .card-text:last-of-type {
+    margin-bottom: 20px; /* Increase this value to add more space */
+}
+.generate-summary {
+    display: inline-block;
+    margin-left: 10px; /* Space between link and button */
+    padding: 5px 10px; /* Padding for the button */
+    background-color: var(--extra-color); /* Background color */
+    color: var(--dark-color); /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+.generate-summary:hover {
+    background-color: #d48800; /* Hover background color */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Adjust the text bar */
+#text-bar {
+    background-color: var(--dark-color); /* Set background color */
+    color: var(--light-color); /* Ensure text is readable */
+    border: 1px solid var(--extra-color); /* Add border for better visibility */
+    padding: 15px; /* Increase padding for a larger appearance */
+    font-size: 1.2em; /* Increase font size */
+    flex: 1; /* Allow text bar to take available space */
+}
+
+#text-bar::placeholder {
+    color: #888; /* Set placeholder text color to grey */
+    opacity: 1; /* Ensure placeholder text is fully opaque */
+}
+
+#text-bar input {
+    background-color: var(--dark-color); /* Set input field background color */
+    color: var(--light-color); /* Ensure text is readable */
+    border: none; /* Remove default border */
+    width: 100%; /* Ensure it takes full width */
+    padding: 15px; /* Increase padding for a larger appearance */
+    font-size: 1.2em; /* Increase font size */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }

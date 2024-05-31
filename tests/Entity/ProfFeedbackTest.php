@@ -2,7 +2,7 @@
 
 namespace App\Tests\Entity;
 use PHPUnit\Framework\TestCase;
-use App\Entity\Feedbackprof;
+use App\Entity\ProfessorFeedback;
 use App\Entity\Student;
 use App\Entity\Professor;
 
@@ -10,45 +10,45 @@ class ProfFeedbackTest extends TestCase
 {
     public function testGetAndSetId()
     {
-        $feedbackprof = new Feedbackprof();
-        $reflection = new \ReflectionClass($feedbackprof);
+        $professor_feedback = new ProfessorFeedback();
+        $reflection = new \ReflectionClass($professor_feedback);
         $property = $reflection->getProperty('id');
         $property->setAccessible(true);
-        $property->setValue($feedbackprof, 1);
-        $this->assertEquals(1, $feedbackprof->getId());
+        $property->setValue($professor_feedback, 1);
+        $this->assertEquals(1, $professor_feedback->getId());
     }
 
     public function testGetAndSetStudent()
     {
-        $feedbackprof = new Feedbackprof();
+        $professor_feedback = new ProfessorFeedback();
         $student = new Student();
         $student->setId(123);
         $student->setUsername('student1');
-        $feedbackprof->setStudent($student);
-        $this->assertSame($student, $feedbackprof->getStudent());
-        $this->assertEquals('student1', $feedbackprof->getStudentUsername());
-        $this->assertEquals(123, $feedbackprof->getStudentId());
+        $professor_feedback->setStudent($student);
+        $this->assertSame($student, $professor_feedback->getStudent());
+        $this->assertEquals('student1', $professor_feedback->getStudentUsername());
+        $this->assertEquals($student, $professor_feedback->getStudent());
     }
 
     public function testGetAndSetProfessor()
     {
-        $feedbackprof = new Feedbackprof();
+        $professor_feedback = new ProfessorFeedback();
         $professor = new Professor();
-        $feedbackprof->setProfessor($professor);
-        $this->assertSame($professor, $feedbackprof->getProfessor());
+        $professor_feedback->setProfessor($professor);
+        $this->assertSame($professor, $professor_feedback->getProfessor());
     }
 
     public function testGetAndSetFeedback()
     {
-        $feedbackprof = new Feedbackprof();
-        $feedbackprof->setFeedback('Excellent professor!');
-        $this->assertEquals('Excellent professor!', $feedbackprof->getFeedback());
+        $professor_feedback = new ProfessorFeedback();
+        $professor_feedback->setFeedbackText('Excellent professor!');
+        $this->assertEquals('Excellent professor!', $professor_feedback->getFeedbackText());
     }
 
     public function testGetAndSetStudentUsername()
     {
-        $feedbackprof = new Feedbackprof();
-        $feedbackprof->setStudentUsername('student1');
-        $this->assertEquals('student1', $feedbackprof->getStudentUsername());
+        $professor_feedback = new ProfessorFeedback();
+        $professor_feedback->setStudentUsername('student1');
+        $this->assertEquals('student1', $professor_feedback->getStudentUsername());
     }
 }

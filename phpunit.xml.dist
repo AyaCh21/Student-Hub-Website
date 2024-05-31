@@ -23,6 +23,7 @@
   <source>
     <include>
       <directory suffix=".php">src</directory>
+      <file>config/packages/security.yaml</file>
     </include>
   </source>
   <php>
@@ -33,9 +34,6 @@
     <!-- Test Database URL -->
     <env name="DATABASE_URL" value="mysql://root:nmsl2020@127.0.0.1:3306/a23www301"/>
   </php>
-  <include>
-    <file>config/packages/security.yaml</file>
-  </include>
   <extensions>
     <extension class="Symfony\Component\Panther\ServerExtension" />
   </extensions>

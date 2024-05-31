@@ -37,7 +37,7 @@ class FeedbackTest extends TestCase
         $feedback->setStudent($student);
         $this->assertSame($student, $feedback->getStudent());
         $this->assertEquals('student1', $feedback->getStudentUsername());
-        $this->assertEquals(123, $feedback->getStudentId());
+        $this->assertEquals($student, $feedback->getStudent());
     }
 
     public function testGetAndSetStudentId()
@@ -47,7 +47,7 @@ class FeedbackTest extends TestCase
         $student->setId(123);
         $student->setUsername('testuser');
         $feedback->setStudent($student);
-        $this->assertEquals(123, $feedback->getStudentId());
+        $this->assertEquals($student, $feedback->getStudent());
         }
 
     public function testGetAndSetStudentUsername()
@@ -57,10 +57,10 @@ class FeedbackTest extends TestCase
         $this->assertEquals('student1', $feedback->getStudentUsername());
     }
 
-    public function testGetAndSetFeedback()
+    public function testGetAndSetFeedbackText()
     {
         $feedback = new Feedback();
-        $feedback->setFeedback('Great course!');
-        $this->assertEquals('Great course!', $feedback->getFeedback());
+        $feedback->setFeedbackText('Great course!');
+        $this->assertEquals('Great course!', $feedback->getFeedbackText());
     }
 }

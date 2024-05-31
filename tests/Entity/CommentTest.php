@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Course;
+use App\Entity\Student;
 use PHPUnit\Framework\TestCase;
 use App\Entity\Comment;
 
@@ -15,7 +16,7 @@ class CommentTest extends TestCase
         $this->assertEquals(123, $comment->getId());
     }
 
-    public function testGetAndSetCourseId()
+    public function testGetAndSetCourse()
     {
         $comment = new Comment();
         $course = new Course();
@@ -24,11 +25,13 @@ class CommentTest extends TestCase
         $this->assertEquals($course, $comment->getCourse());
     }
 
-    public function testGetAndSetUserId()
+    public function testGetAndSetUser()
     {
         $comment = new Comment();
-        $comment->setUserId(789);
-        $this->assertEquals(789, $comment->getUserId());
+        $student = new Student();
+        $student->setId(789);
+        $comment->setStudent($student);
+        $this->assertEquals($student, $comment->getStudent());
     }
 
     public function testGetAndSetType()

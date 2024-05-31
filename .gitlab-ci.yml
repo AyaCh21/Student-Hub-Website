@@ -51,7 +51,7 @@ unit-job:
     - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-interaction
     - COMPOSER_ALLOW_SUPERUSER=1 composer require --dev phpunit/phpunit phpunit/php-code-coverage
     - export XDEBUG_MODE=coverage
-    - vendor/bin/phpunit --filter 'App\\Tests\\Entity' --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
+    - vendor/bin/phpunit tests/Entity/. --configuration phpunit.xml.dist --coverage-cobertura=coverage.cobertura.xml
   artifacts:
     paths: 
       - coverage.cobertura.xml

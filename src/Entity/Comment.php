@@ -13,36 +13,14 @@ class Comment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private ?int $id = null;
 
-    public function getCourse(): ?Course
-    {
-        return $this->course;
-    }
+    #[ORM\Column(type: 'integer')]
+    private int $course_id;
 
-    public function setCourse(?Course $course): void
-    {
-        $this->course = $course;
-    }
-
-    public function getStudent(): ?Student
-    {
-        return $this->student;
-    }
-
-    public function setStudent(?Student $student): void
-    {
-        $this->student = $student;
-    }
-
-    #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'comment')]
-    #[ORM\JoinColumn(name: 'course_id', referencedColumnName: 'id')]
-    private ?Course $course = null;
-
-    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'comment')]
-    #[ORM\JoinColumn(name: 'student_id',referencedColumnName: 'id')]
-    private ?Student $student = null;
+    #[ORM\Column(type: 'integer')]
+    private int $user_id;
 
     #[ORM\Column(type: 'string', length: 10)]
     private string $type;
@@ -85,6 +63,29 @@ class Comment
         return $this;
     }
 
+    public function getCourseId(): int
+    {
+        return $this->course_id;
+    }
+
+    public function setCourseId(int $course_id): self
+    {
+        $this->course_id = $course_id;
+
+        return $this;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(int $user_id): self
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
 
     public function getType(): string
     {

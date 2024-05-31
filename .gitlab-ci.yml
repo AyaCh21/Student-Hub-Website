@@ -71,7 +71,9 @@ deploy-job:
     - dev
   when: manual
   script:
-    - composer install --no-dev
+    - composer install --prefer-dist --no-interaction --optimize-autoloader
+    - php bin/console cache:clear --env=prod --no-debug
+    - php bin/console cache:warmup --env=prod --no-debug
     - rsync -avz --exclude=".git/" 
                  --exclude=".env" 
                  ./ a23www301@shell.studev.groept.be:/var/www/html

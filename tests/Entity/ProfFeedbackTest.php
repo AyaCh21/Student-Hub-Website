@@ -41,8 +41,8 @@ class ProfFeedbackTest extends TestCase
     public function testGetAndSetFeedback()
     {
         $professor_feedback = new ProfessorFeedback();
-        $professor_feedback->setFeedbackText('Excellent professor!');
-        $this->assertEquals('Excellent professor!', $professor_feedback->getFeedbackText());
+        $professor_feedback->setFeedback('Excellent professor!');
+        $this->assertEquals('Excellent professor!', $professor_feedback->getFeedback());
     }
 
     public function testGetAndSetStudentUsername()

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" stopOnFailure="false" stopOnError="false" stopOnRisky="false" stopOnSkipped="false" stopOnIncomplete="false" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" stopOnFailure="false" stopOnError="false" stopOnRisky="false" stopOnSkipped="false"
+         stopOnIncomplete="false" cacheDirectory=".phpunit.cache">
+  <php>
+    <env name="KERNEL_CLASS" value="App\Kernel"/>
+  </php>
   <testsuites>
     <testsuite name="Project Test Suite">
       <directory>tests</directory>
@@ -17,4 +21,6 @@
       <directory suffix=".php">src</directory>
     </include>
   </source>
+
 </phpunit>
+

@@ -34,14 +34,11 @@ lecture:
     controller: App\Controller\LectureController::lecture
     methods: GET|POST
 
-
 view_pdf:
     path: /study_material/{id}/view_pdf
     controller: App\Controller\LectureController::viewPdf
     methods: GET
 
-
-# config/routes.yaml
 generate_summary:
     path: /generate_summary
     controller: App\Controller\LectureController::generateSummary

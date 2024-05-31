@@ -34,7 +34,7 @@
     <!-- Test Database URL -->
     <env name="DATABASE_URL" value="mysql://root:nmsl2020@127.0.0.1:3306/a23www301"/>
   </php>
-  <extensions>
+  <!--<extensions>
     <extension class="Symfony\Component\Panther\ServerExtension" />
-  </extensions>
+  </extensions>-->
 </phpunit>

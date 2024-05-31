@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Entity\Feedback;
-use App\Entity\Feedbackprof;
+use App\Entity\ProfessorFeedback;
 use App\Entity\Professor;
 use App\Entity\Student;
 use App\Form\FeedbackTypeC;
@@ -76,7 +76,7 @@ class FeedbackController extends AbstractController
     public function feedbackprof(int $professorId, Request $request, EntityManagerInterface $entityManager): Response
     {
         $professor = $entityManager->getRepository(Professor::class)->find($professorId);
-        $feedback = new Feedbackprof();
+        $feedback = new ProfessorFeedback();
         if (!$professor) {
             throw $this->createNotFoundException('Professor not found');
         }
@@ -116,7 +116,7 @@ class FeedbackController extends AbstractController
             throw $this->createNotFoundException('Professor not found');
         }
 
-        $professorFeedbacks = $entityManager->getRepository(Feedbackprof::class)->findBy(['professor' => $professor]);
+        $professorFeedbacks = $entityManager->getRepository(ProfessorFeedback::class)->findBy(['professor' => $professor]);
 
         return $this->render('view_feedbackprof.html.twig', [
             'professor' => $professor,

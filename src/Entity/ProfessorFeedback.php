@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\FeedbackProfRepository;
@@ -13,20 +12,25 @@ class ProfessorFeedback
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
+
     #[ORM\ManyToOne(targetEntity: Student::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Student $student = null;
+
     #[ORM\ManyToOne(targetEntity: Professor::class)]
     #[ORM\JoinColumn(name: 'professor_id', referencedColumnName: 'id', nullable: false)]
     private ?Professor $professor = null;
-    #[ORM\Column(type: 'text')]
-    private ?string $feedback_text = null;
 
+    #[ORM\Column(name: 'feedback', type: 'text')]
+    private ?string $feedback = null;
+
+    private ?string $studentUsername = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
     public function getProfessor(): ?Professor
     {
         return $this->professor;
@@ -37,12 +41,20 @@ class ProfessorFeedback
         $this->professor = $professor;
         return $this;
     }
+
     public function getStudent(): ?Student
     {
         return $this->student;
     }
-    private ?string $studentUsername = null;
 
+    public function setStudent(?Student $student): self
+    {
+        $this->student = $student;
+        if ($student) {
+            $this->studentUsername = $student->getUsername();
+        }
+        return $this;
+    }
 
     public function getStudentUsername(): ?string
     {
@@ -54,22 +66,15 @@ class ProfessorFeedback
         $this->studentUsername = $studentUsername;
         return $this;
     }
-    public function setStudent(?Student $student): self
+
+    public function getFeedback(): ?string
     {
-        $this->student = $student;
-        if ($student) {
-            $this->studentUsername = $student->getUsername();
-        }
-        return $this;
-    }
-    public function getFeedbackText(): ?string
-    {
-        return $this->feedback_text;
+        return $this->feedback;
     }
 
-    public function setFeedbackText(?string $feedback_text): self
+    public function setFeedback(?string $feedback): self
     {
-        $this->feedback_text = $feedback_text;
+        $this->feedback = $feedback;
         return $this;
     }
 }

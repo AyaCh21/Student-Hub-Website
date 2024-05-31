@@ -21,18 +21,11 @@ class Feedback
     #[ORM\ManyToOne(targetEntity: Student::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Student $student = null;
-    #[ORM\Column(type: 'text')]
+
+    #[ORM\Column(type: 'text', name: 'feedback')]
     private ?string $feedback_text = null;
 
-    public function getFeedbackText(): ?string
-    {
-        return $this->feedback_text;
-    }
-
-    public function setFeedbackText(?string $feedback_text): void
-    {
-        $this->feedback_text = $feedback_text;
-    }
+    private ?string $studentUsername = null;
 
     public function getId(): ?int
     {
@@ -54,8 +47,25 @@ class Feedback
     {
         return $this->student;
     }
-    private ?string $studentUsername = null;
 
+    public function setStudent(?Student $student): self
+    {
+        $this->student = $student;
+        if ($student) {
+            $this->studentUsername = $student->getUsername();
+        }
+        return $this;
+    }
+
+    public function getFeedbackText(): ?string
+    {
+        return $this->feedback_text;
+    }
+
+    public function setFeedbackText(?string $feedback_text): void
+    {
+        $this->feedback_text = $feedback_text;
+    }
 
     public function getStudentUsername(): ?string
     {
@@ -67,24 +77,15 @@ class Feedback
         $this->studentUsername = $studentUsername;
         return $this;
     }
-    public function setStudent(?Student $student): self
-    {
-        $this->student = $student;
-        if ($student) {
-            $this->studentUsername = $student->getUsername();
-        }
-        return $this;
-    }
 
     public function getFeedback(): ?string
     {
-        return $this->feedback;
+        return $this->feedback_text;
     }
 
     public function setFeedback(?string $feedback): self
     {
-        $this->feedback = $feedback;
+        $this->feedback_text = $feedback;
         return $this;
     }
 }
-

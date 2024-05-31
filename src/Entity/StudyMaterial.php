@@ -52,6 +52,26 @@ class StudyMaterial
 
         return $this;
     }
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    public function getMaterialType(): ?MaterialType
+    {
+        return $this->materialType;
+    }
+
+    public function setMaterialType(?MaterialType $materialType): void
+    {
+        $this->materialType = $materialType;
+    }
 
     public function getUploadedBy(): ?Student
     {

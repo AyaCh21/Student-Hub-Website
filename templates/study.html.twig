@@ -190,7 +190,42 @@
     </div>
 
     <script>
+        function searchCourse() {
+            document.querySelectorAll('.course').forEach(course => {
+                course.style.backgroundColor = '';
+                course.querySelector('.options').style.display = 'none';
+            });
+            document.querySelectorAll('.options li').forEach(option => {
+                option.style.backgroundColor = '';
+            });
+
+            var courseName = document.getElementById('courseSearch').value.trim().replace(/\s+/g, '_').toLowerCase();
+            var type = document.getElementById('typeSelect').value.toLowerCase();
+            var courseElement = document.getElementById(courseName);
+            var optionElement = document.getElementById(courseName + '-' + type);
+
+            if (courseElement && optionElement) {
+                var phaseWrapper = courseElement.closest('.phase-wrapper');
+                var coursesList = phaseWrapper.querySelector('.courses');
+                var phaseToggle = phaseWrapper.querySelector('.phase-toggle');
+
+                if (coursesList.style.display === 'none' || !coursesList.style.display) {
+                    coursesList.style.display = 'block';
+                    phaseWrapper.style.height = 'fit-content';
+                }
+
+                courseElement.closest('.courses').style.display = 'block';
+                optionElement.closest('.options').style.display = 'block';
+                courseElement.style.backgroundColor = '#4A90E2';
+                optionElement.style.backgroundColor = '#D62D20';
+                optionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                alert('Course or type not found. Please check your input.');
+            }
+        }
+
         document.getElementById('courseSearch').addEventListener('input', filterCourses);
+
         function filterCourses() {
             const query = document.getElementById('courseSearch').value.trim().toLowerCase();
             const phases = document.querySelectorAll('.phase-wrapper');
@@ -217,29 +252,9 @@
             });
         }
 
-        function searchCourse() {
-            document.querySelectorAll('.course').forEach(course => {
-                course.style.backgroundColor = '';
-                course.querySelector('.options').style.display = 'none';
-            });
-            document.querySelectorAll('.options li').forEach(option => {
-                option.style.backgroundColor = '';
-            });
-            var courseName = document.getElementById('courseSearch').value.trim().replace(/\s+/g, '_').toLowerCase();
-            var type = document.getElementById('typeSelect').value.toLowerCase();
-            var courseElement = document.getElementById(courseName);
-            var optionElement = document.getElementById(courseName + '-' + type);
 
-            if (courseElement && optionElement) {
-                courseElement.closest('.courses').style.display = 'block';
-                optionElement.closest('.options').style.display = 'block';
-                courseElement.style.backgroundColor = '#4A90E2';
-                optionElement.style.backgroundColor = '#D62D20';
-                optionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                alert('Course or type not found. Please check your input.');
-            }
-        }
+
+
 
         function togglePhase(element) {
             var courses = element.parentElement.nextElementSibling;

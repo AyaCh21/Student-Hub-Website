@@ -137,12 +137,12 @@
                             </div>
                         {% endif %}
                         <ul class="options" style="display: none;">
-                            <li class="option">
-                                <a href="{{ path('lecture', {'id': course.id, 'type': 'lecture'}) }}">Lecture</a>
-                            </li>
-                            <li class="option">
-                                <a href="{{ path('lecture', {'id': course.id, 'type': 'lab'}) }}">Lab</a>
-                            </li>
+                            <a href="{{ path('lecture', {'id': course.id, 'type': 'lecture'}) }}">
+                                <li class="option is-size-4-desktop">Lecture</li>
+                            </a>
+                            <a href="{{ path('lecture', {'id': course.id, 'type': 'lab'}) }}">
+                                <li class="option is-size-4-desktop">Lab</li>
+                            </a>
                         </ul>
                     </li>
                 {% endfor %}

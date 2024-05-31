@@ -3,7 +3,7 @@
 namespace App\Form;
 
 
-use App\Entity\Feedbackprof;
+use App\Entity\ProfessorFeedback;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -33,7 +33,7 @@ class FeedbackType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Feedbackprof::class,
+            'data_class' => ProfessorFeedback::class,
         ]);
     }
 }

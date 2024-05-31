@@ -16,23 +16,20 @@ class CommentTest extends TestCase
         $this->assertEquals(123, $comment->getId());
     }
 
-    public function testGetAndSetCourse()
+    public function testGetAndSetCourseId()
     {
         $comment = new Comment();
-        $course = new Course();
-        $course->setId(456);
-        $comment->setCourse($course);
-        $this->assertEquals($course, $comment->getCourse());
+        $comment->setCourseId(456);
+        $this->assertEquals(456, $comment->getCourseId());
     }
 
-    public function testGetAndSetUser()
+    public function testGetAndSetUserId()
     {
         $comment = new Comment();
-        $student = new Student();
-        $student->setId(789);
-        $comment->setStudent($student);
-        $this->assertEquals($student, $comment->getStudent());
+        $comment->setUserId(789);
+        $this->assertEquals(789, $comment->getUserId());
     }
+
 
     public function testGetAndSetType()
     {

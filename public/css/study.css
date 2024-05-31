@@ -87,7 +87,11 @@ body, html {
     padding: 10px;
 }
 .options {
-    display: block;
+    /*display: block;*/
+    &:hover {
+        box-shadow: inset -6em 0 0 var(--dark-color), inset 6em 0 0 var(--dark-color);
+        color: var(--extra-color);
+    }
 
 }
 .options li{
@@ -104,14 +108,8 @@ body, html {
         color: var(--extra-color);
     }
 }
-.option a{
-    cursor: pointer;
-    margin-right: 10px;
-    text-decoration: none;
-}
-.option a:hover {
-    font-weight: bold;
-}
+
+
 
 
 .search-form {
@@ -239,18 +237,7 @@ body, html {
             box-shadow: 0 0;
         }
     }
-    .option {
-        background: var(--extra-color);
-        color: var(--dark-color);
-        padding: 5px;
-        margin: 2px;
-        border-radius: 10px;
-        width: 7em;
-    }
-    .option a {
-        color: var(--dark-color);
 
-    }
 
     .phase-header {
         /*background: var(--minor-color);*/

@@ -27,16 +27,6 @@ class Feedback
 
     private ?string $studentUsername = null;
 
-    public function getFeedbackText(): ?string
-    {
-        return $this->feedback_text;
-    }
-
-    public function setFeedbackText(?string $feedback_text): void
-    {
-        $this->feedback_text = $feedback_text;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -67,6 +57,16 @@ class Feedback
         return $this;
     }
 
+    public function getFeedbackText(): ?string
+    {
+        return $this->feedback_text;
+    }
+
+    public function setFeedbackText(?string $feedback_text): void
+    {
+        $this->feedback_text = $feedback_text;
+    }
+
     public function getStudentUsername(): ?string
     {
         return $this->studentUsername;
@@ -75,6 +75,17 @@ class Feedback
     public function setStudentUsername(?string $studentUsername): self
     {
         $this->studentUsername = $studentUsername;
+        return $this;
+    }
+
+    public function getFeedback(): ?string
+    {
+        return $this->feedback_text;
+    }
+
+    public function setFeedback(?string $feedback): self
+    {
+        $this->feedback_text = $feedback;
         return $this;
     }
 }
